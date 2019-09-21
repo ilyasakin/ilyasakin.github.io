@@ -4,70 +4,118 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:100&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0px;
-            background-color: #141414;
+    html {
+            scrollbar-face-color: #646464;
+            scrollbar-base-color: #646464;
+            scrollbar-3dlight-color: #646464;
+            scrollbar-highlight-color: #646464;
+            scrollbar-track-color: #000;
+            scrollbar-arrow-color: #000;
+            scrollbar-shadow-color: #646464;
+            scrollbar-dark-shadow-color: #646464;
         }
         
-        .me {
-            color: white;
-            text-align: center;
-            font-family: 'Encode Sans Condensed', sans-serif;
-            font-size: 3.4vh;
-            margin:0;
-            letter-spacing: 2px;
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 3px;
         }
         
-        .center {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 100vh;
+        ::-webkit-scrollbar-button {
+            background-color: #666;
         }
         
-        .line {
-            min-width: 250px;
-            width: 49.5vh;
-            height: 0.211vh;
-            background-color: white;
+        ::-webkit-scrollbar-track {
+            background-color: #646464;
         }
-
-        .typewrite {
-            color: white;
-            font-family: 'Encode Sans Condensed', sans-serif;
-            font-size: 1.68vh;
-            line-height: 0;
-            letter-spacing: 5px;
+        
+        ::-webkit-scrollbar-track-piece {
+            background-color: #000;
         }
-
-        .boxContainer {
-            margin-top: 0.3%;
-            min-width: 250px;
-            width: 25vw;
+        
+        ::-webkit-scrollbar-thumb {
+            height: 50px;
+            background-color: #666;
+            border-radius: 3px;
         }
-
-        .box {
-            height: 1.7022vw;
-            width: 1.7022vw;
-            display: inline-block;
-            margin-right: 5%;
-            margin-left: 5%;
-            min-width: 32px;
-            min-height: 32px;
+        
+        ::-webkit-scrollbar-corner {
+            background-color: #646464;
         }
+    }
+    ::-webkit-resizer {
+        background-color: #666;
+    }
+    body {
+        margin: 0px;
+        background-color: #141414;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+    .me {
+        color: white;
+        text-align: center;
+        font-family: 'Encode Sans Condensed', sans-serif;
+        font-size: 3.4vh;
+        margin: 0;
+        letter-spacing: 2px;
+    }
+    .center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 100vh;
+        width: 100vw;
+    }
+    .line {
+        min-width: 250px;
+        width: 49.5vh;
+        max-width: 55vw;
+        height: 0.211vh;
+        background-color: white;
+    }
+    .typewrite {
+        color: white;
+        font-family: 'Encode Sans Condensed', sans-serif;
+        font-size: 1.68vh;
+        line-height: 0;
+        letter-spacing: 5px;
+    }
+    .boxContainer {
+        margin-top: 0.3%;
+        min-width: 250px;
+        width: 25vw;
+    }
+    .box {
+        height: 1.7022vw;
+        width: 1.7022vw;
+        display: inline-block;
+        margin-right: 5%;
+        margin-left: 5%;
+        min-width: 32px;
+        min-height: 32px;
+    }
+    .icon100 {
+        height: 100%;
+        width: 100%;
+    }
+    .pageTwo {
+        background-color: #010203;
+        width: 100vw;
+    }
+    .pageTwoBox {
+        background-color: azure;
+        display: inline-block;
+    }
 
-        .icon100 {
-            height: 100%;
-            width: 100%;
-        }
-
-        .pageTwo {
-            background-color: #010203;
-            height: 100vh;
-        }
-
+    @media screen and (orientation: portrait) { .pageTwoBox{ height: 100vh; width: 100vw; max-width: 100vw; } }
+    @media screen and (orientation: landscape) { .pageTwoBox{ height: 100vh; width: 33vw; max-width: 33vw; } }
+    @media screen and (orientation:portrait) { #mid {width:100vw; max-width: 100vw;} }
+    @media screen and (orientation: landscape) { #mid { width: 34vw; max-width: 34vw;}}
+    .pageTwoBox:hover {
+        background-color: #141414;
+    }
     </style>
     <script src="script.js"></script>
 </head>
@@ -76,18 +124,29 @@
     <div class="center">
         <h1 class="me">ilyas akın</h1>
         <div>
-        <a class="typewrite" data-period="2000" data-type='[ "code", "sleep", "repeat"]'></a>
+            <a class="typewrite" data-period="2000" data-type='[ "code", "sleep", "repeat"]'></a>
         </div>
         <div class="line"></div>
+
         <div class="boxContainer">
-            <div id="github" class="box"><a href="https://www.github.com/Ashnwor" target="__blank"><img class="icon100" src="images/github.png"></a></div>
-            <div id="linkedin" class="box"><a href="https://www.linkedin.com" target="__blank"><img class="icon100" src="images/linkedin.png"></a></div>
-            <div id="mail" class="box"><a href=""><img class="icon100" src="images/mail.png"></a></div>
+            <div id="github" class="box">
+                <a href="https://www.github.com/Ashnwor" target="__blank"><img class="icon100" src="images/github.png"></a>
+            </div>
+            <div id="linkedin" class="box">
+                <a href="https://www.linkedin.com" target="__blank"><img class="icon100" src="images/linkedin.png"></a>
+            </div>
+            <div id="mail" class="box">
+                <a href=""><img class="icon100" src="images/mail.png"></a>
+            </div>
         </div>
     </div>
-    <div class="pageTwo">
 
+    <div class="pageTwo">
+        <div class="pageTwoBox"></div><!--
+     --><div id="mid" class="pageTwoBox"></div><!--
+     --><div class="pageTwoBox"></div>
     </div>
+
 </body>
 
 </html>
