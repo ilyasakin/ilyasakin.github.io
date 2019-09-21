@@ -4,7 +4,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:100&display=swap" rel="stylesheet">
     <style>
-    html {
+        html {
             scrollbar-face-color: #646464;
             scrollbar-base-color: #646464;
             scrollbar-3dlight-color: #646464;
@@ -12,7 +12,7 @@
             scrollbar-track-color: #000;
             scrollbar-arrow-color: #000;
             scrollbar-shadow-color: #646464;
-            scrollbar-dark-shadow-color: #646464;
+            scrollbar-darkshadow-color: #646464;
         }
         
         ::-webkit-scrollbar {
@@ -41,81 +41,117 @@
         ::-webkit-scrollbar-corner {
             background-color: #646464;
         }
-    }
-    ::-webkit-resizer {
-        background-color: #666;
-    }
-    body {
-        margin: 0px;
-        background-color: #141414;
-        width: 100vw;
-        overflow-x: hidden;
-    }
-    .me {
-        color: white;
-        text-align: center;
-        font-family: 'Encode Sans Condensed', sans-serif;
-        font-size: 3.4vh;
-        margin: 0;
-        letter-spacing: 2px;
-    }
-    .center {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        height: 100vh;
-        width: 100vw;
-    }
-    .line {
-        min-width: 250px;
-        width: 49.5vh;
-        max-width: 55vw;
-        height: 0.211vh;
-        background-color: white;
-    }
-    .typewrite {
-        color: white;
-        font-family: 'Encode Sans Condensed', sans-serif;
-        font-size: 1.68vh;
-        line-height: 0;
-        letter-spacing: 5px;
-    }
-    .boxContainer {
-        margin-top: 0.3%;
-        min-width: 250px;
-        width: 25vw;
-    }
-    .box {
-        height: 1.7022vw;
-        width: 1.7022vw;
-        display: inline-block;
-        margin-right: 5%;
-        margin-left: 5%;
-        min-width: 32px;
-        min-height: 32px;
-    }
-    .icon100 {
-        height: 100%;
-        width: 100%;
-    }
-    .pageTwo {
-        background-color: #010203;
-        width: 100vw;
-    }
-    .pageTwoBox {
-        background-color: azure;
-        display: inline-block;
-    }
-
-    @media screen and (orientation: portrait) { .pageTwoBox{ height: 100vh; width: 100vw; max-width: 100vw; } }
-    @media screen and (orientation: landscape) { .pageTwoBox{ height: 100vh; width: 33vw; max-width: 33vw; } }
-    @media screen and (orientation:portrait) { #mid {width:100vw; max-width: 100vw;} }
-    @media screen and (orientation: landscape) { #mid { width: 34vw; max-width: 34vw;}}
-    .pageTwoBox:hover {
-        background-color: #141414;
-    }
+        
+        ::-webkit-resizer {
+            background-color: #666;
+        }
+        
+        body {
+            margin: 0px;
+            background-color: #141414;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+        
+        .me {
+            color: white;
+            text-align: center;
+            font-family: 'Encode Sans Condensed', sans-serif;
+            font-size: 3.4vh;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        .line {
+            min-width: 250px;
+            width: 49.5vh;
+            max-width: 55vw;
+            height: 0.211vh;
+            background-color: white;
+        }
+        
+        .typewrite {
+            color: white;
+            font-family: 'Encode Sans Condensed', sans-serif;
+            font-size: 1.68vh;
+            line-height: 0;
+            letter-spacing: 5px;
+        }
+        
+        .boxContainer {
+            margin-top: 0.3%;
+            min-width: 250px;
+            width: 25vw;
+        }
+        
+        .box {
+            height: 1.7022vw;
+            width: 1.7022vw;
+            display: inline-block;
+            margin-right: 5%;
+            margin-left: 5%;
+            min-width: 32px;
+            min-height: 32px;
+        }
+        
+        .icon100 {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .pageTwo {
+            background-color: #010203;
+            width: 100vw;
+        }
+        
+        .pageTwoBox {
+            background-color: azure;
+            display: inline-block;
+        }
+        
+        @media screen and (orientation: portrait) {
+            .pageTwoBox {
+                height: 100vh;
+                width: 100vw;
+                max-width: 100vw;
+            }
+        }
+        
+        @media screen and (orientation: landscape) {
+            .pageTwoBox {
+                height: 100vh;
+                width: 33vw;
+                max-width: 33vw;
+            }
+        }
+        
+        @media screen and (orientation:portrait) {
+            #mid {
+                width: 100vw;
+                max-width: 100vw;
+            }
+        }
+        
+        @media screen and (orientation: landscape) {
+            #mid {
+                width: 34vw;
+                max-width: 34vw;
+            }
+        }
+        
+        .pageTwoBox:hover {
+            background-color: #141414;
+        }
     </style>
     <script src="script.js"></script>
 </head>
