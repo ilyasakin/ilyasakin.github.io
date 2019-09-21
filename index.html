@@ -13,8 +13,9 @@
             color: white;
             text-align: center;
             font-family: 'Encode Sans Condensed', sans-serif;
-            font-size: 200%;
+            font-size: 3.4vh;
             margin:0;
+            letter-spacing: 2px;
         }
         
         .center {
@@ -28,15 +29,15 @@
         
         .line {
             min-width: 250px;
-            width: 25%;
-            height: 2px;
+            width: 25vw;
+            height: 0.211vh;
             background-color: white;
         }
 
         .typewrite {
             color: white;
             font-family: 'Encode Sans Condensed', sans-serif;
-            font-size: 100%;
+            font-size: 1.68vh;
             line-height: 0;
             letter-spacing: 5px;
         }
@@ -44,15 +45,25 @@
         .boxContainer {
             margin-top: 0.3%;
             min-width: 250px;
-            width: 25%;
+            width: 25vw;
         }
 
         .box {
-            height: 32px;
-            width: 32px;
+            height: 3.366vh;
+            width: 3.366vh;
             display: inline-block;
             margin-right: 5%;
             margin-left: 5%;
+        }
+
+        .icon100 {
+            height: 100%;
+            width: 100%;
+        }
+
+        .pageTwo {
+            background-color: #010203;
+            height: 100vh;
         }
 
     </style>
@@ -61,23 +72,18 @@
 
 <body>
     <div class="center">
-        <h1 class="me">Ashnwor</h1>
+        <h1 class="me">ilyas akın</h1>
         <div>
         <a class="typewrite" data-period="2000" data-type='[ "code", "sleep", "repeat"]'></a>
         </div>
         <div class="line"></div>
         <div class="boxContainer">
-            <div id="github" class="box"><a href="https://www.github.com/Ashnwor"><img src="images/github.png"></a></div>
-            <div id="linkedin" class="box"><a href="https://www.linkedin.com"><img src="images/linkedin.png"></a></div>
-            <div class="box"></div>
-            <div class="box"></div>
-
-
-
+            <div id="github" class="box"><a href="https://www.github.com/Ashnwor" target="__blank"><img class="icon100" src="images/github.png"></a></div>
+            <div id="linkedin" class="box"><a href="https://www.linkedin.com" target="__blank"><img class="icon100" src="images/linkedin.png"></a></div>
+            <div id="mail" class="box"><a href=""><img class="icon100" src="images/mail.png"></a></div>
         </div>
-
-
-      
+    </div>
+    <div class="pageTwo">
 
     </div>
 </body>
