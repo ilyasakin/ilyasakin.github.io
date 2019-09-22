@@ -156,7 +156,7 @@
         .pageTwoBox:hover {
             background-color: #141414;
         }
-
+        
         .imageCanvas {
             width: 28vw;
             max-width: 28vw;
@@ -164,24 +164,24 @@
             max-height: 33vh;
             background-color: #000000;
             margin-top: 5vh;
-            background-image:url("https://via.placeholder.com/1920x1080");
-            background-size:cover;
-            background-position:center center;
-            background-repeat:no-repeat;
+            background-image: url("https://via.placeholder.com/1920x1080");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             display: block;
             margin-left: auto;
             margin-right: auto;
         }
-
+        
         @media screen and (orientation: portrait) {
             .imageCanvas {
                 width: 80vw;
                 max-width: 80vw;
                 height: 33vh;
                 max-height: 33vh;
-            } 
+            }
         }
-
+        
         .arrowContainerDown {
             width: 100%;
             height: 5vh;
@@ -190,7 +190,7 @@
             bottom: 0;
             text-align: center;
         }
-
+        
         .arrow {
             display: inline-block;
             width: 1.374vh;
@@ -198,55 +198,56 @@
             border-top: 2px solid white;
             border-right: 2px solid white;
             transform: rotate(135deg);
-            
         }
-
+        
         @media screen and (orientation:landscape) {
             .notVisible {
                 visibility: hidden;
             }
         }
-
+        
         .textBox {
             position: absolute;
-            color:white;
+            color: white;
             display: inline-block;
             width: 100%;
         }
-
+        
         .title {
             text-align: center;
             font-size: 3vh;
+            font-family: 'Encode Sans Condensed', sans-serif;
         }
-
+        
         .actualText {
             text-align: left;
             margin-left: 10vw;
             margin-right: 10vw;
+            font-family: 'Encode Sans Condensed', sans-serif;
         }
-
+        
         @media screen and (orientation:landscape) {
             .actualText {
-              font-size: 1.4vw;
-              margin-left: 3vw;
-              margin-right: 3vw;
+                font-size: 1.4vw;
+                margin-left: 3vw;
+                margin-right: 3vw;
             }
         }
-
+        
         @media screen and (orientation:portrait) {
             .actualText {
-              font-size: 3.5vw;
-              margin-left: 10vw;
-              margin-right: 10vw;
+                font-size: 3.5vw;
+                margin-left: 10vw;
+                margin-right: 10vw;
             }
         }
-
+        
         .buttonContainer {
             width: 100%;
             height: 5.1vh;
             text-align: center;
         }
-
+        
         .projectButton {
             border: white solid;
             padding: 0.5vw 2vh;
@@ -254,16 +255,39 @@
             font-size: 0.9vw;
             margin-right: 1vw;
             margin-left: 1vw;
+            font-family: 'Encode Sans Condensed', sans-serif;
+            text-decoration: none;
+            color: white;
+            border-radius: 30px;
         }
-
+        
+        .redButton:hover {
+            background-color: #f44336;
+            color: black;
+            -webkit-transition: background-color 750ms ease-in;
+            -ms-transition: background-color 750ms ease-in;
+            transition: background-color 750ms ease-in;
+            -webkit-transition: color 750ms ease-in;
+            -ms-transition: color 750ms ease-in;
+            transition: color 750ms ease-in;
+        }
+        
+        .blueButton:hover {
+            background-color: #2196F3;
+            color: black;
+            -webkit-transition: background-color 750ms ease-in;
+            -ms-transition: background-color 750ms ease-in;
+            transition: background-color 750ms ease-in;
+            -webkit-transition: color 750ms ease-in;
+            -ms-transition: color 750ms ease-in;
+            transition: color 750ms ease-in;
+        }
+        
         @media screen and (orientation:portrait) {
             .projectButton {
                 font-size: 2.4vh;
             }
         }
-        
-
-
     </style>
     <script src="script.js"></script>
 </head>
@@ -287,51 +311,55 @@
                 <a href=""><img class="icon100" src="images/mail.png"></a>
             </div>
         </div>
-        <div class="arrowContainerDown"><a href="#page2" class="arrow"></a></div>
+        <div class="arrowContainerDown">
+            <a href="#page2" class="arrow"></a>
+        </div>
     </div>
 
-    <div id="page2"class="pageTwo">
+    <div id="page2" class="pageTwo">
         <div id="first" class="pageTwoBox">
             <div class="imageCanvas"></div>
             <div class="textBox">
                 <h2 class="title">Loremus Ipsumus</h2>
                 <p class="actualText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet magna sed mi efficitur euismod. Ut luctus ex id sem ultrices facilisis. Quisque sollicitudin elementum rhoncus. Nulla facilisi. Cras neque diam, egestas sit amet vehicula vitae, rutrum in augue. In ut nibh sed odio lobortis auctor sit amet vitae quam. Ut consectetur eros dolor, semper viverra enim convallis non. Nam sollicitudin nibh diam, ut gravida nisl pharetra in. Maecenas bibendum, neque quis rutrum consectetur, quam odio rutrum mi, in tincidunt ex ligula id felis.</p>
-                
+
                 <div class="buttonContainer">
-                    <a class="projectButton">Live Demo</a>
-                    <a class="projectButton">Source Code</a>
+                    <a href="#" class="projectButton blueButton">Live Demo</a>
+                    <a href="#" class="projectButton redButton">Source Code</a>
                 </div>
             </div>
             <div class="arrowContainerDown notVisible">
                 <a href="#mid" class="arrow"></a>
             </div>
         </div><!--
+     
      --><div id="mid" class="pageTwoBox">
-         <div class="imageCanvas"></div>
-         <div class="textBox">
-            <h2 class="title">Loremus Ipsumus</h2>
-            <p class="actualText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet magna sed mi efficitur euismod. Ut luctus ex id sem ultrices facilisis. Quisque sollicitudin elementum rhoncus. Nulla facilisi. Cras neque diam, egestas sit amet vehicula vitae, rutrum in augue. In ut nibh sed odio lobortis auctor sit amet vitae quam. Ut consectetur eros dolor, semper viverra enim convallis non. Nam sollicitudin nibh diam, ut gravida nisl pharetra in. Maecenas bibendum, neque quis rutrum consectetur, quam odio rutrum mi, in tincidunt ex ligula id felis.</p>
-            <div class="buttonContainer">
-                    <a class="projectButton">Live Demo</a>
-                    <a class="projectButton">Source Code</a>
+            <div class="imageCanvas"></div>
+            <div class="textBox">
+                <h2 class="title">Loremus Ipsumus</h2>
+                <p class="actualText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet magna sed mi efficitur euismod. Ut luctus ex id sem ultrices facilisis. Quisque sollicitudin elementum rhoncus. Nulla facilisi. Cras neque diam, egestas sit amet vehicula vitae, rutrum in augue. In ut nibh sed odio lobortis auctor sit amet vitae quam. Ut consectetur eros dolor, semper viverra enim convallis non. Nam sollicitudin nibh diam, ut gravida nisl pharetra in. Maecenas bibendum, neque quis rutrum consectetur, quam odio rutrum mi, in tincidunt ex ligula id felis.</p>
+                <div class="buttonContainer">
+                    <a href="#" class="projectButton blueButton">Live Demo</a>
+                    <a href="#" class="projectButton redButton">Source Code</a>
                 </div>
-        </div>
-         <div class="arrowContainerDown notVisible">
-             <a href="#third" class="arrow"></a>
+            </div>
+            <div class="arrowContainerDown notVisible">
+                <a href="#third" class="arrow"></a>
             </div>
         </div><!--
+     
      --><div id="third" class="pageTwoBox">
-         <div class="imageCanvas"></div>
-         <div class="textBox">
-             <h2 class="title">Loremus Ipsumus</h2>
-             <p class="actualText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet magna sed mi efficitur euismod. Ut luctus ex id sem ultrices facilisis. Quisque sollicitudin elementum rhoncus. Nulla facilisi. Cras neque diam, egestas sit amet vehicula vitae, rutrum in augue. In ut nibh sed odio lobortis auctor sit amet vitae quam. Ut consectetur eros dolor, semper viverra enim convallis non. Nam sollicitudin nibh diam, ut gravida nisl pharetra in. Maecenas bibendum, neque quis rutrum consectetur, quam odio rutrum mi, in tincidunt ex ligula id felis.</p>
-             <div class="buttonContainer">
-                    <a class="projectButton">Live Demo</a>
-                    <a class="projectButton">Source Code</a>
+            <div class="imageCanvas"></div>
+            <div class="textBox">
+                <h2 class="title">Loremus Ipsumus</h2>
+                <p class="actualText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet magna sed mi efficitur euismod. Ut luctus ex id sem ultrices facilisis. Quisque sollicitudin elementum rhoncus. Nulla facilisi. Cras neque diam, egestas sit amet vehicula vitae, rutrum in augue. In ut nibh sed odio lobortis auctor sit amet vitae quam. Ut consectetur eros dolor, semper viverra enim convallis non. Nam sollicitudin nibh diam, ut gravida nisl pharetra in. Maecenas bibendum, neque quis rutrum consectetur, quam odio rutrum mi, in tincidunt ex ligula id felis.</p>
+                <div class="buttonContainer">
+                    <a href="#" class="projectButton blueButton">Live Demo</a>
+                    <a href="#" class="projectButton redButton">Source Code</a>
                 </div>
             </div>
-         <div class="arrowContainerDown notVisible">
-             <a href="#" class="arrow"></a>
+            <div class="arrowContainerDown notVisible">
+                <a href="#" class="arrow"></a>
             </div>
         </div>
     </div>
