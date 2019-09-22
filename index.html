@@ -13,6 +13,7 @@
             scrollbar-arrow-color: #000;
             scrollbar-shadow-color: #646464;
             scrollbar-darkshadow-color: #646464;
+            scroll-behavior: smooth;
         }
         
         ::-webkit-scrollbar {
@@ -70,6 +71,7 @@
             text-align: center;
             height: 100vh;
             width: 100vw;
+            position: relative;
         }
         
         .line {
@@ -112,10 +114,11 @@
         .pageTwo {
             background-color: #010203;
             width: 100vw;
+            max-width: 100vw;
         }
         
         .pageTwoBox {
-            background-color: azure;
+            background-color: #080808;
             display: inline-block;
         }
         
@@ -152,6 +155,44 @@
         .pageTwoBox:hover {
             background-color: #141414;
         }
+
+        .imageCanvas {
+            width: 28vw;
+            max-width: 28vw;
+            height: 33vh;
+            max-height: 33vh;
+            background-color: #000000;
+            margin-top: 5vh;
+            background-image:url("https://via.placeholder.com/1920x1080");
+            background-size:cover;
+            background-position:center center;
+            background-repeat:no-repeat;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media screen and (orientation: portrait) {
+            .imageCanvas {
+                width: 80vw;
+                max-width: 80vw;
+                height: 33vh;
+                max-height: 33vh;
+            } 
+        }
+
+        .arrow {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-top: 2px solid white;
+            border-right: 2px solid white;
+            transform: rotate(135deg);
+            position: absolute;
+            bottom:0;
+            margin-bottom: 2vh;
+        }
+        
     </style>
     <script src="script.js"></script>
 </head>
@@ -175,12 +216,13 @@
                 <a href=""><img class="icon100" src="images/mail.png"></a>
             </div>
         </div>
+        <a href="#page2"><div class="arrow"></div></a>
     </div>
 
-    <div class="pageTwo">
-        <div class="pageTwoBox"></div><!--
-     --><div id="mid" class="pageTwoBox"></div><!--
-     --><div class="pageTwoBox"></div>
+    <div id="page2"class="pageTwo">
+        <div class="pageTwoBox"><div class="imageCanvas"></div></div><!--
+     --><div id="mid" class="pageTwoBox"><div class="imageCanvas"></div></div><!--
+     --><div class="pageTwoBox"><div class="imageCanvas"></div></div>
     </div>
 
 </body>
