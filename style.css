@@ -1,3 +1,27 @@
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+    vertical-align: baseline;
+    max-width: 100vw;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
 html {
     scrollbar-face-color: #646464;
     scrollbar-base-color: #646464;
@@ -8,6 +32,8 @@ html {
     scrollbar-shadow-color: #646464;
     scrollbar-darkshadow-color: #646464;
     scroll-behavior: smooth;
+    max-width: 100%;
+    margin:0;
 }
 
 ::-webkit-scrollbar {
@@ -45,7 +71,7 @@ body {
     margin: 0px;
     background-color: #141414;
     width: 100vw;
-    overflow-x: hidden;
+    max-width: 100%;
 }
 
 .me {
@@ -57,7 +83,7 @@ body {
     letter-spacing: 2px;
 }
 
-.center {
+.mainContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,13 +91,14 @@ body {
     text-align: center;
     height: 100vh;
     width: 100vw;
+    max-width: 100%;
     position: relative;
 }
 
 .line {
     min-width: 250px;
     width: 49.5vh;
-    max-width: 55vw;
+    max-width: 55%;
     height: 0.211vh;
     background-color: white;
 }
@@ -105,93 +132,76 @@ body {
     width: 100%;
 }
 
-.pageTwo {
-    background-color: #010203;
-    width: 100vw;
-    max-width: 100vw;
-}
-
-.pageTwoBox {
+.pageNew3box {
     background-color: #080808;
     display: inline-block;
     position: relative;
 }
 
 @media screen and (orientation: portrait) {
-    .pageTwoBox {
+    .pageNew3box {
         height: 100vh;
         width: 100vw;
-        max-width: 100vw;
+        max-width: 100%;
     }
 }
 
 @media screen and (orientation: landscape) {
-    .pageTwoBox {
+    .pageNew3box {
         height: 100vh;
-        width: 33vw;
-        max-width: 33vw;
+        width: 33%;
+        max-width: 33%;
     }
 }
 
 @media screen and (orientation:portrait) {
     #mid {
         width: 100vw;
-        max-width: 100vw;
+        max-width: 100%;
     }
 }
 
 @media screen and (orientation: landscape) {
     #mid {
         width: 34vw;
-        max-width: 34vw;
+        max-width: 34%;
     }
 }
 
-.pageTwoBox:hover {
+.pageNew3box:hover {
     background-color: #141414;
 }
 
 .imageCanvas {
-    width: 28vw;
-    max-width: 28vw;
     height: 33vh;
     max-height: 33vh;
     background-color: #000000;
-    margin-top: 5vh;
     background-image: url("https://via.placeholder.com/1920x1080");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media screen and (orientation: portrait) {
-    .imageCanvas {
-        width: 80vw;
-        max-width: 80vw;
-        height: 33vh;
-        max-height: 33vh;
-    }
 }
 
 .arrowContainerDown {
     width: 100%;
-    height: 5vh;
+    max-width: 100vw;
+    height: 6vh;
     position: absolute;
-    display: block;
+    display: flex;
+    justify-content: center;
     bottom: 0;
-    text-align: center;
 }
 
 .arrow {
-    display: inline-block;
-    width: 1.374vh;
-    height: 1.374vh;
+    display: flex;
+    height: 1.4vh;
+    width: 1.4vh;
     border-top: 2px solid white;
     border-right: 2px solid white;
     transform: rotate(135deg);
+    position: absolute;
+    align-self: center;
 }
 
 @media screen and (orientation:landscape) {
@@ -199,6 +209,19 @@ body {
         visibility: hidden;
     }
 }
+
+@media screen and (orientation:landscape) {
+    .ReverseNotVisible {
+        visibility: visible;
+    }
+}
+
+@media screen and (orientation:portrait) {
+    .ReverseNotVisible {
+        visibility: hidden;
+    }
+}
+
 
 .textBox {
     position: absolute;
