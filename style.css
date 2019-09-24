@@ -112,7 +112,7 @@ body {
 }
 
 .boxContainer {
-    margin-top: 0.3%;
+    margin-top: 0.5vh;
     min-width: 250px;
     width: 25vw;
 }
@@ -123,8 +123,14 @@ body {
     display: inline-block;
     margin-right: 5%;
     margin-left: 5%;
-    min-width: 32px;
-    min-height: 32px;
+}
+
+@media screen and (orientation: portrait) {
+    .box {
+        height: 4vh;
+        width: 4vh;
+        max-width: 100%;
+    }
 }
 
 .icon100 {
