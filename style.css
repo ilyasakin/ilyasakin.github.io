@@ -17,8 +17,7 @@ time, mark, audio, video {
 	font: inherit;
     vertical-align: baseline;
     max-width: 100vw;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
@@ -84,10 +83,19 @@ body {
 }
 
 .mainContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     text-align: center;
     height: 100vh;
     width: 100vw;
@@ -195,20 +203,29 @@ body {
     max-width: 100vw;
     height: 6vh;
     position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     bottom: 0;
 }
 
 .arrow {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     height: 1.4vh;
     width: 1.4vh;
     border-top: 2px solid white;
     border-right: 2px solid white;
-    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+        -ms-transform: rotate(135deg);
+            transform: rotate(135deg);
     position: absolute;
-    align-self: center;
+    -ms-flex-item-align: center;
+        align-self: center;
 }
 
 @media screen and (orientation:landscape) {
@@ -300,10 +317,10 @@ body {
     background-color: #f44336;
     color: black;
     -webkit-transition: background-color 750ms ease-in;
-    -ms-transition: background-color 750ms ease-in;
+    -o-transition: background-color 750ms ease-in;
     transition: background-color 750ms ease-in;
     -webkit-transition: color 500ms ease-in;
-    -ms-transition: color 500ms ease-in;
+    -o-transition: color 500ms ease-in;
     transition: color 500ms ease-in;
 }
 
@@ -311,10 +328,10 @@ body {
     background-color: #2196F3;
     color: black;
     -webkit-transition: background-color 750ms ease-in;
-    -ms-transition: background-color 750ms ease-in;
+    -o-transition: background-color 750ms ease-in;
     transition: background-color 750ms ease-in;
     -webkit-transition: color 500ms ease-in;
-    -ms-transition: color 500ms ease-in;
+    -o-transition: color 500ms ease-in;
     transition: color 500ms ease-in;
 }
 
