@@ -268,7 +268,8 @@ body {
 .projectButton {
     border: white solid;
     border-width: 0.1vh;
-    padding: 0.5vw 2vh;
+    width: 6vw;
+    height: 4.5vh;
     display: inline-block;
     font-size: 0.9vw;
     margin-right: 1vw;
@@ -277,6 +278,16 @@ body {
     text-decoration: none;
     color: white;
     border-radius: 30px;
+    line-height: 4.5vh;
+}
+
+@media screen and (orientation:portrait) {
+    .projectButton {
+        height: 5vh;
+        line-height: 5vh;
+        width: 20vw;
+        
+    }
 }
 
 .redButton:hover {
