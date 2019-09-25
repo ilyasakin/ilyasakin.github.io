@@ -178,12 +178,20 @@ body {
     margin-left: 5%;
 }
 
+.box:hover {
+    transform: scale(1.05);
+}
+
 .boxLast {
     height: 1.5vw;
     width: 1.5vw;
     display: inline-block;
     margin-right: 5%;
     margin-left: 5%;
+}
+
+.boxLast:hover {
+    transform: scale(1.05);
 }
 
 @media screen and (orientation: portrait) {
