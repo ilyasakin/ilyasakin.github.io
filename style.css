@@ -309,6 +309,8 @@ body {
     width: 100%;
     height: 5.1vh;
     text-align: center;
+    position: absolute;
+    margin-top: 10vh;
 }
 
 .projectButton {
