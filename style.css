@@ -264,6 +264,12 @@ body {
     background-color: #141414;
 }
 
+@media screen and (orientation:portrait) {
+    .pageNew3box:hover {
+        background-color: #080808;
+    }
+}
+
 .imageCanvas {
     height: 33vh;
     max-height: 33vh;
