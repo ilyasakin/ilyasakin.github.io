@@ -119,6 +119,18 @@ body {
     user-select: none;
 }
 
+.lineLast {
+    min-width: 250px;
+    width: 25vh;
+    max-width: 55%;
+    height: 0.211vh;
+    background-color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .typewrite {
     color: white;
     font-family: 'Encode Sans Condensed', sans-serif;
@@ -141,9 +153,27 @@ body {
     user-select: none;
 }
 
+.boxContainerLast {
+    margin-top: 0.5vh;
+    min-width: 250px;
+    width: 10vw;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .box {
     height: 1.7022vw;
     width: 1.7022vw;
+    display: inline-block;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.boxLast {
+    height: 1.35vw;
+    width: 1.35vw;
     display: inline-block;
     margin-right: 5%;
     margin-left: 5%;
