@@ -80,6 +80,10 @@ body {
     font-size: 3.4vh;
     margin: 0;
     letter-spacing: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .mainContainer {
@@ -109,6 +113,10 @@ body {
     max-width: 55%;
     height: 0.211vh;
     background-color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .typewrite {
@@ -117,12 +125,20 @@ body {
     font-size: 1.68vh;
     line-height: 0;
     letter-spacing: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .boxContainer {
     margin-top: 0.5vh;
     min-width: 250px;
     width: 25vw;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .box {
@@ -157,6 +173,13 @@ body {
         height: 100vh;
         width: 100vw;
         max-width: 100%;
+    }
+
+    #mid {
+        margin-top: -4px;
+    }
+
+    #third {
         margin-top: -4px;
     }
 }
@@ -302,6 +325,10 @@ body {
     color: white;
     border-radius: 30px;
     line-height: 4.5vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 @media screen and (orientation:portrait) {
@@ -309,6 +336,7 @@ body {
         height: 5vh;
         line-height: 5vh;
         width: 20vw;
+        min-width: 100px;
         
     }
 }
@@ -341,18 +369,80 @@ body {
     }
 }
 
-.containerSplit2 {
-    display: inline-block;
-    width: 50%;
-    height: 100vh;
-    background-color: #080808;
-    position: relative;
+#thirdPage {
     margin-top: -4px;
 }
 
-@media screen and (orientation:portrait) {
-    .containerSplit2 {
-        width: 100vw;
-        height: 50vh;
-    }
+.page3Text {
+    color: white;
+    font-family: 'Encode Sans Condensed', sans-serif;
+    margin: 0;
+    font-size: 4vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
+
+.reachOutDuuud {
+    color:white;
+    margin: 0;
+    font-family: 'Encode Sans Condensed', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 2.4vh;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.footerText {
+    margin:0;
+    color: white;
+    font-family: 'Encode Sans Condensed', sans-serif;
+    padding: 1vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 2vh;
+}
+
+@media screen and (orientation: landscape) {
+.effect-shine:hover {
+     mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+    -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+    mask-size: 200%;
+    -webkit-mask-size: 200%;
+    -webkit-animation: shine 2s infinite;
+            animation: shine 2s infinite;
+  }
+}
+
+@media screen and (orientation: portrait) {
+    .effect-shine {
+         mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+        -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+        mask-size: 200%;
+        -webkit-mask-size: 200%;
+        -webkit-animation: shine 2s infinite;
+                animation: shine 2s infinite;
+      }
+    }
+  
+  @keyframes shine {
+    from {
+      -webkit-mask-position: 150%;
+    }
+    
+    to {
+      -webkit-mask-position: -50%;
+    }
+  }
