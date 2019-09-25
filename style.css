@@ -131,6 +131,13 @@ body {
     user-select: none;
 }
 
+@media screen and (orientation: portrait) {
+    .lineLast {
+        min-width: 25%;
+        width: 15vh;
+    }
+}
+
 .typewrite {
     color: white;
     font-family: 'Encode Sans Condensed', sans-serif;
@@ -183,6 +190,14 @@ body {
     .box {
         height: 4vh;
         width: 4vh;
+        max-width: 100%;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .boxLast {
+        height: 3vh;
+        width: 3vh;
         max-width: 100%;
     }
 }
