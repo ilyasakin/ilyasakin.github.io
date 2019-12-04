@@ -220,6 +220,7 @@ body {
     background-color: #080808;
     display: inline-block;
     position: relative;
+    transition: background-color .4s ease-out;
 }
 
 @media screen and (orientation: portrait) {
@@ -262,6 +263,7 @@ body {
 
 .pageNew3box:hover {
     background-color: #141414;
+    transition: background-color .4s ease-in;
 }
 
 @media screen and (orientation:portrait) {
@@ -279,6 +281,10 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     display: block;
+}
+
+.imageCanvasMid {
+    background-image: url("images/m.png") !important;
 }
 
 .arrowContainerDown {
@@ -403,6 +409,16 @@ body {
     }
 }
 
+.redButton{
+    transition: color 500ms ease-out;
+    transition: background-color 750ms ease-out;
+}
+
+.blueButton{
+    transition: color 500ms ease-out;
+    transition: background-color 750ms ease-out;
+}
+
 .redButton:hover {
     background-color: #f44336;
     color: black;
@@ -498,7 +514,7 @@ body {
                 animation: shine 2s infinite;
       }
     }
-  
+
   @keyframes shine {
     from {
       -webkit-mask-position: 150%;
@@ -507,4 +523,8 @@ body {
     to {
       -webkit-mask-position: -50%;
     }
+  }
+
+  .bold {
+      font-weight: bold;
   }
