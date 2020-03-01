@@ -456,6 +456,7 @@ body {
   -webkit-transition: color 500ms ease-in;
   -o-transition: color 500ms ease-in;
   transition: color 500ms ease-in;
+  text-decoration: none;
 }
 
 .blueButton:hover {
@@ -467,6 +468,7 @@ body {
   -webkit-transition: color 500ms ease-in;
   -o-transition: color 500ms ease-in;
   transition: color 500ms ease-in;
+  text-decoration: none;
 }
 
 @media screen and (orientation: portrait) {
