@@ -141,6 +141,7 @@ body {
   text-align: center;
   font-family: "Encode Sans Condensed", sans-serif;
   font-size: 3.4vh;
+  font-weight: bold;
   margin: 0;
   letter-spacing: 2px;
   -webkit-user-select: none;
@@ -202,7 +203,7 @@ body {
 }
 
 .typewrite {
-  color: white;
+  color: white !important;
   font-family: "Encode Sans Condensed", sans-serif;
   font-size: 1.68vh;
   line-height: 0;
@@ -279,58 +280,20 @@ body {
   fill: white;
 }
 
-.pageNew3box {
+.column {
   background-color: #080808;
   display: inline-block;
   position: relative;
   transition: background-color 0.4s ease-out;
 }
 
-@media screen and (orientation: portrait) {
-  .pageNew3box {
-    height: 100vh;
-    width: 100vw;
-    max-width: 100%;
-  }
-
-  #mid {
-    margin-top: -4px;
-  }
-
-  #third {
-    margin-top: -4px;
-  }
-}
-
-@media screen and (orientation: landscape) {
-  .pageNew3box {
-    height: 100vh;
-    width: 33%;
-    max-width: 33%;
-  }
-}
-
-@media screen and (orientation: portrait) {
-  #mid {
-    width: 100vw;
-    max-width: 100%;
-  }
-}
-
-@media screen and (orientation: landscape) {
-  #mid {
-    width: 34vw;
-    max-width: 34%;
-  }
-}
-
-.pageNew3box:hover {
+.column:hover {
   background-color: #141414;
   transition: background-color 0.4s ease-in;
 }
 
 @media screen and (orientation: portrait) {
-  .pageNew3box:hover {
+  .colımn:hover {
     background-color: #080808;
   }
 }
@@ -406,9 +369,12 @@ body {
 }
 
 .title {
+  font-weight: bold;
   text-align: center;
   font-size: 3vh;
   font-family: "Encode Sans Condensed", sans-serif;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
 }
 
 .actualText {
@@ -516,6 +482,7 @@ body {
 .page3Text {
   color: white;
   font-family: "Encode Sans Condensed", sans-serif;
+  font-weight: bold;
   margin: 0;
   font-size: 4vh;
   -webkit-user-select: none;
@@ -528,6 +495,7 @@ body {
   color: white;
   margin: 0;
   font-family: "Encode Sans Condensed", sans-serif;
+  font-weight: bold;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -553,6 +521,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   font-size: 2vh;
+  font-weight: bold;
 }
 
 @media screen and (orientation: landscape) {
