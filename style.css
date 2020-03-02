@@ -1,78 +1,15 @@
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-p,
-blockquote,
-pre,
 a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
+body,
 center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
+code,
+div,
 footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+html,
+i,
+img,
+p,
+q,
+span {
   margin: 0;
   padding: 0;
   border: 0;
@@ -80,8 +17,8 @@ video {
   font: inherit;
   vertical-align: baseline;
   max-width: 100vw;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ /* Firefox, other Gecko */
-  box-sizing: border-box; /* Opera/IE 8+ */
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
@@ -130,18 +67,18 @@ html {
 }
 
 body {
-  margin: 0px;
+  margin: 0;
   background-color: #141414;
   width: 100vw;
   max-width: 100%;
 }
 
 .me {
-  color: white;
+  color: #fff;
   text-align: center;
   font-family: "Encode Sans Condensed", sans-serif;
   font-size: 3.4vh;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0;
   letter-spacing: 2px;
   -webkit-user-select: none;
@@ -176,7 +113,7 @@ body {
   width: 49.5vh;
   max-width: 55%;
   height: 0.211vh;
-  background-color: white;
+  background-color: #fff;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -188,7 +125,7 @@ body {
   width: 25vh;
   max-width: 55%;
   height: 0.211vh;
-  background-color: white;
+  background-color: #fff;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -203,21 +140,11 @@ body {
 }
 
 .typewrite {
-  color: white !important;
+  color: #fff !important;
   font-family: "Encode Sans Condensed", sans-serif;
   font-size: 1.68vh;
   line-height: 0;
   letter-spacing: 5px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.boxContainer {
-  margin-top: 0.5vh;
-  min-width: 250px;
-  width: 25vw;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -234,18 +161,6 @@ body {
   user-select: none;
 }
 
-.box {
-  height: 1.7022vw;
-  width: 1.7022vw;
-  display: inline-block;
-  margin-right: 5%;
-  margin-left: 5%;
-}
-
-.box:hover {
-  transform: scale(1.05);
-}
-
 .boxLast {
   height: 1.5vw;
   width: 1.5vw;
@@ -259,14 +174,6 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-  .box {
-    height: 4vh;
-    width: 4vh;
-    max-width: 100%;
-  }
-}
-
-@media screen and (orientation: portrait) {
   .boxLast {
     height: 3vh;
     width: 3vh;
@@ -277,11 +184,25 @@ body {
 .icon100 {
   height: 100%;
   width: 100%;
-  fill: white;
+  fill: #fff;
 }
 
 .w-vmax-25 {
   width: 25vmax;
+}
+
+.h-35 {
+  height: 30%;
+}
+
+@media screen and (orientation: portrait) {
+  .portrait-h-75 {
+    height: 75% !important;
+  }
+}
+
+.media-button:hover {
+  transform: scale(1.1);
 }
 
 .column {
@@ -297,7 +218,7 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-  .colımn:hover {
+  .column:hover {
     background-color: #080808;
   }
 }
@@ -305,8 +226,8 @@ body {
 .imageCanvas {
   height: 33vh;
   max-height: 33vh;
-  background-color: #000000;
-  background-image: url("https://via.placeholder.com/1920x1080");
+  background-color: #000;
+  background-image: url(https://via.placeholder.com/1920x1080);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -314,9 +235,8 @@ body {
 }
 
 .imageCanvasMid {
-  background-image: url("images/m.png") !important;
+  background-image: url(images/m.png) !important;
 }
-
 .arrowContainerDown {
   width: 100%;
   max-width: 100vw;
@@ -337,8 +257,8 @@ body {
   display: flex;
   height: 1.4vh;
   width: 1.4vh;
-  border-top: 2px solid white;
-  border-right: 2px solid white;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
   -webkit-transform: rotate(135deg);
   -ms-transform: rotate(135deg);
   transform: rotate(135deg);
@@ -367,13 +287,13 @@ body {
 
 .textBox {
   position: absolute;
-  color: white;
+  color: #fff;
   display: inline-block;
   width: 100%;
 }
 
 .title {
-  font-weight: bold;
+  font-weight: 700;
   text-align: center;
   font-size: 3vh;
   font-family: "Encode Sans Condensed", sans-serif;
@@ -413,7 +333,7 @@ body {
 }
 
 .projectButton {
-  border: white solid;
+  border: #fff solid;
   border-width: 0.1vh;
   width: 6vw;
   height: 4.5vh;
@@ -423,7 +343,7 @@ body {
   margin-left: 1vw;
   font-family: "Encode Sans Condensed", sans-serif;
   text-decoration: none;
-  color: white;
+  color: #fff;
   border-radius: 30px;
   line-height: 4.5vh;
   -webkit-user-select: none;
@@ -442,36 +362,36 @@ body {
 }
 
 .redButton {
-  transition: color 500ms ease-out;
+  transition: color 0.5s ease-out;
   transition: background-color 750ms ease-out;
 }
 
 .blueButton {
-  transition: color 500ms ease-out;
+  transition: color 0.5s ease-out;
   transition: background-color 750ms ease-out;
 }
 
 .redButton:hover {
   background-color: #f44336;
-  color: black;
+  color: #000;
   -webkit-transition: background-color 750ms ease-in;
   -o-transition: background-color 750ms ease-in;
   transition: background-color 750ms ease-in;
-  -webkit-transition: color 500ms ease-in;
-  -o-transition: color 500ms ease-in;
-  transition: color 500ms ease-in;
+  -webkit-transition: color 0.5s ease-in;
+  -o-transition: color 0.5s ease-in;
+  transition: color 0.5s ease-in;
   text-decoration: none;
 }
 
 .blueButton:hover {
   background-color: #2196f3;
-  color: black;
+  color: #000;
   -webkit-transition: background-color 750ms ease-in;
   -o-transition: background-color 750ms ease-in;
   transition: background-color 750ms ease-in;
-  -webkit-transition: color 500ms ease-in;
-  -o-transition: color 500ms ease-in;
-  transition: color 500ms ease-in;
+  -webkit-transition: color 0.5s ease-in;
+  -o-transition: color 0.5s ease-in;
+  transition: color 0.5s ease-in;
   text-decoration: none;
 }
 
@@ -486,9 +406,9 @@ body {
 }
 
 .page3Text {
-  color: white;
+  color: #fff;
   font-family: "Encode Sans Condensed", sans-serif;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0;
   font-size: 4vh;
   -webkit-user-select: none;
@@ -498,10 +418,10 @@ body {
 }
 
 .reachOutDuuud {
-  color: white;
+  color: #fff;
   margin: 0;
   font-family: "Encode Sans Condensed", sans-serif;
-  font-weight: bold;
+  font-weight: 700;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -512,14 +432,14 @@ body {
 .footer {
   position: absolute;
   bottom: 0;
-  background-color: black;
+  background-color: #000;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
 .footerText {
   margin: 0;
-  color: white;
+  color: #fff;
   font-family: "Encode Sans Condensed", sans-serif;
   padding: 1vh;
   -webkit-user-select: none;
@@ -527,7 +447,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   font-size: 2vh;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 @media screen and (orientation: landscape) {
@@ -576,12 +496,11 @@ body {
   from {
     -webkit-mask-position: 150%;
   }
-
   to {
     -webkit-mask-position: -50%;
   }
 }
 
 .bold {
-  font-weight: bold;
+  font-weight: 700;
 }
