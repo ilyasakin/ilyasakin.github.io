@@ -280,6 +280,10 @@ body {
   fill: white;
 }
 
+.w-vmax-25 {
+  width: 25vmax;
+}
+
 .column {
   background-color: #080808;
   display: inline-block;
