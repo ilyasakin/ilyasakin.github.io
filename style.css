@@ -191,6 +191,10 @@ body {
   width: 25vmax;
 }
 
+.w-vmax-20 {
+  width: 20vmax;
+}
+
 .h-35 {
   height: 30%;
 }
