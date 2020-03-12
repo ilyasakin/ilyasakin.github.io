@@ -336,79 +336,6 @@ body {
   margin-top: 10vh;
 }
 
-.projectButton {
-  border: #fff solid;
-  border-width: 0.1vh;
-  width: 6vw;
-  height: 4.5vh;
-  display: inline-block;
-  font-size: 0.9vw;
-  margin-right: 1vw;
-  margin-left: 1vw;
-  font-family: "Encode Sans Condensed", sans-serif;
-  text-decoration: none;
-  color: #fff;
-  border-radius: 30px;
-  line-height: 4.5vh;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@media screen and (orientation: portrait) {
-  .projectButton {
-    height: 5vh;
-    line-height: 5vh;
-    width: 20vw;
-    min-width: 100px;
-  }
-}
-
-.redButton {
-  transition: color 0.5s ease-out;
-  transition: background-color 750ms ease-out;
-}
-
-.blueButton {
-  transition: color 0.5s ease-out;
-  transition: background-color 750ms ease-out;
-}
-
-.redButton:hover {
-  background-color: #f44336;
-  color: #000;
-  -webkit-transition: background-color 750ms ease-in;
-  -o-transition: background-color 750ms ease-in;
-  transition: background-color 750ms ease-in;
-  -webkit-transition: color 0.5s ease-in;
-  -o-transition: color 0.5s ease-in;
-  transition: color 0.5s ease-in;
-  text-decoration: none;
-}
-
-.blueButton:hover {
-  background-color: #2196f3;
-  color: #000;
-  -webkit-transition: background-color 750ms ease-in;
-  -o-transition: background-color 750ms ease-in;
-  transition: background-color 750ms ease-in;
-  -webkit-transition: color 0.5s ease-in;
-  -o-transition: color 0.5s ease-in;
-  transition: color 0.5s ease-in;
-  text-decoration: none;
-}
-
-@media screen and (orientation: portrait) {
-  .projectButton {
-    font-size: 2.4vh;
-  }
-}
-
-#thirdPage {
-  margin-top: -4px;
-}
-
 .page3Text {
   color: #fff;
   font-family: "Encode Sans Condensed", sans-serif;
@@ -507,4 +434,13 @@ body {
 
 .bold {
   font-weight: 700;
+}
+
+.border-radius-30px {
+  border-radius: 30px;
+}
+
+.font-encode-sans-condensed {
+  font-family: "Encode Sans Condensed", sans-serif;
+
 }
