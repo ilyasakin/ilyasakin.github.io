@@ -471,3 +471,15 @@ body {
 	background-color: #141414 !important;
 	border-color: #141414 !important;
 }
+
+@media screen and (orientation: portrait) {
+	.btn-port {
+		background-color: #080808;
+		border-color: #080808;
+	}
+
+	.btn-port:hover {
+		background-color: #141414;
+		border-color: #141414;
+	}
+}
