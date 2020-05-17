@@ -123,7 +123,7 @@ body {
 .lineLast {
   min-width: 250px;
   width: 17vw;
-  max-width: 55%;
+  max-width: 100%;
   height: 0.211vh;
   background-color: #fff;
   -webkit-user-select: none;
