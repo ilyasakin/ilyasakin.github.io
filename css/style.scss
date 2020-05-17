@@ -167,10 +167,9 @@ body {
 	display: inline-block;
 	margin-right: 5%;
 	margin-left: 5%;
-}
-
-.boxLast:hover {
-	transform: scale(1.05);
+	&:hover {
+		transform: scale(1.05);
+	}
 }
 
 @media screen and (orientation: portrait) {
@@ -207,11 +206,10 @@ body {
 
 .media-button {
 	transition: transform 100ms ease-out;
-}
-
-.media-button:hover {
-	transform: scale(1.05);
-	transition: transform 100ms ease-in;
+	&:hover {
+		transform: scale(1.05);
+		transition: transform 100ms ease-in;
+	}
 }
 
 .column {
@@ -219,11 +217,10 @@ body {
 	display: inline-block;
 	position: relative;
 	transition: background-color 0.4s ease-out;
-}
-
-.column:hover {
-	background-color: #141414;
-	transition: background-color 0.4s ease-in;
+	&:hover {
+		background-color: #141414;
+		transition: background-color 0.4s ease-in;
+	}
 }
 
 @media screen and (orientation: portrait) {
@@ -460,31 +457,28 @@ body {
 	border-radius: 50%;
 	background-color: #141414;
 	border-color: #141414;
-}
-
-.btn-circle:hover {
-	background-color: #080808;
-	border-color: #080808;
+	&:hover {
+		background-color: #080808;
+		border-color: #080808;
+	}
 }
 
 .btn-circle-alt {
 	background-color: #080808 !important;
 	border-color: #080808 !important;
-}
-
-.btn-circle-alt:hover {
-	background-color: #141414 !important;
-	border-color: #141414 !important;
+	&:hover {
+		background-color: #141414 !important;
+		border-color: #141414 !important;
+	}
 }
 
 @media screen and (orientation: portrait) {
 	.btn-port {
 		background-color: #080808;
 		border-color: #080808;
-	}
-
-	.btn-port:hover {
-		background-color: #141414;
-		border-color: #141414;
+		&:hover {
+			background-color: #141414;
+			border-color: #141414;
+		}
 	}
 }
