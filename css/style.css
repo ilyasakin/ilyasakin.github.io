@@ -89,7 +89,7 @@ body {
   user-select: none;
 }
 
-.mainContainer {
+.main-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -122,7 +122,7 @@ body {
   user-select: none;
 }
 
-.lineLast {
+.line-last {
   min-width: 250px;
   width: 17vw;
   max-width: 100%;
@@ -135,7 +135,7 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-  .lineLast {
+  .line-last {
     min-width: 25%;
     width: 15vh;
   }
@@ -153,7 +153,7 @@ body {
   user-select: none;
 }
 
-.boxContainerLast {
+.box-container-last {
   margin-top: 0.5vh;
   min-width: 250px;
   width: 10vw;
@@ -163,7 +163,7 @@ body {
   user-select: none;
 }
 
-.boxLast {
+.box-last {
   height: 1.5vw;
   width: 1.5vw;
   display: inline-block;
@@ -171,13 +171,13 @@ body {
   margin-left: 5%;
 }
 
-.boxLast:hover {
+.box-last:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
 }
 
 @media screen and (orientation: portrait) {
-  .boxLast {
+  .box-last {
     height: 3vh;
     width: 3vh;
     max-width: 100%;
@@ -244,7 +244,7 @@ body {
   }
 }
 
-.imageCanvas {
+.canvas-image {
   height: 33vh;
   max-height: 33vh;
   background-color: #000;
@@ -255,11 +255,11 @@ body {
   display: block;
 }
 
-.imageCanvasMid {
+.canvas-image-mid {
   background-image: url(../images/m.png) !important;
 }
 
-.arrowContainerDown {
+.arrow-container-down {
   width: 100%;
   max-width: 100vw;
   height: 6vh;
@@ -289,26 +289,26 @@ body {
 }
 
 @media screen and (orientation: landscape) {
-  .notVisible {
+  .not-visible {
     visibility: hidden;
     display: none;
   }
 }
 
 @media screen and (orientation: landscape) {
-  .ReverseNotVisible {
+  .reverse-not-visible {
     visibility: visible;
   }
 }
 
 @media screen and (orientation: portrait) {
-  .ReverseNotVisible {
+  .reverse-not-visible {
     visibility: hidden;
     display: none;
   }
 }
 
-.textBox {
+.text-box {
   position: absolute;
   color: #fff;
   display: inline-block;
@@ -326,7 +326,7 @@ body {
           margin-block-end: 0.83em;
 }
 
-.actualText {
+.actual-text {
   text-align: left;
   margin-left: 10vw;
   margin-right: 10vw;
@@ -334,7 +334,7 @@ body {
 }
 
 @media screen and (orientation: landscape) {
-  .actualText {
+  .actual-text {
     font-size: 1.4vw;
     margin-left: 3vw;
     margin-right: 3vw;
@@ -342,14 +342,14 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-  .actualText {
+  .actual-text {
     font-size: 3.5vw;
     margin-left: 10vw;
     margin-right: 10vw;
   }
 }
 
-.buttonContainer {
+.button-container {
   width: 100%;
   height: 5.1vh;
   text-align: center;
@@ -357,7 +357,7 @@ body {
   margin-top: 10vh;
 }
 
-.page3Text {
+.page-three-text {
   color: #fff;
   font-family: 'Encode Sans Condensed', sans-serif;
   font-weight: 700;
@@ -369,7 +369,7 @@ body {
   user-select: none;
 }
 
-.reachOutDuuud {
+.reach-out {
   color: #fff;
   margin: 0;
   font-family: 'Encode Sans Condensed', sans-serif;
@@ -389,7 +389,7 @@ body {
   border-top-right-radius: 10px;
 }
 
-.footerText {
+.footer-text {
   margin: 0;
   color: #fff;
   font-family: 'Encode Sans Condensed', sans-serif;
