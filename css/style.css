@@ -255,6 +255,10 @@ body {
   display: block;
 }
 
+.canvas-image-first {
+  background-image: url(../images/callendarApp.png) !important;
+}
+
 .canvas-image-mid {
   background-image: url(../images/m.png) !important;
 }
@@ -489,5 +493,17 @@ body {
     background-color: #141414;
     border-color: #141414;
   }
+}
+
+.link {
+  color: white;
+  display: inline-block;
+}
+
+.link:hover {
+  color: white;
+  text-decoration: none;
+  -webkit-transform: scale(1.01);
+          transform: scale(1.01);
 }
 /*# sourceMappingURL=style.css.map */
