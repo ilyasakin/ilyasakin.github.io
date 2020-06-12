@@ -495,7 +495,7 @@ body {
 	display: inline-block;
 	&:hover {
 		color: white;
-		text-decoration: none;
+		text-decoration: underline;
 		transform: scale(1.01);
 	}
 }

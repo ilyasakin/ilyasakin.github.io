@@ -502,7 +502,7 @@ body {
 
 .link:hover {
   color: white;
-  text-decoration: none;
+  text-decoration: underline;
   -webkit-transform: scale(1.01);
           transform: scale(1.01);
 }
