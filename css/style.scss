@@ -207,10 +207,9 @@ body {
 }
 
 .media-button {
-	transition: transform 100ms ease-out;
+	transition: transform 100ms ease-in-out;
 	&:hover {
 		transform: scale(1.05);
-		transition: transform 100ms ease-in;
 	}
 }
 
@@ -218,10 +217,9 @@ body {
 	background-color: #080808;
 	display: inline-block;
 	position: relative;
-	transition: background-color 0.4s ease-out;
+	transition: background-color 0.4s ease-in-out;
 	&:hover {
 		background-color: #141414;
-		transition: background-color 0.4s ease-in;
 	}
 }
 

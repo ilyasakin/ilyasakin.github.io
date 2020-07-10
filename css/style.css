@@ -209,33 +209,27 @@ body {
 }
 
 .media-button {
-  -webkit-transition: -webkit-transform 100ms ease-out;
-  transition: -webkit-transform 100ms ease-out;
-  transition: transform 100ms ease-out;
-  transition: transform 100ms ease-out, -webkit-transform 100ms ease-out;
+  -webkit-transition: -webkit-transform 100ms ease-in-out;
+  transition: -webkit-transform 100ms ease-in-out;
+  transition: transform 100ms ease-in-out;
+  transition: transform 100ms ease-in-out, -webkit-transform 100ms ease-in-out;
 }
 
 .media-button:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
-  -webkit-transition: -webkit-transform 100ms ease-in;
-  transition: -webkit-transform 100ms ease-in;
-  transition: transform 100ms ease-in;
-  transition: transform 100ms ease-in, -webkit-transform 100ms ease-in;
 }
 
 .column {
   background-color: #080808;
   display: inline-block;
   position: relative;
-  -webkit-transition: background-color 0.4s ease-out;
-  transition: background-color 0.4s ease-out;
+  -webkit-transition: background-color 0.4s ease-in-out;
+  transition: background-color 0.4s ease-in-out;
 }
 
 .column:hover {
   background-color: #141414;
-  -webkit-transition: background-color 0.4s ease-in;
-  transition: background-color 0.4s ease-in;
 }
 
 @media screen and (orientation: portrait) {
