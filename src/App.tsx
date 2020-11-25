@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import Container from './components/Container/Container';
+import { Github, Linkedin, Mail, Resume } from './components/icons';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="App">
+			<Container>
+				<div className="flex items-center justify-center w-full h-full">
+					<div>
+						<div className="text-2xl">ilyas akın</div>
+						<hr />
+						<div className="flex flex-row justify-between mt-1">
+							<Github />
+							<Linkedin />
+							<Mail />
+							<Resume />
+						</div>
+					</div>
+				</div>
+			</Container>
+		</div>
+	);
 }
 
 export default App;

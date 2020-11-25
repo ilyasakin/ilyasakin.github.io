@@ -20,6 +20,7 @@
 		"web-vitals": "^0.2.4"
 	},
 	"scripts": {
+		"gen-icon-components": "svgr --typescript src/assets/icons --icon --replace-attr-values \"#000=currentColor\" -d src/components/icons",
 		"build:tailwind": "tailwindcss build src/style/tailwind.css -o src/style/tailwind.output.css",
 		"prestart": "yarn run build:tailwind",
 		"prebuild": "yarn run build:tailwind",
@@ -45,5 +46,8 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"@svgr/cli": "^5.5.0"
 	}
 }
