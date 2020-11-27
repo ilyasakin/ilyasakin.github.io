@@ -2,14 +2,14 @@ import React from 'react';
 import Container from './components/Container/Container';
 import IconButton from './components/IconButton/IconButton';
 import ReactTypingEffect from 'react-typing-effect';
-
+import ContainerColumn from './components/Container/ContainerColumn';
 import { Github, Linkedin, Mail, Resume } from './components/icons';
 import './App.css';
 
 function App() {
 	return (
 		<div className="App">
-			<Container>
+			<Container className="h-screen">
 				<div className="flex items-center justify-center w-full h-full">
 					<div>
 						<div className="text-3xl font-encode-sans font-bold">
@@ -39,6 +39,26 @@ function App() {
 						</div>
 					</div>
 				</div>
+			</Container>
+			<Container equalColumns className="h-auto">
+				<ContainerColumn>
+					<img
+						src="https://via.placeholder.com/1920x1080"
+						alt="Project 1"
+					/>
+				</ContainerColumn>
+				<ContainerColumn>
+					<img
+						src="https://via.placeholder.com/1920x1080"
+						alt="Project 2"
+					/>
+				</ContainerColumn>
+				<ContainerColumn>
+					<img
+						src="https://via.placeholder.com/1920x1080"
+						alt="Project 3"
+					/>
+				</ContainerColumn>
 			</Container>
 		</div>
 	);
