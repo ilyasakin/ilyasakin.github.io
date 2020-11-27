@@ -50,6 +50,7 @@
 	},
 	"devDependencies": {
 		"@svgr/cli": "^5.5.0",
-		"@types/react-typing-effect": "^2.0.1"
+		"@types/react-typing-effect": "^2.0.1",
+		"tailwindcss-scroll-snap": "^1.0.3"
 	}
 }
