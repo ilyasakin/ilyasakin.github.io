@@ -12,8 +12,11 @@ function App() {
 			<Container>
 				<div className="flex items-center justify-center w-full h-full">
 					<div>
-						<div className="text-3xl">ilyas akın</div>
+						<div className="text-3xl font-encode-sans font-bold">
+							ilyas akın
+						</div>
 						<ReactTypingEffect
+							className="font-encode-sans"
 							text={['software developer', 'quick learner']}
 							speed={100}
 							eraseSpeed={100}
