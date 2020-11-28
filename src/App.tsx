@@ -64,7 +64,7 @@ function App() {
 					<TextContent>
 						This is an app that made for a Rent a Car business. Made
 						with <i className="fab fa-react"></i>{' '}
-						<Bold>React Native</Bold> using <Bold>Expo</Bold>. Used
+						<Bold>React Native</Bold> using <Bold>Expo</Bold>. Used{' '}
 						<Bold>Prettier</Bold> for formatting and used{' '}
 						<Bold>ESLint</Bold> for linting as well. Designed the
 						app with extra care for it to comply with Material

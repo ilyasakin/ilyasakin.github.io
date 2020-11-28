@@ -10,10 +10,9 @@ interface Props {
 const Container: React.FC<Props> = ({ children, className, equalColumns }) => {
 	return (
 		<div
-			className={`flex text-white snap-start
+			className={`flex text-white snap-start bg-gray-950 
 			${equalColumns ? 'flex-col md:flex-row' : ''}
 			${className}`}
-			style={{ backgroundColor: '#141414' }}
 		>
 			{children}
 		</div>
