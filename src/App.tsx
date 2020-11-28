@@ -5,6 +5,7 @@ import ReactTypingEffect from 'react-typing-effect';
 import ContainerColumn from './components/ContainerColumn';
 import CenterTitle from './components/CenterTitle';
 import TextContent from './components/TextContent';
+import Bold from './components/Bold';
 import {
 	Github,
 	Linkedin,
@@ -62,10 +63,12 @@ function App() {
 					<CenterTitle>Car Calendar</CenterTitle>
 					<TextContent>
 						This is an app that made for a Rent a Car business. Made
-						with <i className="fab fa-react"></i> React Native using
-						Expo. Used Prettier for formatting and used ESLint for
-						linting as well. Designed the app with extra care for it
-						to comply with Material Design Guidelines.
+						with <i className="fab fa-react"></i>{' '}
+						<Bold>React Native</Bold> using <Bold>Expo</Bold>. Used
+						<Bold>Prettier</Bold> for formatting and used{' '}
+						<Bold>ESLint</Bold> for linting as well. Designed the
+						app with extra care for it to comply with Material
+						Design Guidelines.
 					</TextContent>
 					<TextContent>
 						<br />
@@ -78,13 +81,22 @@ function App() {
 					<CenterTitle>Spotify Clone</CenterTitle>
 					<TextContent>
 						Fetches songs from API, lists and streams on demand.
-						Used <i className="fab fa-react"></i> React, TypeScript
-						and Storybook for frontend. Also designed front-end with{' '}
-						<i className="fab fa-figma"></i> Figma. Used ExpressJS,
-						Mongoose, Babel and NodeJS for backend. Guest
-						creditentals: email: guest@guest.com password:
-						guestguest Note: Live server might respond with relative
-						amount of delay since server is hosted on Heroku.
+						Used <i className="fab fa-react"></i> <Bold>React</Bold>
+						, <Bold>TypeScript</Bold> and <Bold>Storybook</Bold> for
+						frontend. Also designed front-end with{' '}
+						<i className="fab fa-figma"></i> <Bold>Figma</Bold>.
+						Used <Bold>ExpressJS</Bold>, <Bold>Mongoose</Bold>,{' '}
+						<Bold>Babel</Bold> and <Bold>NodeJS</Bold> for backend.
+					</TextContent>
+					<TextContent>
+						<br />
+						Guest creditentals: <br />
+						email: guest@guest.com
+						<br /> password: guestguest
+						<br />
+						<br /> <Bold>Note:</Bold> Live server might respond with
+						relative amount of delay since server is hosted on
+						Heroku.
 					</TextContent>
 				</ContainerColumn>
 				<ContainerColumn>
@@ -93,9 +105,9 @@ function App() {
 					<TextContent>
 						Gets data from Airtable and generates a static site.
 						Every entry in Airtable is a section in the site. Built
-						with Gatsby, TypeScript and{' '}
+						with <Bold>Gatsby</Bold>, <Bold>TypeScript</Bold> and{' '}
 						<Graphql style={{ display: 'inline-block' }}></Graphql>{' '}
-						GraphQL.
+						<Bold>GraphQL</Bold>.
 					</TextContent>
 				</ContainerColumn>
 			</Container>
