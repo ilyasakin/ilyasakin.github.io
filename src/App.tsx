@@ -4,7 +4,7 @@ import IconButton from './components/IconButton';
 import ReactTypingEffect from 'react-typing-effect';
 import ContainerColumn from './components/ContainerColumn';
 import CenterTitle from './components/CenterTitle';
-import { Github, Linkedin, Mail, Resume } from './components/icons';
+import { Github, Linkedin, Mail, Medium, Resume } from './components/icons';
 import './App.css';
 import CarCalendarImg from './assets/images/callendar-app.png';
 import SpotifyCloneImg from './assets/images/spotify-clone.png';
@@ -36,6 +36,9 @@ function App() {
 							</IconButton>
 							<IconButton>
 								<Mail className="w-8 h-8" />
+							</IconButton>
+							<IconButton>
+								<Medium className="w-8 h-8" />
 							</IconButton>
 							<IconButton>
 								<Resume className="w-8 h-8" />
