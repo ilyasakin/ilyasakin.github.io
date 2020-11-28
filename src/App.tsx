@@ -1,10 +1,14 @@
 import React from 'react';
-import Container from './components/Container/Container';
-import IconButton from './components/IconButton/IconButton';
+import Container from './components/Container';
+import IconButton from './components/IconButton';
 import ReactTypingEffect from 'react-typing-effect';
-import ContainerColumn from './components/Container/ContainerColumn';
+import ContainerColumn from './components/ContainerColumn';
+import CenterTitle from './components/CenterTitle';
 import { Github, Linkedin, Mail, Resume } from './components/icons';
 import './App.css';
+import CarCalendarImg from './assets/images/callendar-app.png';
+import SpotifyCloneImg from './assets/images/spotify-clone.png';
+import AirtableCMSImg from './assets/images/airtable-pss.png';
 
 function App() {
 	return (
@@ -16,7 +20,7 @@ function App() {
 							ilyas akın
 						</div>
 						<ReactTypingEffect
-							className="font-encode-sans"
+							className="font-encode-sans tracking-wider"
 							text={['software developer', 'quick learner']}
 							speed={100}
 							eraseSpeed={100}
@@ -42,22 +46,16 @@ function App() {
 			</Container>
 			<Container equalColumns className="h-auto">
 				<ContainerColumn>
-					<img
-						src="https://via.placeholder.com/1920x1080"
-						alt="Project 1"
-					/>
+					<img src={CarCalendarImg} alt="Project 1" />
+					<CenterTitle>Car Calendar</CenterTitle>
 				</ContainerColumn>
 				<ContainerColumn>
-					<img
-						src="https://via.placeholder.com/1920x1080"
-						alt="Project 2"
-					/>
+					<img src={SpotifyCloneImg} alt="Project 2" />
+					<CenterTitle>Spotify Clone</CenterTitle>
 				</ContainerColumn>
 				<ContainerColumn>
-					<img
-						src="https://via.placeholder.com/1920x1080"
-						alt="Project 3"
-					/>
+					<img src={AirtableCMSImg} alt="Project 3" />{' '}
+					<CenterTitle>Airtable Powered Static Site</CenterTitle>
 				</ContainerColumn>
 			</Container>
 		</div>
