@@ -6,7 +6,7 @@ interface Props {
 
 const IconButton: React.FC<Props> = ({ children }) => {
 	return (
-		<div className="transform hover:scale-110 cursor-pointer">
+		<div className="transition-transform transform hover:scale-110 cursor-pointer">
 			{children}
 		</div>
 	);
