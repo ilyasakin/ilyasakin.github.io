@@ -4,6 +4,7 @@ import IconButton from './components/IconButton';
 import ReactTypingEffect from 'react-typing-effect';
 import ContainerColumn from './components/ContainerColumn';
 import CenterTitle from './components/CenterTitle';
+import TextContent from './components/TextContent';
 import { Github, Linkedin, Mail, Medium, Resume } from './components/icons';
 import './App.css';
 import CarCalendarImg from './assets/images/callendar-app.png';
@@ -51,14 +52,40 @@ function App() {
 				<ContainerColumn>
 					<img src={CarCalendarImg} alt="Project 1" />
 					<CenterTitle>Car Calendar</CenterTitle>
+					<TextContent>
+						This is an app that made for a Rent a Car business. Made
+						with React Native using Expo. Used Prettier for
+						formatting and used ESLint for linting as well. Designed
+						the app with extra care for it to comply with Material
+						Design Guidelines.
+					</TextContent>
+					<TextContent>
+						<br />
+						Note: You may not be able to view live preview due to
+						Expo servers' availablity.
+					</TextContent>
 				</ContainerColumn>
 				<ContainerColumn>
 					<img src={SpotifyCloneImg} alt="Project 2" />
 					<CenterTitle>Spotify Clone</CenterTitle>
+					<TextContent>
+						Fetches songs from API, lists and streams on demand.
+						Used React, TypeScript and Storybook for frontend. Also
+						designed front-end with Figma. Used ExpressJS, Mongoose,
+						Babel and NodeJS for backend. Guest creditentals: email:
+						guest@guest.com password: guestguest Note: Live server
+						might respond with relative amount of delay since server
+						is hosted on Heroku.
+					</TextContent>
 				</ContainerColumn>
 				<ContainerColumn>
-					<img src={AirtableCMSImg} alt="Project 3" />{' '}
+					<img src={AirtableCMSImg} alt="Project 3" />
 					<CenterTitle>Airtable Powered Static Site</CenterTitle>
+					<TextContent>
+						Gets data from Airtable and generates a static site.
+						Every entry in Airtable is a section in the site. Built
+						with Gatsby, TypeScript and GraphQL.
+					</TextContent>
 				</ContainerColumn>
 			</Container>
 		</div>
