@@ -37,7 +37,7 @@ function App() {
 							eraseDelay={1000}
 						/>
 						<hr />
-						<div className="flex flex-row justify-between mt-1 space-x-16">
+						<div className="flex flex-row justify-between mt-1 space-x-8 md:space-x-16">
 							<IconButton>
 								<Github className="w-8 h-8" />
 							</IconButton>
