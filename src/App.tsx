@@ -1,0 +1,227 @@
+import React from 'react';
+import Container from './components/Container';
+import IconButton from './components/IconButton';
+import ReactTypingEffect from 'react-typing-effect';
+import ContainerColumn from './components/ContainerColumn';
+import CenterTitle from './components/CenterTitle';
+import TextContent from './components/TextContent';
+import Bold from './components/Bold';
+import PillButton from './components/PillButton';
+import PillButtonsContainer from './components/PillButtonsContainer';
+import {
+	Github,
+	Linkedin,
+	Mail,
+	Medium,
+	Resume,
+	Graphql,
+} from './components/icons';
+import CarCalendarImg from './assets/images/callendar-app.png';
+import SpotifyCloneImg from './assets/images/spotify-clone.png';
+import AirtableCMSImg from './assets/images/airtable-pss.png';
+import '@fortawesome/fontawesome-free/css/all.css';
+
+function App() {
+	const GITHUB_URL = 'https://www.github.com/iakindev';
+	const LINKEDIN_URL = 'https://www.linkedin.com/in/iakindev';
+	const MAIL_URL = 'mailto:ilyas.akin@yahoo.com';
+	const MEDIUM_URL = 'https://ilyasakin.medium.com/';
+	const RESUME_URL = 'https://ilyasakin.codes/resume.pdf';
+
+	return (
+		<div className="text-center">
+			<Container className="h-screen">
+				<div className="flex items-center justify-center w-full h-full">
+					<div>
+						<div className="text-3xl font-encode-sans font-bold">
+							ilyas akın
+						</div>
+						<ReactTypingEffect
+							className="font-encode-sans tracking-wider"
+							text={['software developer', 'quick learner']}
+							speed={100}
+							eraseSpeed={100}
+							eraseDelay={1000}
+						/>
+						<hr />
+						<div className="flex flex-row justify-between mt-1 space-x-8 md:space-x-16">
+							<IconButton href={GITHUB_URL} title="GitHub">
+								<Github className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={LINKEDIN_URL} title="LinkedIn">
+								<Linkedin className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={MAIL_URL} title="Mail">
+								<Mail className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={MEDIUM_URL} title="Medium">
+								<Medium className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={RESUME_URL} title="Resume">
+								<Resume className="w-8 h-8" />
+							</IconButton>
+						</div>
+					</div>
+				</div>
+			</Container>
+			<Container equalColumns className="h-auto">
+				<ContainerColumn>
+					<img src={CarCalendarImg} alt="Project 1" />
+					<CenterTitle>Car Calendar</CenterTitle>
+					<TextContent>
+						This is an app that made for a Rent a Car business. Made
+						with <i className="fab fa-react"></i>{' '}
+						<Bold>React Native</Bold> using <Bold>Expo</Bold>. Used{' '}
+						<Bold>Prettier</Bold> for formatting and used{' '}
+						<Bold>ESLint</Bold> for linting as well. Designed the
+						app with extra care for it to comply with Material
+						Design Guidelines.
+					</TextContent>
+					<TextContent>
+						<br />
+						Note: You may not be able to view live preview due to
+						Expo servers' availablity.
+					</TextContent>
+					<PillButtonsContainer>
+						<PillButton
+							color="bg-red-danger"
+							hoverColor="bg-red-600"
+							ringColor="ring-red-600"
+							href="https://expo.io/appetize-simulator?url=https://expo.io/@ashnwor/carcalendar"
+						>
+							<i
+								className="fas fa-globe-europe"
+								aria-hidden="true"
+							></i>{' '}
+							Live Demo
+						</PillButton>
+						<PillButton
+							color="bg-blue-primary"
+							hoverColor="bg-blue-600"
+							ringColor="ring-blue-600"
+							href="https://github.com/iakindev/rn-car-calendar"
+						>
+							<i className="fas fa-link" aria-hidden="true"></i>{' '}
+							Source Code
+						</PillButton>
+					</PillButtonsContainer>
+				</ContainerColumn>
+				<ContainerColumn>
+					<img src={SpotifyCloneImg} alt="Project 2" />
+					<CenterTitle>Spotify Clone</CenterTitle>
+					<TextContent>
+						Fetches songs from API, lists and streams on demand.
+						Used <i className="fab fa-react"></i> <Bold>React</Bold>
+						, <Bold>TypeScript</Bold> and <Bold>Storybook</Bold> for
+						frontend. Also designed front-end with{' '}
+						<i className="fab fa-figma"></i> <Bold>Figma</Bold>.
+						Used <Bold>ExpressJS</Bold>, <Bold>Mongoose</Bold>,{' '}
+						<Bold>Babel</Bold> and <Bold>NodeJS</Bold> for backend.
+					</TextContent>
+					<TextContent>
+						<br />
+						Guest creditentals: <br />
+						email: guest@guest.com
+						<br /> password: guestguest
+						<br />
+						<br /> <Bold>Note:</Bold> Live server might respond with
+						relative amount of delay since server is hosted on
+						Heroku.
+					</TextContent>
+					<PillButtonsContainer>
+						<PillButton
+							color="bg-red-danger"
+							hoverColor="bg-red-600"
+							ringColor="ring-red-600"
+							href="https://iakindev.github.io/spotify-clone"
+						>
+							<i
+								className="fas fa-globe-europe"
+								aria-hidden="true"
+							></i>{' '}
+							Live Demo
+						</PillButton>
+						<PillButton
+							color="bg-blue-primary"
+							hoverColor="bg-blue-600"
+							ringColor="ring-blue-600"
+							href="https://github.com/iakindev/spotify-clone"
+						>
+							<i className="fas fa-link" aria-hidden="true"></i>{' '}
+							Source Code
+						</PillButton>
+					</PillButtonsContainer>
+				</ContainerColumn>
+				<ContainerColumn>
+					<img src={AirtableCMSImg} alt="Project 3" />
+					<CenterTitle>Airtable Powered Static Site</CenterTitle>
+					<TextContent>
+						Gets data from Airtable and generates a static site.
+						Every entry in Airtable is a section in the site. Built
+						with <Bold>Gatsby</Bold>, <Bold>TypeScript</Bold> and{' '}
+						<Graphql style={{ display: 'inline-block' }}></Graphql>{' '}
+						<Bold>GraphQL</Bold>.
+					</TextContent>
+					<PillButtonsContainer>
+						<PillButton
+							color="bg-red-danger"
+							hoverColor="bg-red-600"
+							ringColor="ring-red-600"
+							href="https://iakindev.github.io/airtable-powered-static-site"
+						>
+							<i
+								className="fas fa-globe-europe"
+								aria-hidden="true"
+							></i>{' '}
+							Live Demo
+						</PillButton>
+						<PillButton
+							color="bg-blue-primary"
+							hoverColor="bg-blue-600"
+							ringColor="ring-blue-600"
+							href="https://github.com/iakindev/airtable-powered-static-site"
+						>
+							<i className="fas fa-link" aria-hidden="true"></i>{' '}
+							Source Code
+						</PillButton>
+					</PillButtonsContainer>
+				</ContainerColumn>
+			</Container>
+			<Container className="h-screen relative">
+				<div className="flex items-center justify-center w-full h-full">
+					<div>
+						<div className="text-3xl font-encode-sans font-bold animate-pulse">
+							INTERESTED?
+						</div>
+						<div className="text-xl font-encode-sans">
+							React out to me!
+						</div>
+						<hr />
+						<div className="flex flex-row justify-between mt-1 space-x-4 md:space-x-8">
+							<IconButton href={GITHUB_URL} title="GitHub">
+								<Github className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={LINKEDIN_URL} title="LinkedIn">
+								<Linkedin className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={MAIL_URL} title="Mail">
+								<Mail className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={MEDIUM_URL} title="Medium">
+								<Medium className="w-8 h-8" />
+							</IconButton>
+							<IconButton href={RESUME_URL} title="Resume">
+								<Resume className="w-8 h-8" />
+							</IconButton>
+						</div>
+					</div>
+					<div className="absolute bottom-0 flex justify-center bg-black p-3 rounded-tr-xl rounded-tl-xl font-encode-sans font-bold text-lg">
+						handcrafted by me
+					</div>
+				</div>
+			</Container>
+		</div>
+	);
+}
+
+export default App;
