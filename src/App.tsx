@@ -176,6 +176,39 @@ function App() {
 					</PillButtonsContainer>
 				</ContainerColumn>
 			</Container>
+			<Container className="h-screen relative">
+				<div className="flex items-center justify-center w-full h-full">
+					<div>
+						<div className="text-3xl font-encode-sans font-bold animate-pulse">
+							INTERESTED?
+						</div>
+						<div className="text-xl font-encode-sans">
+							React out to me!
+						</div>
+						<hr />
+						<div className="flex flex-row justify-between mt-1 space-x-4 md:space-x-8">
+							<IconButton>
+								<Github className="w-8 h-8" />
+							</IconButton>
+							<IconButton>
+								<Linkedin className="w-8 h-8" />
+							</IconButton>
+							<IconButton>
+								<Mail className="w-8 h-8" />
+							</IconButton>
+							<IconButton>
+								<Medium className="w-8 h-8" />
+							</IconButton>
+							<IconButton>
+								<Resume className="w-8 h-8" />
+							</IconButton>
+						</div>
+					</div>
+					<div className="absolute bottom-0 flex justify-center bg-black p-3 rounded-tr-xl rounded-tl-xl font-encode-sans font-bold text-lg">
+						handcrafted by me
+					</div>
+				</div>
+			</Container>
 		</div>
 	);
 }
