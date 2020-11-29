@@ -88,6 +88,7 @@ function App() {
 							color="bg-red-danger"
 							hoverColor="bg-red-600"
 							ringColor="ring-red-600"
+							href="https://expo.io/appetize-simulator?url=https://expo.io/@ashnwor/carcalendar"
 						>
 							<i
 								className="fas fa-globe-europe"
@@ -99,6 +100,7 @@ function App() {
 							color="bg-blue-primary"
 							hoverColor="bg-blue-600"
 							ringColor="ring-blue-600"
+							href="https://github.com/iakindev/rn-car-calendar"
 						>
 							<i className="fas fa-link" aria-hidden="true"></i>{' '}
 							Source Code
@@ -132,6 +134,7 @@ function App() {
 							color="bg-red-danger"
 							hoverColor="bg-red-600"
 							ringColor="ring-red-600"
+							href="https://iakindev.github.io/spotify-clone"
 						>
 							<i
 								className="fas fa-globe-europe"
@@ -143,6 +146,7 @@ function App() {
 							color="bg-blue-primary"
 							hoverColor="bg-blue-600"
 							ringColor="ring-blue-600"
+							href="https://github.com/iakindev/spotify-clone"
 						>
 							<i className="fas fa-link" aria-hidden="true"></i>{' '}
 							Source Code
@@ -164,6 +168,7 @@ function App() {
 							color="bg-red-danger"
 							hoverColor="bg-red-600"
 							ringColor="ring-red-600"
+							href="https://iakindev.github.io/airtable-powered-static-site"
 						>
 							<i
 								className="fas fa-globe-europe"
@@ -175,6 +180,7 @@ function App() {
 							color="bg-blue-primary"
 							hoverColor="bg-blue-600"
 							ringColor="ring-blue-600"
+							href="https://github.com/iakindev/airtable-powered-static-site"
 						>
 							<i className="fas fa-link" aria-hidden="true"></i>{' '}
 							Source Code
