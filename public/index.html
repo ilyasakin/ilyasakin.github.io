@@ -25,10 +25,27 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 		<title>İlyas Akın</title>
+
+		<!-- https://fonts.gstatic.com is the font file origin -->
+		<!-- It may not have the same origin as the CSS file (https://fonts.googleapis.com) -->
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
 		<link
+			rel="preload"
+			as="style"
 			href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:100&amp;display=swap"
-			rel="stylesheet"
 		/>
+
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:100&amp;display=swap"
+			media="print"
+			onload="this.media='all'"
+		/>
+		<noscript>
+			<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:100&amp;display=swap"
+		</noscript>
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
