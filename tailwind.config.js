@@ -11,6 +11,12 @@ module.exports = {
 					950: '#141414',
 					1000: '#080808',
 				},
+				red: {
+					danger: '#dc3545',
+				},
+				blue: {
+					primary: '#007bff',
+				},
 			},
 		},
 	},
