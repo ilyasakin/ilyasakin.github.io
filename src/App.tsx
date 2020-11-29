@@ -6,6 +6,8 @@ import ContainerColumn from './components/ContainerColumn';
 import CenterTitle from './components/CenterTitle';
 import TextContent from './components/TextContent';
 import Bold from './components/Bold';
+import PillButton from './components/PillButton';
+import PillButtonsContainer from './components/PillButtonsContainer';
 import {
 	Github,
 	Linkedin,
@@ -75,6 +77,27 @@ function App() {
 						Note: You may not be able to view live preview due to
 						Expo servers' availablity.
 					</TextContent>
+					<PillButtonsContainer>
+						<PillButton
+							color="bg-red-danger"
+							hoverColor="bg-red-600"
+							ringColor="ring-red-600"
+						>
+							<i
+								className="fas fa-globe-europe"
+								aria-hidden="true"
+							></i>{' '}
+							Live Demo
+						</PillButton>
+						<PillButton
+							color="bg-blue-primary"
+							hoverColor="bg-blue-600"
+							ringColor="ring-blue-600"
+						>
+							<i className="fas fa-link" aria-hidden="true"></i>{' '}
+							Source Code
+						</PillButton>
+					</PillButtonsContainer>
 				</ContainerColumn>
 				<ContainerColumn>
 					<img src={SpotifyCloneImg} alt="Project 2" />
@@ -98,6 +121,27 @@ function App() {
 						relative amount of delay since server is hosted on
 						Heroku.
 					</TextContent>
+					<PillButtonsContainer>
+						<PillButton
+							color="bg-red-danger"
+							hoverColor="bg-red-600"
+							ringColor="ring-red-600"
+						>
+							<i
+								className="fas fa-globe-europe"
+								aria-hidden="true"
+							></i>{' '}
+							Live Demo
+						</PillButton>
+						<PillButton
+							color="bg-blue-primary"
+							hoverColor="bg-blue-600"
+							ringColor="ring-blue-600"
+						>
+							<i className="fas fa-link" aria-hidden="true"></i>{' '}
+							Source Code
+						</PillButton>
+					</PillButtonsContainer>
 				</ContainerColumn>
 				<ContainerColumn>
 					<img src={AirtableCMSImg} alt="Project 3" />
@@ -109,6 +153,27 @@ function App() {
 						<Graphql style={{ display: 'inline-block' }}></Graphql>{' '}
 						<Bold>GraphQL</Bold>.
 					</TextContent>
+					<PillButtonsContainer>
+						<PillButton
+							color="bg-red-danger"
+							hoverColor="bg-red-600"
+							ringColor="ring-red-600"
+						>
+							<i
+								className="fas fa-globe-europe"
+								aria-hidden="true"
+							></i>{' '}
+							Live Demo
+						</PillButton>
+						<PillButton
+							color="bg-blue-primary"
+							hoverColor="bg-blue-600"
+							ringColor="ring-blue-600"
+						>
+							<i className="fas fa-link" aria-hidden="true"></i>{' '}
+							Source Code
+						</PillButton>
+					</PillButtonsContainer>
 				</ContainerColumn>
 			</Container>
 		</div>
