@@ -16,7 +16,6 @@ import {
 	Resume,
 	Graphql,
 } from './components/icons';
-import './App.css';
 import CarCalendarImg from './assets/images/callendar-app.png';
 import SpotifyCloneImg from './assets/images/spotify-clone.png';
 import AirtableCMSImg from './assets/images/airtable-pss.png';
@@ -30,7 +29,7 @@ function App() {
 	const RESUME_URL = 'https://ilyasakin.codes/resume.pdf';
 
 	return (
-		<div className="App">
+		<div className="text-center">
 			<Container className="h-screen">
 				<div className="flex items-center justify-center w-full h-full">
 					<div>
