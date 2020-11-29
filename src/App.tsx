@@ -23,6 +23,12 @@ import AirtableCMSImg from './assets/images/airtable-pss.png';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 function App() {
+	const GITHUB_URL = 'https://www.github.com/iakindev';
+	const LINKEDIN_URL = 'https://www.linkedin.com/in/iakindev';
+	const MAIL_URL = 'mailto:ilyas.akin@yahoo.com';
+	const MEDIUM_URL = 'https://ilyasakin.medium.com/';
+	const RESUME_URL = 'https://ilyasakin.codes/resume.pdf';
+
 	return (
 		<div className="App">
 			<Container className="h-screen">
@@ -40,19 +46,19 @@ function App() {
 						/>
 						<hr />
 						<div className="flex flex-row justify-between mt-1 space-x-8 md:space-x-16">
-							<IconButton>
+							<IconButton href={GITHUB_URL} title="GitHub">
 								<Github className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={LINKEDIN_URL} title="LinkedIn">
 								<Linkedin className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={MAIL_URL} title="Mail">
 								<Mail className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={MEDIUM_URL} title="Medium">
 								<Medium className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={RESUME_URL} title="Resume">
 								<Resume className="w-8 h-8" />
 							</IconButton>
 						</div>
@@ -187,19 +193,19 @@ function App() {
 						</div>
 						<hr />
 						<div className="flex flex-row justify-between mt-1 space-x-4 md:space-x-8">
-							<IconButton>
+							<IconButton href={GITHUB_URL} title="GitHub">
 								<Github className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={LINKEDIN_URL} title="LinkedIn">
 								<Linkedin className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={MAIL_URL} title="Mail">
 								<Mail className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={MEDIUM_URL} title="Medium">
 								<Medium className="w-8 h-8" />
 							</IconButton>
-							<IconButton>
+							<IconButton href={RESUME_URL} title="Resume">
 								<Resume className="w-8 h-8" />
 							</IconButton>
 						</div>
