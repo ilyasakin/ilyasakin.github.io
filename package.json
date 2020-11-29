@@ -1,0 +1,59 @@
+{
+	"name": "iakindev.github.io",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^5.15.1",
+		"@testing-library/jest-dom": "^5.11.4",
+		"@testing-library/react": "^11.1.0",
+		"@testing-library/user-event": "^12.1.10",
+		"@types/jest": "^26.0.15",
+		"@types/node": "^14.14.10",
+		"@types/react": "^17.0.0",
+		"@types/react-dom": "^17.0.0",
+		"autoprefixer": "^10.0.4",
+		"postcss": "^8.1.10",
+		"react": "^17.0.1",
+		"react-dom": "^17.0.1",
+		"react-scripts": "4.0.1",
+		"react-typing-effect": "^2.0.4",
+		"tailwindcss": "^2.0.1",
+		"typescript": "^4.0.3"
+	},
+	"scripts": {
+		"gen-icon-components": "svgr --typescript src/assets/icons --icon --replace-attr-values \"#000=currentColor\" -d src/components/icons",
+		"build:tailwind": "tailwindcss build src/style/tailwind.css -o src/style/tailwind.output.css",
+		"prestart": "yarn run build:tailwind",
+		"prebuild": "yarn run build:tailwind",
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"predeploy": "yarn run build",
+		"deploy": "gh-pages -d build"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@svgr/cli": "^5.5.0",
+		"@types/react-typing-effect": "^2.0.1",
+		"gh-pages": "^3.1.0",
+		"tailwindcss-scroll-snap": "^1.0.3"
+	}
+}
