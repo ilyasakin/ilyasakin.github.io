@@ -16,7 +16,6 @@ const PillButton: React.FC<Props> = ({
 }) => {
 	return (
 		<a
-			type="button"
 			href={href}
 			target="__blank"
 			className={`${color} hover:${hoverColor} block rounded-full px-4 py-2 font-encode-sans focus:outline-none focus:ring-2 focus:${ringColor} focus:ring-opacity-50`}
