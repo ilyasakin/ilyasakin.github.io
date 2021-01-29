@@ -1,5 +1,5 @@
 import Header from './components/Header';
-import './App.scss';
+import './styles/App.scss';
 
 const App = () => {
 	// const GITHUB_URL = 'https://www.github.com/iakindev';
