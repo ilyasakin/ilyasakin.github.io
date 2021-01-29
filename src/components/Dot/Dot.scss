@@ -1,0 +1,32 @@
+.dot-container {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	padding: 0px;
+}
+
+.dot {
+	$dot-size: 16px;
+	width: $dot-size;
+	height: $dot-size;
+	background: #777777;
+	border-radius: $dot-size / 2;
+
+	&-active {
+		background: #ffffff;
+	}
+
+	&:hover {
+		background: #ffffff;
+		cursor: pointer;
+	}
+}
+
+.text {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 15px;
+	margin: 0px 6px;
+	font-family: 'Inter', sans-serif;
+}
