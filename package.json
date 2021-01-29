@@ -4,20 +4,15 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
-		"@fortawesome/fontawesome-free": "^5.15.1",
-		"@testing-library/jest-dom": "^5.11.4",
-		"@testing-library/react": "^11.1.0",
-		"@testing-library/user-event": "^12.1.10",
-		"@types/jest": "^26.0.15",
 		"@types/node": "^14.14.10",
 		"@types/react": "^17.0.0",
 		"@types/react-dom": "^17.0.0",
 		"autoprefixer": "^10.0.4",
+		"node-sass": "4.14.1",
 		"postcss": "^8.1.10",
 		"react": "^17.0.1",
 		"react-dom": "^17.0.1",
 		"react-scripts": "4.0.1",
-		"react-typing-effect": "^2.0.4",
 		"typescript": "^4.0.3"
 	},
 	"scripts": {
@@ -49,9 +44,7 @@
 	},
 	"devDependencies": {
 		"@svgr/cli": "^5.5.0",
-		"@types/react-typing-effect": "^2.0.1",
 		"gh-pages": "^3.1.0",
-		"react-app-rewired": "^2.1.6",
-		"tailwindcss-scroll-snap": "^1.0.3"
+		"react-app-rewired": "^2.1.6"
 	}
 }
