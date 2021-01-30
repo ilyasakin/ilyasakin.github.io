@@ -12,10 +12,12 @@ const App = () => {
 	return (
 		<div className="main">
 			<Header />
-			<Hero
-				title="Hi, I’m İlyas Akın, a software developer."
-				text="Currently I’m working at DOGO as Front-end Developer"
-			/>
+			<div className="content">
+				<Hero
+					title="Hi, I’m İlyas Akın, a software developer."
+					text="Currently I’m working at DOGO as Front-end Developer"
+				/>
+			</div>
 		</div>
 	);
 };
