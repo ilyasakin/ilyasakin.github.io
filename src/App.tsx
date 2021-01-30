@@ -1,5 +1,8 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
+import ProjectsGrid from './components/ProjectsGrid';
+
+import projects from './Projects';
 import './styles/App.scss';
 
 const App = () => {
@@ -17,6 +20,7 @@ const App = () => {
 					title="Hi, I’m İlyas Akın, a software developer."
 					text="Currently I’m working at DOGO as Front-end Developer"
 				/>
+				<ProjectsGrid projects={projects} />
 			</div>
 		</div>
 	);
