@@ -4,6 +4,10 @@
   align-items: center;
   padding: 96px;
 
+  @media (max-width: 768px) {
+    padding: 48px;
+  }
+
   div:not(:first-child) {
     margin-top: 16px;
   }
