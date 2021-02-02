@@ -10,7 +10,13 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
     <div className="project-card">
       <picture>
         <source srcSet={project.images.avif} type="image/avif" />
-        <img className="project-card-image" src={project.images.png} alt="" />
+        <img
+          className="project-card-image"
+          src={project.images.png}
+          loading="lazy"
+          decoding="async"
+          alt={project.title}
+        />
       </picture>
       <div className="project-card-content">
         <div className="project-card-content-title">{project.title}</div>
