@@ -10,11 +10,11 @@ interface Props {
 const ProjectsGrid: React.FC<Props> = ({ projects }) => {
 	return (
 		<div className="projects-grid">
-			{projects.map((project) => {
+			{projects.map((project, index) => {
 				return (
 					<ProjectCard
 						project={project}
-						key={`project-${kebabCase(project.title)}`}
+						key={`project-${index}-${kebabCase(project.title)}`}
 					/>
 				);
 			})}
