@@ -1,7 +1,7 @@
 .icon-link {
-	shape-rendering: geometricPrecision;
-	transition: transform 0.1s ease-in-out;
-	&:hover {
-		transform: scale(1.1);
-	}
+  shape-rendering: geometricPrecision;
+  transition: transform 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
