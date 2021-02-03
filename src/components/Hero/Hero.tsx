@@ -16,12 +16,30 @@ const Hero: React.FC<Props> = ({ title, text, links }) => {
       <h1 className="hero-title">{title}</h1>
       <div className="hero-text">{text}</div>
       <div className="hero-social">
-        <IconLink Icon={Github} height="24px" width="24px" href={links.GITHUB} />
-        <IconLink Icon={Dribbble} height="24px" width="24px" href={links.DRIBBBLE} />
-        <IconLink Icon={Mail} height="24px" width="32px" href={links.MAIL} />
-        <IconLink Icon={Medium} height="24px" width="42.26px" href={links.MEDIUM} />
-        <IconLink Icon={LinkedinAlt} height="24px" width="24px" href={links.MEDIUM} />
-        <IconLink Icon={Resume} height="24px" width="24px" href={links.RESUME} />
+        <IconLink Icon={Github} height="24px" width="24px" href={links.GITHUB} ariaLabel="GitHub" />
+        <IconLink
+          Icon={Dribbble}
+          height="24px"
+          width="24px"
+          href={links.DRIBBBLE}
+          ariaLabel="Dribbble"
+        />
+        <IconLink Icon={Mail} height="24px" width="32px" href={links.MAIL} ariaLabel="Mail" />
+        <IconLink
+          Icon={Medium}
+          height="24px"
+          width="42.26px"
+          href={links.MEDIUM}
+          ariaLabel="Medium"
+        />
+        <IconLink
+          Icon={LinkedinAlt}
+          height="24px"
+          width="24px"
+          href={links.MEDIUM}
+          ariaLabel="LinkedIn"
+        />
+        <IconLink Icon={Resume} height="24px" width="24px" href={links.RESUME} ariaLabel="Resume" />
       </div>
     </div>
   );
