@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProjectsGrid from './components/ProjectsGrid';
+import Footer from './components/Footer';
 
 import links from './Links';
 import projects from './Projects';
@@ -18,6 +19,7 @@ const App = () => {
         />
         <ProjectsGrid projects={projects} />
       </div>
+      <Footer />
     </div>
   );
 };
