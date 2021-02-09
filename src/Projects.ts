@@ -10,7 +10,8 @@ const Projects: Project[] = [
       avif: SpotifyAVIF,
       png: SpotifyPNG,
     },
-    sourceUrl: '',
+    sourceUrl: '#',
+    liveUrl: '#',
   },
   {
     title: 'Hello',
@@ -19,7 +20,8 @@ const Projects: Project[] = [
       avif: SpotifyAVIF,
       png: SpotifyPNG,
     },
-    sourceUrl: '',
+    sourceUrl: '#',
+    liveUrl: '#',
   },
   {
     title: 'Hello',
@@ -28,7 +30,8 @@ const Projects: Project[] = [
       avif: SpotifyAVIF,
       png: SpotifyPNG,
     },
-    sourceUrl: '',
+    sourceUrl: '#',
+    liveUrl: '#',
   },
 ];
 
