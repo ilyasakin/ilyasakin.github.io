@@ -28,16 +28,16 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
       <div className="project-card-links">
         <IconLink
           Icon={Github}
-          height="24px"
-          width="24px"
+          height="1.5rem"
+          width="1.5rem"
           ariaLabel="Source Code"
           href={project.sourceUrl}
         />
         {project.liveUrl && (
           <IconLink
             Icon={Globe}
-            height="24px"
-            width="24px"
+            height="1.5rem"
+            width="1.5rem"
             ariaLabel="Source Code"
             href={project.liveUrl}
           />
