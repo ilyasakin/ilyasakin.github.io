@@ -38,4 +38,15 @@
       line-height: 19px;
     }
   }
+
+  &-links {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 16px;
+
+    .icon-link:not(:first-child) {
+      margin-left: 16px;
+    }
+  }
 }

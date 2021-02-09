@@ -1,6 +1,9 @@
 .icon-link {
   shape-rendering: geometricPrecision;
   transition: transform 0.1s ease-in-out;
+  text-decoration: none;
+  color: #fff;
+
   &:hover {
     transform: scale(1.1);
   }
