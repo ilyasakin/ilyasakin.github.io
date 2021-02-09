@@ -48,7 +48,7 @@ const Hero: React.FC<Props> = ({ title, text, links }) => {
         <IconLink
           Icon={Resume}
           height="1.5rem"
-          width="1.5rem"
+          width="2rem"
           href={links.RESUME}
           ariaLabel="Resume"
         />
