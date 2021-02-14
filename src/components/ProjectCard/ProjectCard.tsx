@@ -42,7 +42,7 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
             Icon={Globe}
             height="1.5rem"
             width="1.5rem"
-            ariaLabel="Source Code"
+            ariaLabel="Live Demo"
             href={project.LIVE_URL}
           />
         )}

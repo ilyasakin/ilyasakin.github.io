@@ -10,7 +10,7 @@ interface Props {
 
 const IconLink: React.FC<Props> = ({ width, height, Icon, href, ariaLabel }) => {
   return (
-    <a className="icon-link" href={href} target="__blank" aria-label={ariaLabel}>
+    <a className="icon-link" href={href} target="__blank" aria-label={ariaLabel} title={ariaLabel}>
       <Icon width={width} height={height} />
     </a>
   );
