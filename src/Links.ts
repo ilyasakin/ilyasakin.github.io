@@ -6,7 +6,7 @@ const Links: LinksType = {
   MAIL: 'mailto:ilyas.akin@yahoo.com',
   MEDIUM: 'https://ilyasakin.medium.com',
   LINKEDIN: 'https://www.linkedin.com/in/iakindev',
-  RESUME: '/resume.pdf',
+  RESUME: '/ilyas-akin.pdf',
 };
 
 export default Links;
