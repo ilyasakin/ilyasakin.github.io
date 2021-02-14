@@ -1,12 +1,12 @@
 interface Project {
-  title: string;
-  text: string;
-  images: {
-    avif: string;
-    png: string;
+  TITLE: string;
+  DESCRIPTION: string;
+  IMAGES: {
+    AVIF: string;
+    PNG: string;
   };
-  sourceUrl: string;
-  liveUrl?: string;
+  SOURCE_URL: string;
+  LIVE_URL?: string;
 }
 
 export default Project;
