@@ -17,21 +17,23 @@ const Projects: Project[] = [
       AVIF: SpotifyAVIF,
       PNG: SpotifyPNG,
     },
-    SOURCE_URL: '#',
-    LIVE_URL: '#',
+    SOURCE_URL: 'https://github.com/iakindev/deliquus',
+    LIVE_URL: 'https://www.npmjs.com/package/deliquus',
   },
   {
     TITLE: 'Spotify Clone',
     DESCRIPTION: `A shallow Spotify Clone with front-end and back-end.
     
     Front-end built with React, React Router, TypeScript and SCSS.
-    Back-end built with Express and Mongoose.`,
+    Back-end built with Express and Mongoose.
+    
+    Learned how to not to structure components, how to not write maintainable css etc. Made a lot of mistakes and learned a lot.`,
     IMAGES: {
       AVIF: SpotifyAVIF,
       PNG: SpotifyPNG,
     },
-    SOURCE_URL: '#',
-    LIVE_URL: '#',
+    SOURCE_URL: 'https://github.com/iakindev/spotify-clone',
+    LIVE_URL: 'https://ilyasakin.codes/spotify-clone',
   },
   {
     TITLE: 'Hello',
