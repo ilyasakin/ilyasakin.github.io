@@ -23,7 +23,7 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
       </picture>
       <div className="project-card-content">
         <div className="project-card-content-title">{project.title}</div>
-        <div className="project-card-content-text">{project.title}</div>
+        <div className="project-card-content-text">{project.text}</div>
       </div>
       <div className="project-card-links">
         <IconLink
