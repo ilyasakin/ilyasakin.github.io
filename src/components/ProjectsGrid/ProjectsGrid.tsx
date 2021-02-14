@@ -12,7 +12,7 @@ const ProjectsGrid: React.FC<Props> = ({ projects }) => {
     <div className="projects-grid">
       {projects.map((project, index) => {
         return (
-          <ProjectCard project={project} key={`project-${index}-${kebabCase(project.title)}`} />
+          <ProjectCard project={project} key={`project-${index}-${kebabCase(project.TITLE)}`} />
         );
       })}
     </div>

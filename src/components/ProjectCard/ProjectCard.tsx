@@ -12,19 +12,19 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
   return (
     <div className="project-card">
       <picture>
-        <source srcSet={project.images.avif} type="image/avif" />
+        <source srcSet={project.IMAGES.AVIF} type="image/avif" />
         <img
           className="project-card-image"
-          src={project.images.png}
+          src={project.IMAGES.PNG}
           loading="lazy"
           decoding="async"
-          alt={project.title}
+          alt={project.TITLE}
         />
       </picture>
       <div className="project-card-content">
-        <div className="project-card-content-title">{project.title}</div>
+        <div className="project-card-content-title">{project.TITLE}</div>
         <div className="project-card-content-text">
-          {project.text.split('\n').map((line) => {
+          {project.DESCRIPTION.split('\n').map((line) => {
             return <div>{`${line}`}</div>;
           })}
         </div>
@@ -35,15 +35,15 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
           height="1.5rem"
           width="1.5rem"
           ariaLabel="Source Code"
-          href={project.sourceUrl}
+          href={project.SOURCE_URL}
         />
-        {project.liveUrl && (
+        {project.LIVE_URL && (
           <IconLink
             Icon={Globe}
             height="1.5rem"
             width="1.5rem"
             ariaLabel="Source Code"
-            href={project.liveUrl}
+            href={project.LIVE_URL}
           />
         )}
       </div>
