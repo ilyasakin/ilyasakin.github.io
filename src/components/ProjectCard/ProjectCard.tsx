@@ -11,11 +11,18 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
   console.log(project);
   return (
     <div className="project-card">
-      <picture>
-        <source srcSet={project.IMAGES.AVIF} type="image/avif" />
+      <picture className="project-card-image">
+        <source srcSet={`${project.IMAGES.AVIF[480]}, 480w`} type="image/avif" />
+        <source srcSet={`${project.IMAGES.AVIF[720]}, 720w`} type="image/avif" />
+        <source srcSet={`${project.IMAGES.AVIF[1080]}, 1080w`} type="image/avif" />
+
+        <source srcSet={`${project.IMAGES.JPG[480]}, 480w`} type="image/jpeg" />
+        <source srcSet={`${project.IMAGES.JPG[720]}, 720w`} type="image/jpeg" />
+        <source srcSet={`${project.IMAGES.JPG[1080]}, 1080w`} type="image/jpeg" />
+
         <img
           className="project-card-image"
-          src={project.IMAGES.PNG}
+          src={project.IMAGES.JPG[480]}
           loading="lazy"
           decoding="async"
           alt={project.TITLE}

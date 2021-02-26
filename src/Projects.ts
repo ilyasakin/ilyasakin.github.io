@@ -2,6 +2,14 @@ import Project from './types/Project';
 import SpotifyAVIF from './assets/images/spotify-clone.avif';
 import SpotifyPNG from './assets/images/spotify-clone.png';
 
+import DeliquusJPG_480 from './assets/images/deliquus_480.jpg';
+import DeliquusJPG_720 from './assets/images/deliquus_480.jpg';
+import DeliquusJPG_1080 from './assets/images/deliquus_480.jpg';
+
+import DeliquusAVIF_480 from './assets/images/deliquus_480.avif';
+import DeliquusAVIF_720 from './assets/images/deliquus_480.avif';
+import DeliquusAVIF_1080 from './assets/images/deliquus_480.avif';
+
 const Projects: Project[] = [
   {
     TITLE: 'Deliquus',
@@ -14,8 +22,8 @@ const Projects: Project[] = [
     For example, you have a components directory as a source.
     You can make it check if tests and stories exist for components.`,
     IMAGES: {
-      AVIF: SpotifyAVIF,
-      PNG: SpotifyPNG,
+      AVIF: { 480: DeliquusAVIF_480, 720: DeliquusAVIF_720, 1080: DeliquusAVIF_1080 },
+      JPG: { 480: DeliquusJPG_480, 720: DeliquusJPG_720, 1080: DeliquusJPG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/deliquus',
     LIVE_URL: 'https://www.npmjs.com/package/deliquus',
@@ -28,8 +36,8 @@ const Projects: Project[] = [
     
     Written in JavaScript with NodeJS.`,
     IMAGES: {
-      AVIF: SpotifyAVIF,
-      PNG: SpotifyPNG,
+      AVIF: { 480: SpotifyAVIF, 720: SpotifyAVIF, 1080: SpotifyAVIF },
+      JPG: { 480: SpotifyPNG, 720: SpotifyPNG, 1080: SpotifyPNG },
     },
     SOURCE_URL: 'https://github.com/iakindev/gen-srcset',
     LIVE_URL: 'https://www.npmjs.com/package/gen-srcset',
@@ -43,8 +51,8 @@ const Projects: Project[] = [
     
     Learned how to not to structure components, how to not write maintainable css etc. Made a lot of mistakes and learned a lot.`,
     IMAGES: {
-      AVIF: SpotifyAVIF,
-      PNG: SpotifyPNG,
+      AVIF: { 480: SpotifyAVIF, 720: SpotifyAVIF, 1080: SpotifyAVIF },
+      JPG: { 480: SpotifyPNG, 720: SpotifyPNG, 1080: SpotifyPNG },
     },
     SOURCE_URL: 'https://github.com/iakindev/spotify-clone',
     LIVE_URL: 'https://ilyasakin.codes/spotify-clone',
