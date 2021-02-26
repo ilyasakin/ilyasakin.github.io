@@ -8,7 +8,7 @@ const Projects: Project[] = [
     DESCRIPTION: `
     A cli coverage tool but checks if they exists and returns clean exit or error.
     
-    Written in TypeScript in NodeJS.
+    Written in TypeScript with NodeJS.
     
     User can match multiple sources with multiple targets.
     For example, you have a components directory as a source.
@@ -19,6 +19,20 @@ const Projects: Project[] = [
     },
     SOURCE_URL: 'https://github.com/iakindev/deliquus',
     LIVE_URL: 'https://www.npmjs.com/package/deliquus',
+  },
+  {
+    TITLE: 'gen-srcset',
+    DESCRIPTION: `Cli tool to generate <picture /> srcset with AVIF support.
+    
+    You can automate generating srcset with this tool.
+    
+    Written in JavaScript with NodeJS.`,
+    IMAGES: {
+      AVIF: SpotifyAVIF,
+      PNG: SpotifyPNG,
+    },
+    SOURCE_URL: 'https://github.com/iakindev/gen-srcset',
+    LIVE_URL: 'https://www.npmjs.com/package/gen-srcset',
   },
   {
     TITLE: 'Spotify Clone',
@@ -34,16 +48,6 @@ const Projects: Project[] = [
     },
     SOURCE_URL: 'https://github.com/iakindev/spotify-clone',
     LIVE_URL: 'https://ilyasakin.codes/spotify-clone',
-  },
-  {
-    TITLE: 'Hello',
-    DESCRIPTION: 'Hello',
-    IMAGES: {
-      AVIF: SpotifyAVIF,
-      PNG: SpotifyPNG,
-    },
-    SOURCE_URL: '#',
-    LIVE_URL: '#',
   },
 ];
 
