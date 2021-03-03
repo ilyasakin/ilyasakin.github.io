@@ -11,6 +11,12 @@ import DeliquusJPG_1080 from './assets/images/deliquus_1080.jpg';
 import DeliquusAVIF_720 from './assets/images/deliquus_720.avif';
 import DeliquusAVIF_1080 from './assets/images/deliquus_1080.avif';
 
+import GenSrcsetAVIF_720 from './assets/images/gen-srcset_720.avif';
+import GenSrcsetAVIF_1080 from './assets/images/gen-srcset_1080.avif';
+
+import GenSrcsetPNG_720 from './assets/images/gen-srcset_720.jpg';
+import GenSrcsetPNG_1080 from './assets/images/gen-srcset_1080.jpg';
+
 const Projects: Project[] = [
   {
     TITLE: 'Deliquus',
@@ -37,8 +43,8 @@ const Projects: Project[] = [
     
     Written in JavaScript with NodeJS.`,
     IMAGES: {
-      AVIF: { 720: SpotifyAVIF_720, 1080: SpotifyAVIF_1080 },
-      JPG: { 720: SpotifyPNG_720, 1080: SpotifyPNG_1080 },
+      AVIF: { 720: GenSrcsetAVIF_720, 1080: GenSrcsetAVIF_1080 },
+      JPG: { 720: GenSrcsetPNG_720, 1080: GenSrcsetPNG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/gen-srcset',
     LIVE_URL: 'https://www.npmjs.com/package/gen-srcset',
