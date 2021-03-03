@@ -1,6 +1,9 @@
 import Project from './types/Project';
-import SpotifyAVIF from './assets/images/spotify-clone.avif';
-import SpotifyPNG from './assets/images/spotify-clone.png';
+import SpotifyAVIF_720 from './assets/images/spotify-clone_720.avif';
+import SpotifyAVIF_1080 from './assets/images/spotify-clone_1080.avif';
+
+import SpotifyPNG_720 from './assets/images/spotify-clone_720.png';
+import SpotifyPNG_1080 from './assets/images/spotify-clone_1080.png';
 
 import DeliquusJPG_720 from './assets/images/deliquus_720.jpg';
 import DeliquusJPG_1080 from './assets/images/deliquus_1080.jpg';
@@ -34,8 +37,8 @@ const Projects: Project[] = [
     
     Written in JavaScript with NodeJS.`,
     IMAGES: {
-      AVIF: { 720: SpotifyAVIF, 1080: SpotifyAVIF },
-      JPG: { 720: SpotifyPNG, 1080: SpotifyPNG },
+      AVIF: { 720: SpotifyAVIF_720, 1080: SpotifyAVIF_1080 },
+      JPG: { 720: SpotifyPNG_720, 1080: SpotifyPNG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/gen-srcset',
     LIVE_URL: 'https://www.npmjs.com/package/gen-srcset',
@@ -49,8 +52,8 @@ const Projects: Project[] = [
     
     Learned how to not to structure components, how to not write maintainable css etc. Made a lot of mistakes and learned a lot.`,
     IMAGES: {
-      AVIF: { 720: SpotifyAVIF, 1080: SpotifyAVIF },
-      JPG: { 720: SpotifyPNG, 1080: SpotifyPNG },
+      AVIF: { 720: SpotifyAVIF_720, 1080: SpotifyAVIF_1080 },
+      JPG: { 720: SpotifyPNG_720, 1080: SpotifyPNG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/spotify-clone',
     LIVE_URL: 'https://ilyasakin.codes/spotify-clone',
