@@ -22,7 +22,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "predeploy": "yarn run build",
+    "predeploy": "yarn run build && cp CNAME build/",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
