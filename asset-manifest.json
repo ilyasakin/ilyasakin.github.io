@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.36031258.chunk.css",
-    "main.js": "/static/js/main.22bff7d3.chunk.js",
-    "main.js.map": "/static/js/main.22bff7d3.chunk.js.map",
+    "main.css": "/static/css/main.f73101cb.chunk.css",
+    "main.js": "/static/js/main.76f85a59.chunk.js",
+    "main.js.map": "/static/js/main.76f85a59.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.a65dc0d8.js",
     "runtime-main.js.map": "/static/js/runtime-main.a65dc0d8.js.map",
     "static/js/2.414c78d6.chunk.js": "/static/js/2.414c78d6.chunk.js",
     "static/js/2.414c78d6.chunk.js.map": "/static/js/2.414c78d6.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.36031258.chunk.css.map": "/static/css/main.36031258.chunk.css.map",
+    "static/css/main.f73101cb.chunk.css.map": "/static/css/main.f73101cb.chunk.css.map",
     "static/js/2.414c78d6.chunk.js.LICENSE.txt": "/static/js/2.414c78d6.chunk.js.LICENSE.txt",
     "static/media/deliquus_1080.51381c64.jpg": "/static/media/deliquus_1080.51381c64.jpg",
     "static/media/gen-srcset_1080.74b68344.jpg": "/static/media/gen-srcset_1080.74b68344.jpg",
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.a65dc0d8.js",
     "static/js/2.414c78d6.chunk.js",
-    "static/css/main.36031258.chunk.css",
-    "static/js/main.22bff7d3.chunk.js"
+    "static/css/main.f73101cb.chunk.css",
+    "static/js/main.76f85a59.chunk.js"
   ]
 }
