@@ -3,6 +3,8 @@
   transition: transform 0.1s ease-in-out;
   text-decoration: none;
   color: #fff;
+  display: flex;
+  align-items: center;
 
   &:hover {
     transform: scale(1.1);

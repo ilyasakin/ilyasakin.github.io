@@ -33,7 +33,10 @@ const Projects: Project[] = [
       JPG: { 720: DeliquusJPG_720, 1080: DeliquusJPG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/deliquus',
-    LIVE_URL: 'https://www.npmjs.com/package/deliquus',
+    LIVE_URL: {
+      type: 'npm',
+      url: 'https://www.npmjs.com/package/deliquus',
+    },
   },
   {
     TITLE: 'gen-srcset',
@@ -47,7 +50,10 @@ const Projects: Project[] = [
       JPG: { 720: GenSrcsetPNG_720, 1080: GenSrcsetPNG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/gen-srcset',
-    LIVE_URL: 'https://www.npmjs.com/package/gen-srcset',
+    LIVE_URL: {
+      type: 'npm',
+      url: 'https://www.npmjs.com/package/gen-srcset',
+    },
   },
   {
     TITLE: 'Spotify Clone',
@@ -62,7 +68,10 @@ const Projects: Project[] = [
       JPG: { 720: SpotifyPNG_720, 1080: SpotifyPNG_1080 },
     },
     SOURCE_URL: 'https://github.com/iakindev/spotify-clone',
-    LIVE_URL: 'https://ilyasakin.codes/spotify-clone',
+    LIVE_URL: {
+      type: 'website',
+      url: 'https://ilyasakin.codes/spotify-clone',
+    },
   },
 ];
 

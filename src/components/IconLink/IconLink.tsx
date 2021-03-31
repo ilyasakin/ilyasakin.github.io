@@ -1,9 +1,9 @@
 import './IconLink.scss';
 
 interface Props {
-  Icon: React.FC<{ width: string; height: string }>;
-  width: string;
-  height: string;
+  Icon: React.FC<{ width?: string; height?: string }>;
+  width?: string;
+  height?: string;
   href: string;
   ariaLabel: string;
 }

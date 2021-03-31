@@ -1,7 +1,7 @@
 import './ProjectCard.scss';
 import Project from '../../types/Project';
 import IconLink from '../IconLink';
-import { Github, Globe } from '../icons';
+import { Github, Globe, Npm } from '../icons';
 
 interface Props {
   project: Project;
@@ -63,11 +63,10 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
         />
         {project.LIVE_URL && (
           <IconLink
-            Icon={Globe}
+            Icon={project.LIVE_URL.type === 'npm' ? Npm : Globe}
             height="1.5rem"
-            width="1.5rem"
             ariaLabel="Live Demo"
-            href={project.LIVE_URL}
+            href={project.LIVE_URL.url}
           />
         )}
       </div>
