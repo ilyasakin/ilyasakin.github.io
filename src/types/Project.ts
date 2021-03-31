@@ -6,7 +6,10 @@ interface Project {
     JPG: { 720: string; 1080: string };
   };
   SOURCE_URL: string;
-  LIVE_URL?: string;
+  LIVE_URL?: {
+    type: 'website' | 'npm';
+    url: string;
+  };
 }
 
 export default Project;
