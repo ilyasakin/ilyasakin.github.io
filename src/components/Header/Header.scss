@@ -4,4 +4,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 3rem;
+
+  @media (max-width: 1024px) {
+    padding: 2rem 0;
+  }
 }

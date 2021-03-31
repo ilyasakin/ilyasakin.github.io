@@ -3,6 +3,10 @@
   margin: 0 auto;
   color: white;
 
+  @media (max-width: 1024px) {
+    padding: 2rem;
+  }
+
   @media (max-width: 768px) {
     padding: 0 2rem;
   }
