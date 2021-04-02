@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ProjectCard: React.FC<Props> = ({ project }) => {
-  console.log(project);
   return (
     <div className="project-card">
       <picture className="project-card-image">
@@ -48,8 +47,8 @@ const ProjectCard: React.FC<Props> = ({ project }) => {
       <div className="project-card-content">
         <div className="project-card-content-title">{project.TITLE}</div>
         <div className="project-card-content-text">
-          {project.DESCRIPTION.split('\n').map((line) => {
-            return <div>{`${line}`}</div>;
+          {project.DESCRIPTION.split('\n').map((line, index) => {
+            return <div key={`${project.TITLE}_${index}`}>{`${line}`}</div>;
           })}
         </div>
       </div>
