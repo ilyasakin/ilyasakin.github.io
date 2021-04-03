@@ -1,21 +1,21 @@
-import Project from './types/Project';
-import SpotifyAVIF_720 from './assets/images/spotify-clone_720.avif';
-import SpotifyAVIF_1080 from './assets/images/spotify-clone_1080.avif';
+import Project from '../types/Project';
+import SpotifyAVIF_720 from '../assets/images/spotify-clone_720.avif';
+import SpotifyAVIF_1080 from '../assets/images/spotify-clone_1080.avif';
 
-import SpotifyPNG_720 from './assets/images/spotify-clone_720.png';
-import SpotifyPNG_1080 from './assets/images/spotify-clone_1080.png';
+import SpotifyPNG_720 from '../assets/images/spotify-clone_720.png';
+import SpotifyPNG_1080 from '../assets/images/spotify-clone_1080.png';
 
-import DeliquusJPG_720 from './assets/images/deliquus_720.jpg';
-import DeliquusJPG_1080 from './assets/images/deliquus_1080.jpg';
+import DeliquusJPG_720 from '../assets/images/deliquus_720.jpg';
+import DeliquusJPG_1080 from '../assets/images/deliquus_1080.jpg';
 
-import DeliquusAVIF_720 from './assets/images/deliquus_720.avif';
-import DeliquusAVIF_1080 from './assets/images/deliquus_1080.avif';
+import DeliquusAVIF_720 from '../assets/images/deliquus_720.avif';
+import DeliquusAVIF_1080 from '../assets/images/deliquus_1080.avif';
 
-import GenSrcsetAVIF_720 from './assets/images/gen-srcset_720.avif';
-import GenSrcsetAVIF_1080 from './assets/images/gen-srcset_1080.avif';
+import GenSrcsetAVIF_720 from '../assets/images/gen-srcset_720.avif';
+import GenSrcsetAVIF_1080 from '../assets/images/gen-srcset_1080.avif';
 
-import GenSrcsetPNG_720 from './assets/images/gen-srcset_720.jpg';
-import GenSrcsetPNG_1080 from './assets/images/gen-srcset_1080.jpg';
+import GenSrcsetPNG_720 from '../assets/images/gen-srcset_720.jpg';
+import GenSrcsetPNG_1080 from '../assets/images/gen-srcset_1080.jpg';
 
 const Projects: Project[] = [
   {

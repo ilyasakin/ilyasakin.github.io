@@ -3,8 +3,8 @@ import Hero from './components/Hero';
 import ProjectsGrid from './components/ProjectsGrid';
 import Footer from './components/Footer';
 
-import links from './Links';
-import projects from './Projects';
+import links from './content/Links';
+import projects from './content/Projects';
 import './styles/App.scss';
 
 const App = () => {
