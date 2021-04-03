@@ -1,5 +1,4 @@
 {
-  "css.customData": [".vscode/css_custom_data.json"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.exclude": {
     "yarn.lock": true
