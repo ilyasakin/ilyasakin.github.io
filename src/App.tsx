@@ -14,7 +14,7 @@ const App = () => {
       <div className="content">
         <Hero
           title="Hi, I’m İlyas Akın, a software developer."
-          text="Currently I’m working at DOGO as Front-end Developer"
+          text="Currently I’m working at Supply Chain Wizard as Software Developer"
           links={links}
         />
         <ProjectsGrid projects={projects} />
