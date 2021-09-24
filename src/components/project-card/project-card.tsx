@@ -1,6 +1,6 @@
-import './ProjectCard.scss';
-import Project from '../../types/Project';
-import IconLink from '../IconLink';
+import './project-card.scss';
+import Project from '../../types/project';
+import IconLink from '../icon-link';
 import { Github, Globe, Npm } from '../icons';
 
 interface Props {

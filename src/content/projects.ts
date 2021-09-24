@@ -1,4 +1,4 @@
-import Project from '../types/Project';
+import Project from '../types/project';
 import SpotifyAVIF_720 from '../assets/images/spotify-clone_720.avif';
 import SpotifyAVIF_1080 from '../assets/images/spotify-clone_1080.avif';
 

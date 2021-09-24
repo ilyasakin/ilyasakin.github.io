@@ -1,8 +1,8 @@
 import { Dribbble, Github, LinkedinAlt, Mail, Medium, Resume } from '../icons';
-import IconLink from '../IconLink';
-import Links from '../../types/Links';
+import IconLink from '../icon-link';
+import Links from '../../types/links';
 
-import './Hero.scss';
+import './hero.scss';
 
 interface Props {
   title: string;

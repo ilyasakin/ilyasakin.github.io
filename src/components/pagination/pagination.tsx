@@ -1,5 +1,5 @@
-import Dot from '../Dot';
-import './Pagination.scss';
+import Dot from './pagination-dot';
+import './pagination.scss';
 
 const Pagination: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-import './Dot.scss';
+import './dot.scss';
 
 interface Props {
   active?: boolean;
