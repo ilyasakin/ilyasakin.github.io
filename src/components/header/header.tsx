@@ -1,6 +1,6 @@
 import { Logo } from '../icons';
-import Pagination from '../Pagination';
-import './Header.scss';
+import Pagination from '../pagination';
+import './header.scss';
 
 const Header: React.FC = () => {
   return (

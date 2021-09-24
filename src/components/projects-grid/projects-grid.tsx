@@ -1,6 +1,6 @@
-import './ProjectsGrid.scss';
-import ProjectCard from '../ProjectCard';
-import Project from '../../types/Project';
+import './projects-grid.scss';
+import ProjectCard from '../project-card';
+import Project from '../../types/project';
 import kebabCase from 'kebab-case';
 
 interface Props {

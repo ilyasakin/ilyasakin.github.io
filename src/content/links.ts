@@ -1,4 +1,4 @@
-import LinksType from '../types/Links';
+import LinksType from '../types/links';
 
 const Links: LinksType = {
   GITHUB: 'https://github.com/ilyasakin',

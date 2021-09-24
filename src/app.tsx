@@ -1,11 +1,11 @@
-import Header from './components/Header';
-import Hero from './components/Hero';
-import ProjectsGrid from './components/ProjectsGrid';
-import Footer from './components/Footer';
+import Header from './components/header';
+import Hero from './components/hero';
+import ProjectsGrid from './components/projects-grid';
+import Footer from './components/footer';
 
-import links from './content/Links';
-import projects from './content/Projects';
-import './styles/App.scss';
+import links from './content/links';
+import projects from './content/projects';
+import './styles/app.scss';
 
 const App = () => {
   return (

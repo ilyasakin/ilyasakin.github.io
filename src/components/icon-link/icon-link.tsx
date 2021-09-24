@@ -1,4 +1,4 @@
-import './IconLink.scss';
+import './icon-link.scss';
 
 interface Props {
   Icon: React.FC<{ width?: string; height?: string }>;
