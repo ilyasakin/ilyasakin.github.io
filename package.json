@@ -1,29 +1,31 @@
 {
   "name": "iakindev.github.io",
   "homepage": "https://ilyasakin.codes",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@types/node": "^14.14.10",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "autoprefixer": "^10.0.4",
-    "kebab-case": "^1.0.0",
-    "postcss": "^8.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "sass": "^1.32.6",
-    "typescript": "^4.0.3"
+    "kebab-case": "^1.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@svgr/cli": "^5.5.0",
+    "@vitejs/plugin-react": "^1.0.1",
+    "gen-srcset": "^0.4.0",
+    "gh-pages": "^3.2.3",
+    "sass": "^1.42.1",
+    "vite": "^2.5.10",
+    "typescript": "^4.4.3",
+    "@types/node": "^16.10.0",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9"
   },
   "scripts": {
-    "gen-icon-components": "svgr --typescript src/assets/icons --icon --replace-attr-values \"#000=currentColor\" -d src/components/icons",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject",
-    "predeploy": "yarn run build && cp CNAME build/",
-    "deploy": "gh-pages -d build"
+    "start": "vite",
+    "build": "vite build",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
+    "gen-icon-components": "svgr --typescript src/assets/icons --icon --replace-attr-values \"#000=currentColor\" -d src/components/icons"
   },
   "eslintConfig": {
     "extends": [
@@ -42,11 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@svgr/cli": "^5.5.0",
-    "gen-srcset": "^0.0.1-2",
-    "gh-pages": "^3.1.0",
-    "react-app-rewired": "^2.1.6"
   }
 }
