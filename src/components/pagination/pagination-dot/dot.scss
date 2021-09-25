@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .dot-container {
   display: flex;
   flex-direction: row;
@@ -10,7 +12,7 @@
   width: $dot-size;
   height: $dot-size;
   background: #777777;
-  border-radius: $dot-size / 2;
+  border-radius: math.div($dot-size, 2);
 
   &-active {
     background: #ffffff;
