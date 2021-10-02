@@ -1,6 +1,6 @@
-import LinksType from '../types/links';
+import ILinks from '../types/ILinks';
 
-const Links: LinksType = {
+const Links: ILinks = {
   GITHUB: 'https://github.com/ilyasakin',
   DRIBBBLE: 'https://dribbble.com/ashnwor',
   MAIL: 'mailto:ilyas.akin@yahoo.com',

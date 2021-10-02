@@ -1,4 +1,4 @@
-interface Project {
+interface IProject {
   TITLE: string;
   DESCRIPTION: string;
   IMAGES: {
@@ -12,4 +12,4 @@ interface Project {
   };
 }
 
-export default Project;
+export default IProject;

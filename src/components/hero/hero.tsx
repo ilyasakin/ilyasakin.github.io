@@ -1,13 +1,13 @@
 import { Dribbble, Github, LinkedinAlt, Mail, Medium, Resume } from '../icons';
 import IconLink from '../icon-link';
-import Links from '../../types/links';
+import ILinks from '../../types/ILinks';
 
 import './hero.scss';
 
 interface Props {
   title: string;
   text: string;
-  links: Links;
+  links: ILinks;
 }
 
 const Hero: React.FC<Props> = ({ title, text, links }) => {

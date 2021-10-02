@@ -1,4 +1,4 @@
-interface Links {
+interface ILinks {
   GITHUB: string;
   DRIBBBLE: string;
   LINKEDIN: string;
@@ -7,4 +7,4 @@ interface Links {
   RESUME: string;
 }
 
-export default Links;
+export default ILinks;
