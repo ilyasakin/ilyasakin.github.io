@@ -1,4 +1,4 @@
-import Project from '../types/project';
+import IProject from '../types/IProject';
 import SpotifyAVIF_720 from '../assets/images/spotify-clone_720.avif';
 import SpotifyAVIF_1080 from '../assets/images/spotify-clone_1080.avif';
 
@@ -17,7 +17,7 @@ import GenSrcsetAVIF_1080 from '../assets/images/gen-srcset_1080.avif';
 import GenSrcsetPNG_720 from '../assets/images/gen-srcset_720.jpg';
 import GenSrcsetPNG_1080 from '../assets/images/gen-srcset_1080.jpg';
 
-const Projects: Project[] = [
+const projects: IProject[] = [
   {
     TITLE: 'Deliquus',
     DESCRIPTION: `
@@ -75,4 +75,4 @@ const Projects: Project[] = [
   },
 ];
 
-export default Projects;
+export default projects;

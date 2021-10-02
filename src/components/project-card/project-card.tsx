@@ -1,5 +1,5 @@
 import './project-card.scss';
-import Project from '../../types/project';
+import Project from '../../types/IProject';
 import IconLink from '../icon-link';
 import { Github, Globe, Npm } from '../icons';
 

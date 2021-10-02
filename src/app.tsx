@@ -1,10 +1,15 @@
 import Header from './components/header';
 import Hero from './components/hero';
 import ProjectsGrid from './components/projects-grid';
+import ArticlesGrid from './components/articles-grid';
 import Footer from './components/footer';
+import Spacer from './components/spacer';
+import SectionTitle from './components/section-title';
 
 import links from './content/links';
 import projects from './content/projects';
+import articles from './content/articles';
+
 import './styles/app.scss';
 
 const App = () => {
@@ -17,7 +22,11 @@ const App = () => {
           text="Currently I’m working at Supply Chain Wizard as Software Developer"
           links={links}
         />
+        <SectionTitle title="Projects" />
         <ProjectsGrid projects={projects} />
+        <Spacer />
+        <SectionTitle title="Articles" />
+        <ArticlesGrid articles={articles} />
       </div>
       <Footer />
     </div>
