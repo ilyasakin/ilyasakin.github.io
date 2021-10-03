@@ -1,5 +1,7 @@
 import './article-card.scss';
 import IArticle from '../../types/IArticle';
+import IconLink from '../icon-link';
+import { Medium } from '../icons';
 
 interface Props {
   article: IArticle;
@@ -51,6 +53,15 @@ const ArticleCard: React.FC<Props> = ({ article }) => {
             })}
           </div>
         )}
+      </div>
+      <div className="article-card-links">
+        <IconLink
+          Icon={Medium}
+          height="1.5rem"
+          width="1.5rem"
+          ariaLabel="Read article"
+          href={article.URL}
+        />
       </div>
     </div>
   );
