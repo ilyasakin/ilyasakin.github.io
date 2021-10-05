@@ -5,6 +5,7 @@ import ArticlesGrid from './components/articles-grid';
 import Footer from './components/footer';
 import Spacer from './components/spacer';
 import SectionTitle from './components/section-title';
+import CompoundProviders from './components/compound-providers';
 
 import links from './content/links';
 import projects from './content/projects';
@@ -14,22 +15,24 @@ import './styles/app.scss';
 
 const App = () => {
   return (
-    <div className="main">
-      <Header />
-      <div className="content">
-        <Hero
-          title="Hi, I’m İlyas Akın, a software developer."
-          text="Currently I’m working at Supply Chain Wizard as Software Developer"
-          links={links}
-        />
-        <SectionTitle title="Projects" />
-        <ProjectsGrid projects={projects} />
-        <Spacer />
-        <SectionTitle title="Articles" />
-        <ArticlesGrid articles={articles} />
+    <CompoundProviders>
+      <div className="main">
+        <Header />
+        <div className="content">
+          <Hero
+            title="Hi, I’m İlyas Akın, a software developer."
+            text="Currently I’m working at Supply Chain Wizard as Software Developer"
+            links={links}
+          />
+          <SectionTitle title="Projects" />
+          <ProjectsGrid projects={projects} />
+          <Spacer />
+          <SectionTitle title="Articles" />
+          <ArticlesGrid articles={articles} />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </CompoundProviders>
   );
 };
 

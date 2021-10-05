@@ -1,8 +1,11 @@
+import InView from 'react-intersection-observer';
+
 import { Dribbble, Github, LinkedinAlt, Mail, Medium, Resume } from '../icons';
 import IconLink from '../icon-link';
 import ILinks from '../../types/ILinks';
 
 import './hero.scss';
+import { usePagination } from '../../context/pagination.context';
 
 interface Props {
   title: string;
@@ -11,8 +14,16 @@ interface Props {
 }
 
 const Hero: React.FC<Props> = ({ title, text, links }) => {
+  const { setPagination } = usePagination();
+
+  const onInViewChange = (inView: boolean, entry: IntersectionObserverEntry) => {
+    if (!inView) return;
+
+    setPagination({ inView: 'landing' });
+  };
+
   return (
-    <div className="hero">
+    <InView as="div" threshold={0} className="hero" onChange={onInViewChange}>
       <h1 className="hero-title">{title}</h1>
       <div className="hero-text">{text}</div>
       <div className="hero-social">
@@ -53,7 +64,7 @@ const Hero: React.FC<Props> = ({ title, text, links }) => {
           ariaLabel="Resume"
         />
       </div>
-    </div>
+    </InView>
   );
 };
 
