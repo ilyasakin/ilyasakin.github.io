@@ -23,7 +23,7 @@ const ProjectsGrid: React.FC<Props> = ({ projects }) => {
   };
 
   return (
-    <InView as="div" threshold={0.7} className="projects-grid" onChange={onInViewChange}>
+    <InView as="div" threshold={1} className="projects-grid" onChange={onInViewChange}>
       {projects.map((project, index) => {
         return (
           <ProjectCard project={project} key={`project-${index}-${kebabCase(project.TITLE)}`} />
