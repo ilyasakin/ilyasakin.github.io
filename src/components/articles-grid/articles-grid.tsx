@@ -25,7 +25,7 @@ const ArticlesGrid: React.FC<Props> = ({ articles }) => {
   };
 
   return (
-    <InView as="div" threshold={0.7} className="articles-grid" onChange={onInViewChange}>
+    <InView as="div" threshold={1} className="articles-grid" onChange={onInViewChange}>
       {articles.map((article: IArticle, index: number) => {
         return (
           <ArticleCard article={article} key={`article-${index}-${kebabCase(article.TITLE)}`} />

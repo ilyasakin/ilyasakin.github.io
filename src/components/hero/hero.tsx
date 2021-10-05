@@ -23,7 +23,7 @@ const Hero: React.FC<Props> = ({ title, text, links }) => {
   };
 
   return (
-    <InView as="div" threshold={0} className="hero" onChange={onInViewChange}>
+    <InView as="div" threshold={1} className="hero" onChange={onInViewChange}>
       <h1 className="hero-title">{title}</h1>
       <div className="hero-text">{text}</div>
       <div className="hero-social">
