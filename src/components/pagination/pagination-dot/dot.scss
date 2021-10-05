@@ -13,6 +13,7 @@
   height: $dot-size;
   background: #777777;
   border-radius: math.div($dot-size, 2);
+  border: none;
 
   &-active {
     background: #ffffff;

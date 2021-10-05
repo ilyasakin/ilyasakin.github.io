@@ -2,13 +2,15 @@ import './dot.scss';
 
 interface Props {
   active?: boolean;
+  pageName: string;
+  onClick: () => void;
 }
 
-const Dot: React.FC<Props> = ({ active }) => {
+const Dot: React.FC<Props> = ({ active, pageName, onClick }) => {
   return (
     <div className="dot-container">
-      <div className={`dot ${active && 'dot-active'}`} />
-      {active && <div className="text">Landing</div>}
+      <button onClick={onClick} className={`dot ${active && 'dot-active'}`} />
+      {active && <div className="text">{pageName}</div>}
     </div>
   );
 };
