@@ -53,7 +53,7 @@ const Hero: React.FC<Props> = ({ title, text, links }) => {
           Icon={LinkedinAlt}
           height="1.5rem"
           width="1.5rem"
-          href={links.MEDIUM}
+          href={links.LINKEDIN}
           ariaLabel="LinkedIn"
         />
         <IconLink
