@@ -18,7 +18,21 @@ import AvoidTailwindAVIF_1080 from '../assets/images/avoid-tailwind_1080.avif';
 import AvoidTailwindJPEG_720 from '../assets/images/avoid-tailwind_720.png';
 import AvoidTailwindJPEG_1080 from '../assets/images/avoid-tailwind_1080.png';
 
+import FiveUsefulVSCodeExtPNG_720 from '../assets/images/5_useful_vscode_extensions_720.png';
+import FiveUsefulVSCodeExtPNG_1080 from '../assets/images/5_useful_vscode_extensions_1080.png';
+
+import FiveUsefulVSCodeExtAVIF_720 from '../assets/images/5_useful_vscode_extensions_720.avif';
+import FiveUsefulVSCodeExtAVIF_1080 from '../assets/images/5_useful_vscode_extensions_1080.avif';
+
 const articles: IArticle[] = [
+  {
+    TITLE: '5 Useful VSCode Extensions to use in 2022',
+    IMAGES: {
+      AVIF: { 720: FiveUsefulVSCodeExtAVIF_720, 1080: FiveUsefulVSCodeExtAVIF_1080 },
+      JPG: { 720: FiveUsefulVSCodeExtPNG_720, 1080: FiveUsefulVSCodeExtPNG_1080 },
+    },
+    URL: 'https://ilyasakin.medium.com/5-useful-vscode-extensions-to-use-in-2022-c4d6ece62ee4',
+  },
   {
     TITLE: 'Node-RED is bad for your enterprise-grade services',
     IMAGES: {
