@@ -14,14 +14,20 @@ const Hero = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const tooltipContent = (
-    <span
+    <div
       style={{
         fontSize: "12px",
         lineHeight: "1.5",
+        textAlign: "center",
       }}
     >
-      {isCopied ? "Copied!" : "Copy to clipboard"}
-    </span>
+      {isCopied ? (
+        <div>Successfully copied!</div>
+      ) : (
+        <div>Click to copy to clipboard</div>
+      )}
+      {!isCopied && <div>ilyas.akin@yahoo.com</div>}
+    </div>
   );
 
   return (
