@@ -42,16 +42,16 @@ const Hero = () => {
 
       <div className={style.hero__links}>
         <Link href="https://github.com/ilyasakin" passHref>
-          <a target="_blank" rel="noreferrer noopener">
+          <a target="_blank" rel="noreferrer noopener" title="GitHub">
             <Image src={GitHubIcon} alt="GitHub" />
           </a>
         </Link>
         <Link href="https://dribbble.com/ashnwor" passHref>
-          <a target="_blank" rel="noreferrer noopener">
+          <a target="_blank" rel="noreferrer noopener" title="Dribbble">
             <Image src={DribbbleIcon} alt="Dribbble" />
           </a>
         </Link>
-        <Tooltip content={tooltipContent}>
+        <Tooltip content={tooltipContent} title="Personal Mail">
           <Image
             style={{ cursor: "pointer" }}
             src={MailIcon}
@@ -66,17 +66,17 @@ const Hero = () => {
           />
         </Tooltip>
         <Link href="https://ilyasakin.medium.com" passHref>
-          <a target="_blank" rel="noreferrer noopener">
+          <a target="_blank" rel="noreferrer noopener" title="Medium">
             <Image src={MediumIcon} alt="Medium" />
           </a>
         </Link>
         <Link href="https://www.linkedin.com/in/ilyasakin" passHref>
-          <a target="_blank" rel="noreferrer noopener">
+          <a target="_blank" rel="noreferrer noopener" title="LinkedIn">
             <Image src={LinkedInIcon} alt="LinkedIn" />
           </a>
         </Link>
         <Link href="/ilyas-akin.pdf" passHref>
-          <a target="_blank" rel="noreferrer noopener">
+          <a target="_blank" rel="noreferrer noopener" title="Resume">
             <Image src={ResumeIcon} alt="Resume" />
           </a>
         </Link>
