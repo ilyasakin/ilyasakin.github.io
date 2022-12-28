@@ -37,7 +37,7 @@ const Hero = () => {
       </h1>
 
       <p className={style.hero__subtitle}>
-        Currently I’m working at Stepfront™ as Software Developer
+        Currently I’m working at Kuika Software as Software Developer
       </p>
 
       <div className={style.hero__links}>
