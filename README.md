@@ -1,6 +1,6 @@
 # My Personal Site
 
-[Visit the site](https://iakindev.github.io/)
+[Visit the site](https://ilyasakin.dev)
 
 ## LICENSE
 
