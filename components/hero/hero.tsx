@@ -7,7 +7,6 @@ import MailIcon from "../../assets/icons/mail.svg";
 import MediumIcon from "../../assets/icons/medium.svg";
 import LinkedInIcon from "../../assets/icons/linkedin.svg";
 import ResumeIcon from "../../assets/icons/resume.svg";
-import { Tooltip } from "@nextui-org/react";
 import { useState } from "react";
 
 const Hero = () => {
@@ -41,17 +40,13 @@ const Hero = () => {
       </p>
 
       <div className={style.hero__links}>
-        <Link href="https://github.com/ilyasakin" passHref>
-          <a target="_blank" rel="noreferrer noopener" title="GitHub">
+        <Link href="https://github.com/ilyasakin">
             <Image src={GitHubIcon} alt="GitHub" />
-          </a>
         </Link>
-        <Link href="https://dribbble.com/ashnwor" passHref>
-          <a target="_blank" rel="noreferrer noopener" title="Dribbble">
+        <Link href="https://dribbble.com/ashnwor" >
             <Image src={DribbbleIcon} alt="Dribbble" />
-          </a>
+          
         </Link>
-        <Tooltip content={tooltipContent} title="Personal Mail">
           <Image
             style={{ cursor: "pointer" }}
             src={MailIcon}
@@ -64,21 +59,15 @@ const Hero = () => {
             }}
             onMouseLeave={() => setTimeout(() => setIsCopied(false), 150)}
           />
-        </Tooltip>
-        <Link href="https://ilyasakin.medium.com" passHref>
-          <a target="_blank" rel="noreferrer noopener" title="Medium">
+        <Link href="https://ilyasakin.medium.com" >
             <Image src={MediumIcon} alt="Medium" />
-          </a>
         </Link>
-        <Link href="https://www.linkedin.com/in/ilyasakin" passHref>
-          <a target="_blank" rel="noreferrer noopener" title="LinkedIn">
+        <Link href="https://www.linkedin.com/in/ilyasakin" >
             <Image src={LinkedInIcon} alt="LinkedIn" />
-          </a>
+          
         </Link>
-        <Link href="/ilyas-akin.pdf" passHref>
-          <a target="_blank" rel="noreferrer noopener" title="Resume">
+        <Link href="/ilyas-akin.pdf" >
             <Image src={ResumeIcon} alt="Resume" />
-          </a>
         </Link>
       </div>
     </div>
