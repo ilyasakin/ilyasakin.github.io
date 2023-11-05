@@ -55,3 +55,44 @@
     object-fit: contain;
   }
 }
+
+.hero__mail_container {
+  position: relative;
+  
+  &:hover {
+    .tooltip {
+      display: initial;
+    }
+  }
+}
+
+.tooltip {
+  position: absolute;
+  display: none; 
+  left: 50%;
+  top: -80px;
+  transform: translateX(-50%);
+  transition: opacity 0.3s ease-in-out;
+  
+  &:hover {
+    display: initial;
+  }
+}
+
+.tooltip__filler {
+  height: 21px;
+}
+
+.tooltip__inner_container {
+  background: #f0f0f0;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.tooltip__text {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  margin-bottom: 10px;
+}
