@@ -12,23 +12,6 @@ import { useState } from "react";
 const Hero = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  const tooltipContent = (
-    <div
-      style={{
-        fontSize: "12px",
-        lineHeight: "1.5",
-        textAlign: "center",
-      }}
-    >
-      {isCopied ? (
-        <div>Successfully copied!</div>
-      ) : (
-        <div>Click to copy to clipboard</div>
-      )}
-      {!isCopied && <div>ilyas.akin@yahoo.com</div>}
-    </div>
-  );
-
   return (
     <div className={style.hero__container}>
       <h1 className={style.hero__title}>
@@ -46,6 +29,17 @@ const Hero = () => {
         <Link href="https://dribbble.com/ashnwor" >
             <Image className={style.hero__icon} src={DribbbleIcon} alt="Dribbble" />
         </Link>
+        
+        <div className={style.hero__mail_container}>
+          <div className={style.tooltip}>
+            <div className={style.tooltip__inner_container}>
+              <div className={style.tooltip_text}>
+                {isCopied ? "Copied!" : "Click to copy"}
+              </div>
+              {!isCopied && <div>ilyas.akin@yahoo.com </div>}
+            </div>
+            <div className={style.tooltip__filler}></div>
+          </div>
           <Image
             className={style.hero__icon}
             src={MailIcon}
@@ -56,6 +50,8 @@ const Hero = () => {
             }}
             onMouseLeave={() => setTimeout(() => setIsCopied(false), 150)}
           />
+        </div>
+          
         <Link href="https://ilyasakin.medium.com" >
             <Image className={style.hero__icon} src={MediumIcon} alt="Medium" />
         </Link>
