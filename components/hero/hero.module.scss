@@ -40,4 +40,18 @@
   & > *:not(:last-child) {
     margin-right: 1rem !important;
   }
+  
+  @media (max-width: 1024px) {
+    margin-top: 0.5rem;
+  }
+}
+
+.hero__icon {
+  cursor: pointer;
+  
+  @media (max-width: 1024px) {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
 }

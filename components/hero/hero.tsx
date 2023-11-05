@@ -41,18 +41,15 @@ const Hero = () => {
 
       <div className={style.hero__links}>
         <Link href="https://github.com/ilyasakin">
-            <Image src={GitHubIcon} alt="GitHub" />
+            <Image className={style.hero__icon} src={GitHubIcon} alt="GitHub" />
         </Link>
         <Link href="https://dribbble.com/ashnwor" >
-            <Image src={DribbbleIcon} alt="Dribbble" />
-          
+            <Image className={style.hero__icon} src={DribbbleIcon} alt="Dribbble" />
         </Link>
           <Image
-            style={{ cursor: "pointer" }}
+            className={style.hero__icon}
             src={MailIcon}
             alt="Mail"
-            height={27}
-            width={33}
             onClick={() => {
               navigator.clipboard.writeText("ilyas.akin@yahoo.com");
               setIsCopied(true);
@@ -60,14 +57,14 @@ const Hero = () => {
             onMouseLeave={() => setTimeout(() => setIsCopied(false), 150)}
           />
         <Link href="https://ilyasakin.medium.com" >
-            <Image src={MediumIcon} alt="Medium" />
+            <Image className={style.hero__icon} src={MediumIcon} alt="Medium" />
         </Link>
         <Link href="https://www.linkedin.com/in/ilyasakin" >
-            <Image src={LinkedInIcon} alt="LinkedIn" />
+            <Image className={style.hero__icon} src={LinkedInIcon} alt="LinkedIn" />
           
         </Link>
         <Link href="/ilyas-akin.pdf" >
-            <Image src={ResumeIcon} alt="Resume" />
+            <Image className={style.hero__icon} src={ResumeIcon} alt="Resume" />
         </Link>
       </div>
     </div>
