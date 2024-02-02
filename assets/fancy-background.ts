@@ -21,7 +21,10 @@ let cubeMaterial: THREE.MeshBasicMaterial;
 
 let mouseX = 0;
 let mouseY = 0;
-document.body.addEventListener("pointermove", onPointerMove);
+
+if (typeof window !== "undefined") {
+  window.addEventListener("pointermove", onPointerMove);
+}
 
 let windowHalfX = typeof window !== "undefined" ? innerWidth / 2 : 0;
 let windowHalfY = typeof window !== "undefined" ? innerHeight / 2 : 0;
