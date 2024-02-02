@@ -24,12 +24,16 @@ const Hero = () => {
 
       <div className={style.hero__links}>
         <Link href="https://github.com/ilyasakin">
-            <Image className={style.hero__icon} src={GitHubIcon} alt="GitHub" />
+          <Image className={style.hero__icon} src={GitHubIcon} alt="GitHub" />
         </Link>
-        <Link href="https://dribbble.com/ashnwor" >
-            <Image className={style.hero__icon} src={DribbbleIcon} alt="Dribbble" />
+        <Link href="https://dribbble.com/ashnwor">
+          <Image
+            className={style.hero__icon}
+            src={DribbbleIcon}
+            alt="Dribbble"
+          />
         </Link>
-        
+
         <div className={style.hero__mail_container}>
           <div className={style.tooltip}>
             <div className={style.tooltip__inner_container}>
@@ -51,16 +55,19 @@ const Hero = () => {
             onMouseLeave={() => setTimeout(() => setIsCopied(false), 150)}
           />
         </div>
-          
-        <Link href="https://ilyasakin.medium.com" >
-            <Image className={style.hero__icon} src={MediumIcon} alt="Medium" />
+
+        <Link href="https://ilyasakin.medium.com">
+          <Image className={style.hero__icon} src={MediumIcon} alt="Medium" />
         </Link>
-        <Link href="https://www.linkedin.com/in/ilyasakin" >
-            <Image className={style.hero__icon} src={LinkedInIcon} alt="LinkedIn" />
-          
+        <Link href="https://www.linkedin.com/in/ilyasakin">
+          <Image
+            className={style.hero__icon}
+            src={LinkedInIcon}
+            alt="LinkedIn"
+          />
         </Link>
         <Link href="/ilyas-akin.pdf" prefetch={false}>
-            <Image className={style.hero__icon} src={ResumeIcon} alt="Resume" />
+          <Image className={style.hero__icon} src={ResumeIcon} alt="Resume" />
         </Link>
       </div>
     </div>
