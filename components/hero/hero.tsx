@@ -7,6 +7,8 @@ import { Resume, Dribbble, Medium, Github, Linkedin, Mail } from "../icons";
 const Hero = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
+  const tenMmToPx = 37.7952755906;
+
   return (
     <div className={style.hero__container}>
       <h1 className={style.hero__title}>
@@ -16,11 +18,29 @@ const Hero = () => {
       <p className={style.hero__subtitle}>Crafting Code at Kuika Software ✨</p>
 
       <div className={style.hero__links}>
-        <Link href="https://github.com/ilyasakin" title="Github">
-          <Github className={style.hero__icon} height={40} width={40} />
+        <Link
+          className={style.hero__link}
+          href="https://github.com/ilyasakin"
+          title="GitHub"
+        >
+          <Github
+            className={style.hero__icon}
+            height={tenMmToPx}
+            width={tenMmToPx}
+          />
+          <span className={style.hero__link_text}>GitHub</span>
         </Link>
-        <Link href="https://dribbble.com/ashnwor" title="Dribbble">
-          <Dribbble className={style.hero__icon} height={40} width={40} />
+        <Link
+          className={style.hero__link}
+          href="https://dribbble.com/ashnwor"
+          title="Dribbble"
+        >
+          <Dribbble
+            className={style.hero__icon}
+            height={tenMmToPx}
+            width={tenMmToPx}
+          />
+          <span className={style.hero__link_text}>Dribbble</span>
         </Link>
 
         <div className={style.hero__mail_container} title="Mail">
@@ -37,8 +57,8 @@ const Hero = () => {
           </div>
           <Mail
             className={style.hero__icon}
-            height={40}
-            width={40}
+            height={tenMmToPx}
+            width={tenMmToPx}
             style={{ cursor: "pointer" }}
             onClick={() => {
               navigator.clipboard.writeText("ilyas.akin@yahoo.com");
@@ -46,16 +66,45 @@ const Hero = () => {
             }}
             onMouseLeave={() => setTimeout(() => setIsCopied(false), 150)}
           />
+          <span className={style.hero__link_text}>Mail</span>
         </div>
 
-        <Link href="https://ilyasakin.medium.com" title="Medium">
-          <Medium className={style.hero__icon} height={40} width={40} />
+        <Link
+          className={style.hero__link}
+          href="https://ilyasakin.medium.com"
+          title="Medium"
+        >
+          <Medium
+            className={style.hero__icon}
+            height={tenMmToPx}
+            width={tenMmToPx}
+          />
+          <span className={style.hero__link_text}>Medium</span>
         </Link>
-        <Link href="https://www.linkedin.com/in/ilyasakin" title="Linkedin">
-          <Linkedin className={style.hero__icon} height={40} width={40} />
+        <Link
+          className={style.hero__link}
+          href="https://www.linkedin.com/in/ilyasakin"
+          title="Linkedin"
+        >
+          <Linkedin
+            className={style.hero__icon}
+            height={tenMmToPx}
+            width={tenMmToPx}
+          />
+          <span className={style.hero__link_text}>Linkedin</span>
         </Link>
-        <Link href="/ilyas-akin.pdf" prefetch={false} title="Resume">
-          <Resume className={style.hero__icon} height={40} width={40} />
+        <Link
+          className={style.hero__link}
+          href="/ilyas-akin.pdf"
+          prefetch={false}
+          title="Resume"
+        >
+          <Resume
+            className={style.hero__icon}
+            height={tenMmToPx}
+            width={tenMmToPx}
+          />
+          <span className={style.hero__link_text}>Resume</span>
         </Link>
       </div>
     </div>
