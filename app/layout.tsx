@@ -9,6 +9,9 @@ export const metadata: Metadata = {
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
+  display: "swap",
+  preload: true,
+  fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto"],
   weight: "700",
   style: "normal",
 });
