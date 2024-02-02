@@ -4,7 +4,7 @@ import { JetBrains_Mono } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Ilyas Akin",
-  description: "Personal website of Ilyas Akin",
+  description: "My social links and resume.",
 };
 
 const jetbrainsMono = JetBrains_Mono({
