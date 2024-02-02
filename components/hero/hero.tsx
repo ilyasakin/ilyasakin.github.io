@@ -17,10 +17,10 @@ const Hero = () => {
 
       <div className={style.hero__links}>
         <Link href="https://github.com/ilyasakin" title="Github">
-          <Github height={40} width={40} />
+          <Github className={style.hero__icon} height={40} width={40} />
         </Link>
         <Link href="https://dribbble.com/ashnwor" title="Dribbble">
-          <Dribbble height={40} width={40} />
+          <Dribbble className={style.hero__icon} height={40} width={40} />
         </Link>
 
         <div className={style.hero__mail_container} title="Mail">
@@ -36,6 +36,7 @@ const Hero = () => {
             <div className={style.tooltip__filler}></div>
           </div>
           <Mail
+            className={style.hero__icon}
             height={40}
             width={40}
             style={{ cursor: "pointer" }}
@@ -48,13 +49,13 @@ const Hero = () => {
         </div>
 
         <Link href="https://ilyasakin.medium.com" title="Medium">
-          <Medium height={40} width={40} />
+          <Medium className={style.hero__icon} height={40} width={40} />
         </Link>
         <Link href="https://www.linkedin.com/in/ilyasakin" title="Linkedin">
-          <Linkedin height={40} width={40} />
+          <Linkedin className={style.hero__icon} height={40} width={40} />
         </Link>
         <Link href="/ilyas-akin.pdf" prefetch={false} title="Resume">
-          <Resume height={40} width={40} />
+          <Resume className={style.hero__icon} height={40} width={40} />
         </Link>
       </div>
     </div>

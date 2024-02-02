@@ -14,6 +14,8 @@ a {
 
 * {
   box-sizing: border-box;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
 }
 
 /* Appear animated */
