@@ -38,7 +38,7 @@
   padding: 0.5rem;
   flex-wrap: wrap;
   gap: 1rem;
-  
+
   @media (max-width: 1024px) {
     margin-top: 0.5rem;
   }
@@ -46,7 +46,7 @@
 
 .hero__icon {
   cursor: pointer;
-  
+
   @media (max-width: 1024px) {
     height: 40px;
     width: auto;
@@ -56,7 +56,7 @@
 
 .hero__mail_container {
   position: relative;
-  
+
   &:hover {
     .tooltip {
       display: initial;
@@ -66,12 +66,12 @@
 
 .tooltip {
   position: absolute;
-  display: none; 
+  display: none;
   left: 50%;
   top: -80px;
   transform: translateX(-50%);
   transition: opacity 0.3s ease-in-out;
-  
+
   &:hover {
     display: initial;
   }
