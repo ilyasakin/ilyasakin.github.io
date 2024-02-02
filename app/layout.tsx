@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import "../styles/globals.css";
 import { JetBrains_Mono } from "next/font/google";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Ilyas Akin",
@@ -16,20 +17,18 @@ const jetbrainsMono = JetBrains_Mono({
   style: "normal",
 });
 
-export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
-  children,
-}: {
+interface IRootLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout(props: IRootLayoutProps) {
   return (
     <html
       lang="en"
       className={jetbrainsMono.className}
       style={{ background: "#000000" }}
     >
-      <body>{children}</body>
+      <body>{props.children}</body>
     </html>
   );
 }
