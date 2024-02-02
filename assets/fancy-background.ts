@@ -9,6 +9,7 @@ import texturepz from "../assets/textures/pz.jpg";
 import texturenx from "../assets/textures/nx.jpg";
 import textureny from "../assets/textures/ny.jpg";
 import texturenz from "../assets/textures/nz.jpg";
+import { setInterval } from "worker-timers";
 
 let camera: THREE.PerspectiveCamera;
 let scene: THREE.Scene;
@@ -23,18 +24,20 @@ let mouseX = 0;
 let mouseY = 0;
 
 const isMobile = /Android|iPhone|iPad/i.test(
-  typeof navigator !== "undefined" ? navigator.userAgent : ""
+  typeof navigator !== "undefined" ? navigator.userAgent : "",
 );
 
 if (typeof window !== "undefined" && !isMobile) {
   window.addEventListener("pointermove", onPointerMove);
 }
 
-if (isMobile) {
+if (typeof window !== "undefined" && isMobile) {
   setInterval(() => {
-    mouseX = Math.random() * 200 - 100;
-    mouseY = Math.random() * 200 - 100;
-  }, 1000);
+    // Between 0 and innerWidth
+    mouseX = Math.random() * window.innerWidth;
+    // Between 0 and innerHeight
+    mouseY = Math.random() * window.innerHeight;
+  }, 1500);
 }
 
 let windowHalfX = typeof window !== "undefined" ? innerWidth / 2 : 0;
@@ -61,7 +64,14 @@ export function init() {
   // heavy inner shadow
   container.style.boxShadow = "inset 0 0 100px rgba(0, 0, 0, 0.5)";
   // inner blur
-  container.style.filter = "blur(30px)";
+
+  if (isMobile) {
+    container.style.pointerEvents = "none";
+    container.style.filter = "blur(20px)";
+  } else {
+    container.style.filter = "blur(30px)";
+  }
+
   document.body.appendChild(container);
 
   camera = new THREE.PerspectiveCamera(70, width / height, 1, 3000);
