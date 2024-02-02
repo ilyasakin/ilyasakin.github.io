@@ -1,13 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import style from "./hero.module.scss";
-import GitHubIcon from "../../assets/icons/github.svg";
-import DribbbleIcon from "../../assets/icons/dribbble.svg";
-import MailIcon from "../../assets/icons/mail.svg";
-import MediumIcon from "../../assets/icons/medium.svg";
-import LinkedInIcon from "../../assets/icons/linkedin.svg";
-import ResumeIcon from "../../assets/icons/resume.svg";
 import { useState } from "react";
+import { Resume, Dribbble, Medium, Github, Linkedin, Mail } from "../icons";
 
 const Hero = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
@@ -18,36 +13,30 @@ const Hero = () => {
         Hi, I’m İlyas Akın, a software developer.
       </h1>
 
-      <p className={style.hero__subtitle}>
-        Crafting Code at Kuika Software ✨
-      </p>
+      <p className={style.hero__subtitle}>Crafting Code at Kuika Software ✨</p>
 
       <div className={style.hero__links}>
         <Link href="https://github.com/ilyasakin">
-          <Image className={style.hero__icon} src={GitHubIcon} alt="GitHub" />
+          <Github height={40} width={40} />
         </Link>
         <Link href="https://dribbble.com/ashnwor">
-          <Image
-            className={style.hero__icon}
-            src={DribbbleIcon}
-            alt="Dribbble"
-          />
+          <Dribbble height={40} width={40} />
         </Link>
 
         <div className={style.hero__mail_container}>
           <div className={style.tooltip}>
             <div className={style.tooltip__inner_container}>
-              <div className={style.tooltip_text}>
+              <div className={style.tooltip__text}>
                 {isCopied ? "Copied!" : "Click to copy"}
               </div>
-              {!isCopied && <div>ilyas.akin@yahoo.com </div>}
+              {!isCopied && <div className={style.tooltip__text}>ilyas.akin@yahoo.com </div>}
             </div>
             <div className={style.tooltip__filler}></div>
           </div>
-          <Image
-            className={style.hero__icon}
-            src={MailIcon}
-            alt="Mail"
+          <Mail
+            height={40}
+            width={40}
+            style={{ cursor: "pointer" }}
             onClick={() => {
               navigator.clipboard.writeText("ilyas.akin@yahoo.com");
               setIsCopied(true);
@@ -57,17 +46,13 @@ const Hero = () => {
         </div>
 
         <Link href="https://ilyasakin.medium.com">
-          <Image className={style.hero__icon} src={MediumIcon} alt="Medium" />
+          <Medium height={40} width={40} />
         </Link>
         <Link href="https://www.linkedin.com/in/ilyasakin">
-          <Image
-            className={style.hero__icon}
-            src={LinkedInIcon}
-            alt="LinkedIn"
-          />
+          <Linkedin height={40} width={40} />
         </Link>
         <Link href="/ilyas-akin.pdf" prefetch={false}>
-          <Image className={style.hero__icon} src={ResumeIcon} alt="Resume" />
+          <Resume height={40} width={40} />
         </Link>
       </div>
     </div>
