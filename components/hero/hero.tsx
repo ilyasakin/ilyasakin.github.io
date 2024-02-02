@@ -59,7 +59,7 @@ const Hero = () => {
             <Image className={style.hero__icon} src={LinkedInIcon} alt="LinkedIn" />
           
         </Link>
-        <Link href="/ilyas-akin.pdf" >
+        <Link href="/ilyas-akin.pdf" prefetch={false}>
             <Image className={style.hero__icon} src={ResumeIcon} alt="Resume" />
         </Link>
       </div>
