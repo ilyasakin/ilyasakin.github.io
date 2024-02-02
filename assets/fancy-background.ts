@@ -22,8 +22,19 @@ let cubeMaterial: THREE.MeshBasicMaterial;
 let mouseX = 0;
 let mouseY = 0;
 
-if (typeof window !== "undefined") {
+const isMobile = /Android|iPhone|iPad/i.test(
+  typeof navigator !== "undefined" ? navigator.userAgent : ""
+);
+
+if (typeof window !== "undefined" && !isMobile) {
   window.addEventListener("pointermove", onPointerMove);
+}
+
+if (isMobile) {
+  setInterval(() => {
+    mouseX = Math.random() * 200 - 100;
+    mouseY = Math.random() * 200 - 100;
+  }, 1000);
 }
 
 let windowHalfX = typeof window !== "undefined" ? innerWidth / 2 : 0;
