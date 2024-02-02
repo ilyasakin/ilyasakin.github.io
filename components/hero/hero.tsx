@@ -19,7 +19,7 @@ const Hero = () => {
       </h1>
 
       <p className={style.hero__subtitle}>
-        Currently I’m working at Kuika Software as Software Developer
+        Crafting Code at Kuika Software ✨
       </p>
 
       <div className={style.hero__links}>
