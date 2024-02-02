@@ -1,4 +1,6 @@
-html,
+html {
+  background-color: #000;
+}
 body {
   padding: 0;
   margin: 0;
@@ -11,4 +13,18 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* Appear animated */
+#fancy-background {
+  animation: appear 1s ease-in-out;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
