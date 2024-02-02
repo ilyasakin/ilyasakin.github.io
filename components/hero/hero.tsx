@@ -16,20 +16,22 @@ const Hero = () => {
       <p className={style.hero__subtitle}>Crafting Code at Kuika Software ✨</p>
 
       <div className={style.hero__links}>
-        <Link href="https://github.com/ilyasakin">
+        <Link href="https://github.com/ilyasakin" title="Github">
           <Github height={40} width={40} />
         </Link>
-        <Link href="https://dribbble.com/ashnwor">
+        <Link href="https://dribbble.com/ashnwor" title="Dribbble">
           <Dribbble height={40} width={40} />
         </Link>
 
-        <div className={style.hero__mail_container}>
+        <div className={style.hero__mail_container} title="Mail">
           <div className={style.tooltip}>
             <div className={style.tooltip__inner_container}>
               <div className={style.tooltip__text}>
                 {isCopied ? "Copied!" : "Click to copy"}
               </div>
-              {!isCopied && <div className={style.tooltip__text}>ilyas.akin@yahoo.com </div>}
+              {!isCopied && (
+                <div className={style.tooltip__text}>ilyas.akin@yahoo.com </div>
+              )}
             </div>
             <div className={style.tooltip__filler}></div>
           </div>
@@ -45,13 +47,13 @@ const Hero = () => {
           />
         </div>
 
-        <Link href="https://ilyasakin.medium.com">
+        <Link href="https://ilyasakin.medium.com" title="Medium">
           <Medium height={40} width={40} />
         </Link>
-        <Link href="https://www.linkedin.com/in/ilyasakin">
+        <Link href="https://www.linkedin.com/in/ilyasakin" title="Linkedin">
           <Linkedin height={40} width={40} />
         </Link>
-        <Link href="/ilyas-akin.pdf" prefetch={false}>
+        <Link href="/ilyas-akin.pdf" prefetch={false} title="Resume">
           <Resume height={40} width={40} />
         </Link>
       </div>
