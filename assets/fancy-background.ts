@@ -19,14 +19,14 @@ let parameters: { color: number; envMap: THREE.CubeTexture };
 let nobjects: number;
 let cubeMaterial: THREE.MeshBasicMaterial;
 
-let mouseX = 0,
-  mouseY = 0;
+let mouseX = 0;
+let mouseY = 0;
 
-let windowHalfX = window.innerWidth / 2;
-let windowHalfY = window.innerHeight / 2;
+let windowHalfX = typeof window !== "undefined" ? innerWidth / 2 : 0;
+let windowHalfY = typeof window !== "undefined" ? innerHeight / 2 : 0;
 
-let width = window.innerWidth;
-let height = window.innerHeight;
+let width = typeof window !== "undefined" ? innerWidth : 0;
+let height = typeof window !== "undefined" ? innerHeight : 0;
 
 const materials: THREE.MeshBasicMaterial[] = [];
 const objects: THREE.Mesh[] = [];
