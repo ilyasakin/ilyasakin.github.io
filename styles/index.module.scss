@@ -10,12 +10,12 @@
 
 .page {
   min-height: calc(100dvh - (32px + 6rem));
-  max-height: calc(100dvh - (32px + 6rem));
   display: flex;
   flex-direction: column;
+  padding-bottom: calc(32px + 6rem);
 
   @media (max-width: 768px) {
+    padding-bottom: calc(32px + 4rem);
     min-height: calc(100dvh - (32px + 4rem));
-    max-height: calc(100dvh - (32px + 4rem));
   }
 }
