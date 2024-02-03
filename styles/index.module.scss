@@ -9,7 +9,8 @@
 }
 
 .page {
-  height: 100vh;
+  min-height: calc(100dvh - 33px);
   display: flex;
   flex-direction: column;
+  padding-bottom: 133px;
 }
