@@ -34,6 +34,19 @@ const Hero = () => {
         <Link
           className={style.hero__link}
           target="_blank"
+          href="https://ilyasakin.medium.com"
+          title="Medium"
+        >
+          <Medium
+            className={style.hero__icon}
+            height={tenMmToPx}
+            width={tenMmToPx}
+          />
+          <span className={style.hero__link_text}>Medium</span>
+        </Link>
+        <Link
+          className={style.hero__link}
+          target="_blank"
           href="https://dribbble.com/ashnwor"
           title="Dribbble"
         >
@@ -44,7 +57,6 @@ const Hero = () => {
           />
           <span className={style.hero__link_text}>Dribbble</span>
         </Link>
-
         <div className={style.hero__mail_container} title="Mail">
           <div className={style.tooltip}>
             <div className={style.tooltip__inner_container}>
@@ -70,20 +82,6 @@ const Hero = () => {
           />
           <span className={style.hero__link_text}>Mail</span>
         </div>
-
-        <Link
-          className={style.hero__link}
-          target="_blank"
-          href="https://ilyasakin.medium.com"
-          title="Medium"
-        >
-          <Medium
-            className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
-          />
-          <span className={style.hero__link_text}>Medium</span>
-        </Link>
         <Link
           className={style.hero__link}
           target="_blank"
