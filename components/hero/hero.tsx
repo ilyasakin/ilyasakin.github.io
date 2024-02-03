@@ -20,6 +20,7 @@ const Hero = () => {
       <div className={style.hero__links}>
         <Link
           className={style.hero__link}
+          target="_blank"
           href="https://github.com/ilyasakin"
           title="GitHub"
         >
@@ -32,6 +33,7 @@ const Hero = () => {
         </Link>
         <Link
           className={style.hero__link}
+          target="_blank"
           href="https://dribbble.com/ashnwor"
           title="Dribbble"
         >
@@ -71,6 +73,7 @@ const Hero = () => {
 
         <Link
           className={style.hero__link}
+          target="_blank"
           href="https://ilyasakin.medium.com"
           title="Medium"
         >
@@ -83,6 +86,7 @@ const Hero = () => {
         </Link>
         <Link
           className={style.hero__link}
+          target="_blank"
           href="https://www.linkedin.com/in/ilyasakin"
           title="Linkedin"
         >
@@ -95,6 +99,7 @@ const Hero = () => {
         </Link>
         <Link
           className={style.hero__link}
+          target="_blank"
           href="/ilyas-akin.pdf"
           prefetch={false}
           title="Resume"
