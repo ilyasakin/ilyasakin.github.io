@@ -9,6 +9,10 @@
   @media (max-width: 1024px) {
     padding: 3rem;
   }
+  
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
 
   & > *:not(:last-child) {
     margin-bottom: 1rem;
@@ -22,6 +26,11 @@
   color: #ffffff;
   margin-top: 0;
   text-align: center;
+  
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    line-height: 34px;
+  }
 }
 
 .hero__subtitle {
@@ -31,6 +40,11 @@
   color: #ffffff;
   margin-top: 0;
   text-align: center;
+  
+  @media (max-width: 1024px) {
+    font-size: 22px;
+    line-height: 26px;
+  }
 }
 
 .hero__links {
