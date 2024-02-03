@@ -12,7 +12,7 @@ const Hero = () => {
   return (
     <div className={style.hero__container}>
       <h1 className={style.hero__title}>
-        Hi, I’m İlyas Akın, a software developer.
+        Hi, I’m İlyas Akın, a full-stack web developer.
       </h1>
 
       <p className={style.hero__subtitle}>Crafting Code at Kuika Software ✨</p>
