@@ -9,13 +9,13 @@
 }
 
 .page {
-  min-height: calc(100dvh - (32px + 3rem));
+  min-height: calc(100dvh - (32px + 6rem));
+  max-height: calc(100dvh - (32px + 6rem));
   display: flex;
   flex-direction: column;
-  padding-bottom: 133px;
 
   @media (max-width: 768px) {
-    padding-bottom: 64px;
-    min-height: calc(100dvh - (32px + 2rem));
+    min-height: calc(100dvh - (32px + 4rem));
+    max-height: calc(100dvh - (32px + 4rem));
   }
 }
