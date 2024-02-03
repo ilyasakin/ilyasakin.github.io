@@ -9,8 +9,12 @@
 }
 
 .page {
-  min-height: calc(100dvh - 33px);
+  min-height: calc(100dvh - 133px);
   display: flex;
   flex-direction: column;
   padding-bottom: 133px;
+
+  @media (max-width: 768px) {
+    padding-bottom: 64px;
+  }
 }
