@@ -80,7 +80,7 @@ export function init() {
   scene = new THREE.Scene();
 
   renderer = new THREE.WebGLRenderer();
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(window.devicePixelRatio / 20);
   renderer.setSize(width, height);
   container.appendChild(renderer.domElement);
 
