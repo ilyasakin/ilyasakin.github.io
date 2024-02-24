@@ -9,3 +9,58 @@
     padding: 2rem;
   }
 }
+
+.header_buttons {
+  flex: 1;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  padding-right: 32px;
+  gap: 1rem;
+}
+
+.header_button {
+  position: relative;
+  color: #ffffff;
+  background-color: transparent;
+  border: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 0;
+  height: 32px;
+  transition:
+    color 0.3s,
+    background-color 0.3s;
+  border-radius: 4px;
+  padding: 0 12px;
+  cursor: pointer;
+
+  &:not(.active):hover {
+    background-color: #ffffff1a;
+    color: #ffffff;
+  }
+
+  &.active {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff0000;
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  min-width: 16px;
+  min-height: 16px;
+}
