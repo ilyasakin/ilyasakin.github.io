@@ -12,6 +12,15 @@ export default function HomePage() {
     if (typeof window === "undefined") {
       return;
     }
+
+    const isReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (isReducedMotion) {
+      return;
+    }
+
     init();
     animate();
 
