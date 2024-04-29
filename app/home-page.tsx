@@ -13,18 +13,25 @@ export default function HomePage() {
       return;
     }
 
-    const isReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const onMediaChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        destroy();
+      } else {
+        init();
+        animate();
+      }
+    };
 
-    if (isReducedMotion) {
-      return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    mediaQuery.addEventListener("change", onMediaChange);
+
+    if (!mediaQuery.matches) {
+      init();
+      animate();
     }
 
-    init();
-    animate();
-
     return () => {
+      mediaQuery.removeEventListener("change", onMediaChange);
       destroy();
     };
   }, []);
