@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "../styles/globals.css";
 import { JetBrains_Mono } from "next/font/google";
 import React from "react";
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: "Ilyas Akin",
@@ -29,6 +30,7 @@ export default function RootLayout(props: IRootLayoutProps) {
       style={{ background: "#000000" }}
     >
       <body>{props.children}</body>
+      <Analytics />
     </html>
   );
 }
