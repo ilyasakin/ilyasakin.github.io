@@ -100,7 +100,7 @@ const Hero = () => {
           target="_blank"
           href="/ilyas-akin.pdf"
           prefetch={false}
-          title="Resume"
+          title="Resume (outdated)"
         >
           <Resume
             className={style.hero__icon}
