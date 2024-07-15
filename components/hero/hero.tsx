@@ -15,7 +15,7 @@ const Hero = () => {
         Hi, I’m İlyas Akın, a full-stack web developer.
       </h1>
 
-      <p className={style.hero__subtitle}>crafting code at Kuika Software ✨</p>
+      <p className={style.hero__subtitle}>Crafting code at Kuika Software ✨</p>
 
       <div className={style.hero__links}>
         <Link
