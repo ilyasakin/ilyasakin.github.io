@@ -11,6 +11,17 @@ import textureny from "../assets/textures/ny.jpg";
 import texturenz from "../assets/textures/nz.jpg";
 import { setInterval } from "worker-timers";
 
+const getIsWebGL2 = () => {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(window.WebGL2RenderingContext && canvas.getContext("webgl2"));
+  } catch (e) {
+    return false;
+  }
+};
+
+const isWebGL2 = getIsWebGL2();
+
 let camera: THREE.PerspectiveCamera;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
@@ -55,6 +66,10 @@ const postprocessing: {
 } = { composer: null, bokeh: null };
 
 export function init() {
+  if (!isWebGL2) {
+    return;
+  }
+
   const container = document.createElement("div");
   container.id = "fancy-background";
   container.style.position = "fixed";
@@ -180,6 +195,10 @@ export function init() {
 }
 
 function onPointerMove(event: PointerEvent) {
+  if (!isWebGL2) {
+    return;
+  }
+
   if (!event.isPrimary) return;
 
   mouseX = event.clientX - windowHalfX;
@@ -187,6 +206,10 @@ function onPointerMove(event: PointerEvent) {
 }
 
 function onWindowResize() {
+  if (!isWebGL2) {
+    return;
+  }
+
   windowHalfX = window.innerWidth / 2;
   windowHalfY = window.innerHeight / 2;
 
@@ -204,6 +227,10 @@ function onWindowResize() {
 }
 
 function initPostprocessing() {
+  if (!isWebGL2) {
+    return;
+  }
+
   const renderPass = new RenderPass(scene, camera);
 
   const bokehPass = new BokehPass(scene, camera, {
@@ -225,11 +252,19 @@ function initPostprocessing() {
 }
 
 export function animate() {
+  if (!isWebGL2) {
+    return;
+  }
+
   render();
   requestAnimationFrame(animate);
 }
 
 function render() {
+  if (!isWebGL2) {
+    return;
+  }
+
   const time = Date.now() * 0.00005;
 
   camera.position.x += (mouseX - camera.position.x) * 0.036;
@@ -250,6 +285,10 @@ function render() {
 }
 
 export function destroy() {
+  if (!isWebGL2) {
+    return;
+  }
+
   const container = document.getElementById("fancy-background");
   if (container) {
     container.remove();
