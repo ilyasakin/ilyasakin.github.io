@@ -1,13 +1,12 @@
 import Link from "next/link";
-import Image from "next/image";
-import style from "./hero.module.scss";
 import { useState } from "react";
-import { Resume, Dribbble, Medium, Github, Linkedin, Mail } from "../icons";
+import { Medium, Github, Linkedin, Mail } from "../icons";
+import style from "./hero.module.scss";
 
 const Hero = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  const tenMmToPx = 37.7952755906;
+  const MM_TO_PX = 3.7795275591;
 
   return (
     <div className={style.hero__container}>
@@ -15,7 +14,7 @@ const Hero = () => {
         Hi, I’m İlyas Akın, a full-stack web developer.
       </h1>
 
-      <p className={style.hero__subtitle}>Crafting Code at Kuika Software ✨</p>
+      <p className={style.hero__subtitle}>Crafting code at Kuika Software ✨</p>
 
       <div className={style.hero__links}>
         <Link
@@ -26,8 +25,8 @@ const Hero = () => {
         >
           <Github
             className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
+            height={10 * MM_TO_PX}
+            width={10 * MM_TO_PX}
           />
           <span className={style.hero__link_text}>GitHub</span>
         </Link>
@@ -39,23 +38,10 @@ const Hero = () => {
         >
           <Medium
             className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
+            height={10 * MM_TO_PX}
+            width={10 * MM_TO_PX}
           />
           <span className={style.hero__link_text}>Medium</span>
-        </Link>
-        <Link
-          className={style.hero__link}
-          target="_blank"
-          href="https://dribbble.com/ashnwor"
-          title="Dribbble"
-        >
-          <Dribbble
-            className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
-          />
-          <span className={style.hero__link_text}>Dribbble</span>
         </Link>
         <div className={style.hero__mail_container} title="Mail">
           <div className={style.tooltip}>
@@ -71,8 +57,8 @@ const Hero = () => {
           </div>
           <Mail
             className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
+            height={10 * MM_TO_PX}
+            width={10 * MM_TO_PX}
             style={{ cursor: "pointer" }}
             onClick={() => {
               navigator.clipboard.writeText("ilyas.akin@yahoo.com");
@@ -90,24 +76,10 @@ const Hero = () => {
         >
           <Linkedin
             className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
+            height={10 * MM_TO_PX}
+            width={10 * MM_TO_PX}
           />
           <span className={style.hero__link_text}>Linkedin</span>
-        </Link>
-        <Link
-          className={style.hero__link}
-          target="_blank"
-          href="/ilyas-akin.pdf"
-          prefetch={false}
-          title="Resume (outdated)"
-        >
-          <Resume
-            className={style.hero__icon}
-            height={tenMmToPx}
-            width={tenMmToPx}
-          />
-          <span className={style.hero__link_text}>Resume</span>
         </Link>
       </div>
     </div>
