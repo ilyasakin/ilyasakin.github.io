@@ -9,7 +9,7 @@ export default function Hero() {
   return (
     <div className={style.hero__container}>
       <h1 className={style.hero__title}>
-        Hi, I'm İlyas Akın, a senior full-stack web developer.
+        Hi, I&apos;m İlyas Akın, a senior full-stack web developer.
       </h1>
 
       <p className={style.hero__subtitle}>Crafting code at Kuika Software ✨</p>
