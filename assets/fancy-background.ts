@@ -36,12 +36,36 @@ export class FancyBackground {
   
   private readonly isWebGL2: boolean;
 
+  private readonly GRID_SIZE = {
+    x: this.isMobile ? 8 : 14,
+    y: this.isMobile ? 5 : 9,
+    z: this.isMobile ? 8 : 14
+  };
+  private readonly SPHERE_DETAIL = {
+    segments: this.isMobile ? 12 : 20,
+    rings: this.isMobile ? 6 : 10
+  };
+  private animationFrameId: number | null = null;
+  private textureCube: THREE.CubeTexture | null = null;
+
   constructor() {
     this.isWebGL2 = this.getIsWebGL2();
     this.windowHalfX = typeof window !== "undefined" ? window.innerWidth / 2 : 0;
     this.windowHalfY = typeof window !== "undefined" ? window.innerHeight / 2 : 0;
     this.width = typeof window !== "undefined" ? window.innerWidth : 0;
     this.height = typeof window !== "undefined" ? window.innerHeight : 0;
+
+    if (this.isWebGL2) {
+      // Initialize core components in constructor
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(70, this.width / this.height, 1, 3000);
+      this.renderer = new THREE.WebGLRenderer({ antialias: true });
+      
+      // Bind methods
+      this.onPointerMove = this.onPointerMove.bind(this);
+      this.onWindowResize = this.onWindowResize.bind(this);
+      this.animate = this.animate.bind(this);
+    }
   }
 
   private getIsWebGL2(): boolean {
@@ -55,16 +79,6 @@ export class FancyBackground {
 
   public init(): void {
     if (!this.isWebGL2) return;
-
-    // Initialize scene, camera, and renderer in constructor
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(70, this.width / this.height, 1, 3000);
-    this.renderer = new THREE.WebGLRenderer();
-    
-    // Bind methods
-    this.onPointerMove = this.onPointerMove.bind(this);
-    this.onWindowResize = this.onWindowResize.bind(this);
-    this.animate = this.animate.bind(this);
 
     const container = document.createElement("div");
     container.id = "fancy-background";
@@ -100,52 +114,63 @@ export class FancyBackground {
   }
 
   private setupScene(): void {
-    const urls = [
-      texturepx.src,
-      texturenx.src,
-      texturepy.src,
-      textureny.src,
-      texturepz.src,
-      texturenz.src,
-    ];
+    // Pre-load textures once
+    if (!this.textureCube) {
+      const urls = [
+        texturepx.src,
+        texturenx.src,
+        texturepy.src,
+        textureny.src,
+        texturepz.src,
+        texturenz.src,
+      ].map(url => this.isMobile ? url.replace(/\.(jpg|png)$/, '_small.$1') : url);
 
-    const textureCube = new THREE.CubeTextureLoader().load(urls);
-    const parameters = { color: 0xff4900, envMap: textureCube };
-    const cubeMaterial = new THREE.MeshBasicMaterial(parameters);
-    const geo = new THREE.SphereGeometry(1, 20, 10);
+      this.textureCube = new THREE.CubeTextureLoader().load(urls);
+    }
 
-    const xgrid = 14, ygrid = 9, zgrid = 14;
-    this.nobjects = xgrid * ygrid * zgrid;
+    const parameters = { 
+      color: 0xff4900, 
+      envMap: this.textureCube,
+      fog: false,
+      lights: false,
+      precision: this.isMobile ? 'lowp' as const : 'mediump' as const
+    };
+
+    const geo = new THREE.SphereGeometry(
+      1, 
+      this.SPHERE_DETAIL.segments,
+      this.SPHERE_DETAIL.rings
+    );
+    geo.computeBoundingSphere();
+
+    // Use instanced mesh for better performance
+    const instancedMesh = new THREE.InstancedMesh(
+      geo,
+      new THREE.MeshBasicMaterial(parameters),
+      this.GRID_SIZE.x * this.GRID_SIZE.y * this.GRID_SIZE.z
+    );
+
+    const matrix = new THREE.Matrix4();
     const s = 60;
     let count = 0;
 
-    for (let i = 0; i < xgrid; i++) {
-      for (let j = 0; j < ygrid; j++) {
-        for (let k = 0; k < zgrid; k++) {
-          const mesh = new THREE.Mesh(
-            geo,
-            this.singleMaterial ? cubeMaterial : new THREE.MeshBasicMaterial(parameters)
-          );
+    for (let i = 0; i < this.GRID_SIZE.x; i++) {
+      for (let j = 0; j < this.GRID_SIZE.y; j++) {
+        for (let k = 0; k < this.GRID_SIZE.z; k++) {
+          const x = 200 * (i - this.GRID_SIZE.x / 2);
+          const y = 200 * (j - this.GRID_SIZE.y / 2);
+          const z = 200 * (k - this.GRID_SIZE.z / 2);
 
-          if (!this.singleMaterial) {
-            this.materials[count] = mesh.material as THREE.MeshBasicMaterial;
-          }
-
-          const x = 200 * (i - xgrid / 2);
-          const y = 200 * (j - ygrid / 2);
-          const z = 200 * (k - zgrid / 2);
-
-          mesh.position.set(x, y, z);
-          mesh.scale.set(s, s, s);
-          mesh.matrixAutoUpdate = false;
-          mesh.updateMatrix();
-
-          this.scene.add(mesh);
-          this.objects.push(mesh);
-          count++;
+          matrix.makeTranslation(x, y, z);
+          matrix.scale(new THREE.Vector3(s, s, s));
+          instancedMesh.setMatrixAt(count++, matrix);
         }
       }
     }
+
+    instancedMesh.instanceMatrix.needsUpdate = true;
+    this.scene.add(instancedMesh);
+    this.objects = [instancedMesh];
   }
 
   private setupEventListeners(): void {
@@ -210,15 +235,17 @@ export class FancyBackground {
 
     const time = Date.now() * 0.00005;
 
+    // Camera movement
     this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.036;
     this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.036;
     this.camera.lookAt(this.scene.position);
 
-    if (!this.singleMaterial) {
-      for (let i = 0; i < this.nobjects; i++) {
-        const h = ((360 * (i / this.nobjects + time)) % 360) / 360;
-        this.materials[i].color.setHSL(h, 1, 0.5);
-      }
+    // Color animation for instanced mesh
+    if (this.objects[0] instanceof THREE.InstancedMesh) {
+      const material = this.objects[0].material as THREE.MeshBasicMaterial;
+      const h = (time % 1); // Cycles between 0 and 1
+      material.color.setHSL(h, 1, 0.5);
+      material.needsUpdate = true;
     }
 
     if (this.postprocessing.composer) {
@@ -230,17 +257,53 @@ export class FancyBackground {
     if (!this.isWebGL2) return;
     
     this.render();
-    requestAnimationFrame(this.animate);
+    this.animationFrameId = requestAnimationFrame(this.animate);
   }
 
   public destroy(): void {
     if (!this.isWebGL2) return;
 
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+
+    // Dispose of geometries and materials
+    this.objects.forEach(object => {
+      if (object.geometry) {
+        object.geometry.dispose();
+      }
+      if (object instanceof THREE.Mesh && object.material) {
+        if (Array.isArray(object.material)) {
+          object.material.forEach(material => material.dispose());
+        } else {
+          object.material.dispose();
+        }
+      }
+    });
+
+    // Dispose of textures
+    if (this.textureCube) {
+      this.textureCube.dispose();
+    }
+
+    // Clean up renderer
+    if (this.renderer) {
+      this.renderer.dispose();
+      this.renderer.forceContextLoss();
+    }
+
+    // Remove DOM elements
     const container = document.getElementById("fancy-background");
     if (container) {
       container.remove();
     }
+
+    // Remove event listeners
     window.removeEventListener("resize", this.onWindowResize);
     window.removeEventListener("pointermove", this.onPointerMove);
+
+    // Clear arrays
+    this.objects = [];
+    this.materials = [];
   }
 }
