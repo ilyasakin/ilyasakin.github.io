@@ -4,6 +4,7 @@ import Hero from "../components/hero/hero";
 import BackgroundController from "../components/background/background-controller";
 import Blog from "../components/blog/blog";
 import { Suspense } from "react";
+import BackToTop from "../components/back-to-top/back-to-top";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
           </Suspense>
         </div>
       </div>
+      <BackToTop />
     </>
   );
 }
