@@ -10,21 +10,6 @@ interface Props {
 }
 
 export default function BlogPost({ post }: Props) {
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const fancyBackground = new FancyBackground();
-    
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!mediaQuery.matches) {
-      fancyBackground.init();
-    }
-
-    return () => {
-      fancyBackground.destroy();
-    };
-  }, []);
-
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
