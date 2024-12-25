@@ -3,6 +3,7 @@ import BlogPost from "./blog-post";
 import { getMediumPosts } from "../../../utils/medium";
 import { notFound } from "next/navigation";
 import { toKebabCase } from "../../../utils/string";
+import PageTransition from "../../../components/transitions/page-transition";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }>} 
@@ -34,5 +35,9 @@ export default async function Page(
     notFound();
   }
 
-  return <BlogPost post={post} />;
+  return (
+    <PageTransition>
+      <BlogPost post={post} />
+    </PageTransition>
+  );
 } 

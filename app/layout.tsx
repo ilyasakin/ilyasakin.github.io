@@ -1,36 +1,15 @@
-import { Metadata } from "next";
+import { ReactNode } from "react";
 import "../styles/globals.css";
 import { JetBrains_Mono } from "next/font/google";
-import React from "react";
-import { Analytics } from '@vercel/analytics/react';
 
-export const metadata: Metadata = {
-  title: "Ilyas Akin",
-  description: "My social links and resume.",
-};
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  preload: true,
-  fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto"],
-  weight: "700",
-  style: "normal",
-});
-
-interface IRootLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function RootLayout(props: IRootLayoutProps) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={jetbrainsMono.className}
-      style={{ background: "#000000" }}
-    >
-      <body>{props.children}</body>
-      <Analytics />
+    <html lang="en" className={jetbrainsMono.className}>
+      <body>
+        {children}
+      </body>
     </html>
   );
 }
