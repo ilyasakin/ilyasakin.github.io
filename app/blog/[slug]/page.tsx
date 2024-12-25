@@ -1,17 +1,14 @@
-import { Metadata } from "next";
+import { Metadata ,} from "next";
 import BlogPost from "./blog-post";
 import { getMediumPosts } from "../../../utils/medium";
 import { notFound } from "next/navigation";
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params:Promise< { slug: string }>} 
+): Promise<Metadata> {
+  const { slug } = await params;
   const posts = await getMediumPosts();
-  const post = posts.find(post => encodeURIComponent(post.title) === params.slug);
+  const post = posts.find(post => encodeURIComponent(post.title) === slug);
   
   if (!post) {
     return {
@@ -25,9 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(
+  { params }: { params:Promise< { slug: string }>} 
+) {
+  const { slug } = await params;
   const posts = await getMediumPosts();
-  const post = posts.find(post => encodeURIComponent(post.title) === params.slug);
+  const post = posts.find(post => encodeURIComponent(post.title) === slug);
   
   if (!post) {
     notFound();
