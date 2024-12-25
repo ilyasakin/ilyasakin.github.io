@@ -2,6 +2,8 @@ import styles from "../styles/index.module.scss";
 import Header from "../components/header/header";
 import Hero from "../components/hero/hero";
 import BackgroundController from "../components/background/background-controller";
+import Blog from "../components/blog/blog";
+import { Suspense } from "react";
 
 export default function HomePage() {
   return (
@@ -11,7 +13,9 @@ export default function HomePage() {
         <Header />
         <div className={styles.page}>
           <Hero />
-          {/* Blog section temporarily hidden */}
+          <Suspense fallback={<div>Loading blog posts...</div>}>
+            <Blog />
+          </Suspense>
         </div>
       </div>
     </>

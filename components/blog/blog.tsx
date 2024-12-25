@@ -1,22 +1,31 @@
 import styles from "./blog.module.scss";
-import { BLOG_POSTS } from "../../data/blog-posts";
-import Link from "next/link";
+import { getMediumPosts } from "../../utils/medium";
+import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
 
-export default function Blog() {
+export default async function Blog() {
+  const posts = await getMediumPosts();
+
   return (
     <section className={styles.blog}>
       <h2>Blog</h2>
       <div className={styles.posts}>
-        {BLOG_POSTS.map((post) => (
+        {posts.map((post) => (
           <Link 
-            href={`/blog/${post.slug}`} 
-            key={post.slug} 
+            href={`/blog/${encodeURIComponent(post.title)}`}
+            key={post.link} 
             className={styles.postLink}
           >
             <article className={styles.post}>
               <h3>{post.title}</h3>
               <p>{post.preview}</p>
-              <span className={styles.status}>{post.status}</span>
+              <div className={styles.meta}>
+                <time dateTime={post.pubDate}>
+                  {formatDistanceToNow(new Date(post.pubDate), { addSuffix: true })}
+                </time>
+                <span>·</span>
+                <span>medium.com</span>
+              </div>
             </article>
           </Link>
         ))}
