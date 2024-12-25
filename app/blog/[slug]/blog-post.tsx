@@ -2,6 +2,7 @@ import styles from "./blog-post.module.scss";
 import { MediumPost } from "../../../utils/medium";
 import Link from "next/link";
 import { formatDistanceToNow } from 'date-fns';
+import BackToTop from "../../../components/back-to-top/back-to-top";
 
 interface Props {
   post: MediumPost;
@@ -36,6 +37,8 @@ export default function BlogPost({ post }: Props) {
         </header>
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }} suppressHydrationWarning />
       </article>
+
+      <BackToTop />
     </div>
   );
 } 
