@@ -1,12 +1,10 @@
-"use client";
 import styles from "./blog-post.module.scss";
-import { BlogPost as BlogPostType } from "../../../data/blog-posts";
-import { FancyBackground } from "../../../assets/fancy-background";
-import { useEffect } from "react";
+import { MediumPost } from "../../../utils/medium";
 import Link from "next/link";
+import { formatDistanceToNow } from 'date-fns';
 
 interface Props {
-  post: BlogPostType;
+  post: MediumPost;
 }
 
 export default function BlogPost({ post }: Props) {
@@ -21,16 +19,22 @@ export default function BlogPost({ post }: Props) {
       <article className={styles.article}>
         <header>
           <h1>{post.title}</h1>
-          <p className={styles.status}>{post.status}</p>
+          <div className={styles.meta}>
+            <time suppressHydrationWarning dateTime={post.pubDate}>
+              {formatDistanceToNow(new Date(post.pubDate), { addSuffix: true })}
+            </time>
+            <span>·</span>
+            <a 
+              href={post.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.mediumLink}
+            >
+              Read on Medium
+            </a>
+          </div>
         </header>
-        
-        <div className={styles.content}>
-          {post.status === "Coming soon" ? (
-            <p>This article is currently being written. Check back soon!</p>
-          ) : (
-            post.content
-          )}
-        </div>
+        <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }} suppressHydrationWarning />
       </article>
     </div>
   );
