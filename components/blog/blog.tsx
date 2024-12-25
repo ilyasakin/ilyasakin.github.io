@@ -16,6 +16,7 @@ export default async function Blog() {
             href={`/blog/${toKebabCase(post.title)}`}
             key={post.link} 
             className={styles.postLink}
+            prefetch
           >
             <article className={styles.post}>
               <h3>{post.title}</h3>
