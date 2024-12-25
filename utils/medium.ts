@@ -31,6 +31,11 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
   
   const posts = feed.items.map(item => {
     const dom = new JSDOM(item['content:encoded'] || '');
+    dom.window.document.querySelectorAll("img").forEach(img => {
+        if (img.src.includes("post.clientViewed")) {
+            img.remove();
+        }
+    });
     const originalInnerHTML = dom.window.document.body.innerHTML;
     dom.window.document.body.querySelectorAll("figure").forEach(figure => {
         figure.remove();
