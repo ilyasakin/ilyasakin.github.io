@@ -4,13 +4,14 @@ import { BLOG_POSTS } from "../../../data/blog-posts";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = BLOG_POSTS.find(post => post.slug === params.slug);
+  const { slug } = await params;
+  const post = BLOG_POSTS.find(post => post.slug === slug);
   
   if (!post) {
     return {
@@ -24,8 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function Page({ params }: Props) {
-  const post = BLOG_POSTS.find(post => post.slug === params.slug);
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  const post = BLOG_POSTS.find(post => post.slug === slug);
   
   if (!post) {
     notFound();
