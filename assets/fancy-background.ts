@@ -123,7 +123,7 @@ export class FancyBackground {
         textureny.src,
         texturepz.src,
         texturenz.src,
-      ].map(url => this.isMobile ? url.replace(/\.(jpg|png)$/, '_small.$1') : url);
+      ];
 
       this.textureCube = new THREE.CubeTextureLoader().load(urls);
     }
