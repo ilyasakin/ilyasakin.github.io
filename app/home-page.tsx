@@ -2,6 +2,7 @@
 import styles from "../styles/index.module.scss";
 import Header from "../components/header/header";
 import Hero from "../components/hero/hero";
+import Blog from "../components/blog/blog";
 import { FancyBackground } from "../assets/fancy-background";
 import { useEffect } from "react";
 // This is a Client Component. It receives data as props and
@@ -43,6 +44,7 @@ export default function HomePage() {
 
       <div className={styles.page}>
         <Hero />
+        <Blog />
       </div>
     </div>
   );
