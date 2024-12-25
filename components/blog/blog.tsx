@@ -2,6 +2,7 @@ import styles from "./blog.module.scss";
 import { getMediumPosts } from "../../utils/medium";
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
+import { toKebabCase } from '../../utils/string';
 
 export default async function Blog() {
   const posts = await getMediumPosts();
@@ -12,7 +13,7 @@ export default async function Blog() {
       <div className={styles.posts}>
         {posts.map((post) => (
           <Link 
-            href={`/blog/${encodeURIComponent(post.title)}`}
+            href={`/blog/${toKebabCase(post.title)}`}
             key={post.link} 
             className={styles.postLink}
           >
