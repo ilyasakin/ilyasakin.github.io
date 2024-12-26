@@ -11,11 +11,16 @@
     "svgr": "svgr --typescript assets/icons --icon --replace-attr-values \"#000=currentColor\" -d components/icons"
   },
   "dependencies": {
+    "@types/jsdom": "^21.1.7",
     "@vercel/analytics": "^1.4.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^11.15.0",
+    "jsdom": "^25.0.1",
     "postprocessing": "6.36.4",
     "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "rss-parser": "^3.13.0",
     "sass": "^1.83.0",
     "three": "^0.171.0",
     "worker-timers": "^8.0.11"
