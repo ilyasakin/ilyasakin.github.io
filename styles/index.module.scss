@@ -1,21 +1,16 @@
 .container {
-  //background: rgba(0, 0, 0, 0.85);
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0 0 50px 100px rgba(0, 0, 0, 0.5);
-
-  @media (max-width: 1024px) {
-    background: rgba(0, 0, 0, 0.25);
-  }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .page {
-  min-height: calc(100dvh - (32px + 6rem));
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: calc(32px + 6rem);
-
-  @media (max-width: 768px) {
-    padding-bottom: calc(32px + 4rem);
-    min-height: calc(100dvh - (32px + 4rem));
-  }
+  gap: 4rem;
 }
