@@ -15,7 +15,6 @@ export class FancyBackground {
   private camera!: THREE.PerspectiveCamera;
   private scene!: THREE.Scene;
   private renderer!: THREE.WebGLRenderer;
-  private materials: THREE.MeshBasicMaterial[] = [];
   private objects: THREE.Mesh[] = [];
   private mouseX = 0;
   private mouseY = 0;
@@ -23,44 +22,49 @@ export class FancyBackground {
   private windowHalfY: number;
   private width: number;
   private height: number;
-  private nobjects: number = 0;
-  private singleMaterial: boolean = false;
   private postprocessing: {
     composer: EffectComposer | null;
     bokeh: BokehPass | null;
   } = { composer: null, bokeh: null };
-  
+
   private readonly isMobile = /Android|iPhone|iPad/i.test(
     typeof navigator !== "undefined" ? navigator.userAgent : "",
   );
-  
+
   private readonly isWebGL2: boolean;
 
   private readonly GRID_SIZE = {
-    x: this.isMobile ? 8 : 14,
-    y: this.isMobile ? 5 : 9,
-    z: this.isMobile ? 8 : 14
+    x: this.isMobile ? 6 : 10,
+    y: this.isMobile ? 4 : 7,
+    z: this.isMobile ? 6 : 10,
   };
   private readonly SPHERE_DETAIL = {
-    segments: this.isMobile ? 12 : 20,
-    rings: this.isMobile ? 6 : 10
+    segments: this.isMobile ? 8 : 16,
+    rings: this.isMobile ? 4 : 8,
   };
   private animationFrameId: number | null = null;
   private textureCube: THREE.CubeTexture | null = null;
 
   constructor() {
     this.isWebGL2 = this.getIsWebGL2();
-    this.windowHalfX = typeof window !== "undefined" ? window.innerWidth / 2 : 0;
-    this.windowHalfY = typeof window !== "undefined" ? window.innerHeight / 2 : 0;
+    this.windowHalfX =
+      typeof window !== "undefined" ? window.innerWidth / 2 : 0;
+    this.windowHalfY =
+      typeof window !== "undefined" ? window.innerHeight / 2 : 0;
     this.width = typeof window !== "undefined" ? window.innerWidth : 0;
     this.height = typeof window !== "undefined" ? window.innerHeight : 0;
 
     if (this.isWebGL2) {
       // Initialize core components in constructor
       this.scene = new THREE.Scene();
-      this.camera = new THREE.PerspectiveCamera(70, this.width / this.height, 1, 3000);
+      this.camera = new THREE.PerspectiveCamera(
+        70,
+        this.width / this.height,
+        1,
+        3000,
+      );
       this.renderer = new THREE.WebGLRenderer({ antialias: true });
-      
+
       // Bind methods
       this.onPointerMove = this.onPointerMove.bind(this);
       this.onWindowResize = this.onWindowResize.bind(this);
@@ -70,7 +74,7 @@ export class FancyBackground {
 
   private getIsWebGL2(): boolean {
     try {
-      const canvas = document.createElement("canvas");
+      const canvas: HTMLCanvasElement = document.createElement("canvas");
       return !!(window.WebGL2RenderingContext && canvas.getContext("webgl2"));
     } catch (e) {
       return false;
@@ -80,7 +84,7 @@ export class FancyBackground {
   public init(): void {
     if (!this.isWebGL2) return;
 
-    const container = document.createElement("div");
+    const container: HTMLDivElement = document.createElement("div");
     container.id = "fancy-background";
     container.style.position = "fixed";
     container.style.top = "0";
@@ -98,7 +102,12 @@ export class FancyBackground {
     document.body.appendChild(container);
 
     this.camera.position.z = 200;
-    this.renderer.setPixelRatio(window.devicePixelRatio / 20);
+    if (!this.isMobile) {
+      this.renderer.setPixelRatio(window.devicePixelRatio * 0.5);
+    } else {
+      // skip postprocessing on mobile
+      this.postprocessing.bokeh = null;
+    }
     this.renderer.setSize(this.width, this.height);
     container.appendChild(this.renderer.domElement);
 
@@ -128,18 +137,18 @@ export class FancyBackground {
       this.textureCube = new THREE.CubeTextureLoader().load(urls);
     }
 
-    const parameters = { 
-      color: 0xff4900, 
+    const parameters = {
+      color: 0xff4900,
       envMap: this.textureCube,
       fog: false,
       lights: false,
-      precision: this.isMobile ? 'lowp' as const : 'mediump' as const
+      precision: this.isMobile ? ("lowp" as const) : ("mediump" as const),
     };
 
     const geo = new THREE.SphereGeometry(
-      1, 
+      1,
       this.SPHERE_DETAIL.segments,
-      this.SPHERE_DETAIL.rings
+      this.SPHERE_DETAIL.rings,
     );
     geo.computeBoundingSphere();
 
@@ -147,19 +156,19 @@ export class FancyBackground {
     const instancedMesh = new THREE.InstancedMesh(
       geo,
       new THREE.MeshBasicMaterial(parameters),
-      this.GRID_SIZE.x * this.GRID_SIZE.y * this.GRID_SIZE.z
+      this.GRID_SIZE.x * this.GRID_SIZE.y * this.GRID_SIZE.z,
     );
 
-    const matrix = new THREE.Matrix4();
-    const s = 60;
-    let count = 0;
+    const matrix: THREE.Matrix4 = new THREE.Matrix4();
+    const s: number = 60;
+    let count: number = 0;
 
     for (let i = 0; i < this.GRID_SIZE.x; i++) {
       for (let j = 0; j < this.GRID_SIZE.y; j++) {
         for (let k = 0; k < this.GRID_SIZE.z; k++) {
-          const x = 200 * (i - this.GRID_SIZE.x / 2);
-          const y = 200 * (j - this.GRID_SIZE.y / 2);
-          const z = 200 * (k - this.GRID_SIZE.z / 2);
+          const x: number = 200 * (i - this.GRID_SIZE.x / 2);
+          const y: number = 200 * (j - this.GRID_SIZE.y / 2);
+          const z: number = 200 * (k - this.GRID_SIZE.z / 2);
 
           matrix.makeTranslation(x, y, z);
           matrix.scale(new THREE.Vector3(s, s, s));
@@ -182,18 +191,18 @@ export class FancyBackground {
         this.mouseY = Math.random() * window.innerHeight;
       }, 1500);
     }
-    
+
     window.addEventListener("resize", this.onWindowResize);
   }
 
   private onPointerMove(event: PointerEvent): void {
     if (!this.isWebGL2 || !event.isPrimary) return;
-    
+
     this.mouseX = event.clientX - this.windowHalfX;
     this.mouseY = event.clientY - this.windowHalfY;
   }
 
-  private onWindowResize(): void {
+  private onWindowResize(event: UIEvent): void {
     if (!this.isWebGL2) return;
 
     this.windowHalfX = window.innerWidth / 2;
@@ -242,8 +251,8 @@ export class FancyBackground {
 
     // Color animation for instanced mesh
     if (this.objects[0] instanceof THREE.InstancedMesh) {
-      const material = this.objects[0].material as THREE.MeshBasicMaterial;
-      const h = (time % 1); // Cycles between 0 and 1
+      const material: THREE.MeshBasicMaterial = this.objects[0].material;
+      const h: number = time % 1; // Cycles between 0 and 1
       material.color.setHSL(h, 1, 0.5);
       material.needsUpdate = true;
     }
@@ -255,7 +264,7 @@ export class FancyBackground {
 
   public animate(): void {
     if (!this.isWebGL2) return;
-    
+
     this.render();
     this.animationFrameId = requestAnimationFrame(this.animate);
   }
@@ -268,13 +277,13 @@ export class FancyBackground {
     }
 
     // Dispose of geometries and materials
-    this.objects.forEach(object => {
+    this.objects.forEach((object) => {
       if (object.geometry) {
         object.geometry.dispose();
       }
       if (object instanceof THREE.Mesh && object.material) {
         if (Array.isArray(object.material)) {
-          object.material.forEach(material => material.dispose());
+          object.material.forEach((material) => material.dispose());
         } else {
           object.material.dispose();
         }
@@ -304,6 +313,5 @@ export class FancyBackground {
 
     // Clear arrays
     this.objects = [];
-    this.materials = [];
   }
 }
