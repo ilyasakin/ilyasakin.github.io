@@ -16,10 +16,10 @@ export default function MailButton() {
             {isCopied ? "Copied!" : "Click to copy"}
           </div>
           {!isCopied && (
-            <div className={style.tooltip__text}>ilyas.akin@yahoo.com </div>
+            <div className={style.tooltip__text}>ilyas.akin@yahoo.com</div>
           )}
         </div>
-        <div className={style.tooltip__filler}></div>
+        <div className={style.tooltip__arrow}></div>
       </div>
       <Mail
         className={style.hero__icon}
