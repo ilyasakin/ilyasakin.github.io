@@ -12,15 +12,18 @@ export async function generateMetadata(
   const posts = await getMediumPosts();
   const post = posts.find(post => toKebabCase(post.title) === slug);
   
-  if (!post) {
-    return {
-      title: "Post Not Found - Ilyas Akin",
-    };
-  }
+  if (!post) return {};
 
   return {
-    title: `${post.title} - Ilyas Akin`,
+    title: post.title,
     description: post.preview,
+    openGraph: {
+      title: post.title,
+      description: post.preview,
+      type: 'article',
+      publishedTime: post.pubDate,
+      authors: ['İlyas Akın'],
+    },
   };
 }
 
