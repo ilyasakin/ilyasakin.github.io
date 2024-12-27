@@ -6,18 +6,17 @@ import styles from '../../app/blog/[slug]/blog-post.module.scss';
 export default function BackButton() {
   const router = useRouter();
 
-  const handleBack = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleBack = () => {
     router.back();
   };
 
   return (
-    <a 
-      href="/"
+    <button 
       onClick={handleBack}
       className={styles.backLink}
+      type="button"
     >
       ← Back to home
-    </a>
+    </button>
   );
 } 
