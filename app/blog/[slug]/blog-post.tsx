@@ -11,29 +11,39 @@ interface Props {
 export default function BlogPost({ post }: Props) {
   return (
     <div className={styles.container}>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} aria-label="Navigation">
         <BackButton />
       </nav>
       
-      <article className={styles.article}>
+      <article className={styles.article} itemScope itemType="http://schema.org/BlogPosting">
         <header>
-          <h1>{post.title}</h1>
+          <h1 itemProp="headline">{post.title}</h1>
           <div className={styles.meta}>
-            <time suppressHydrationWarning dateTime={post.pubDate}>
+            <time 
+              itemProp="datePublished" 
+              suppressHydrationWarning 
+              dateTime={post.pubDate}
+            >
               {formatDistanceToNow(new Date(post.pubDate), { addSuffix: true })}
             </time>
-            <span>·</span>
+            <span aria-hidden="true">·</span>
             <a 
               href={post.link}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.mediumLink}
+              itemProp="url"
             >
               Read on Medium
             </a>
           </div>
         </header>
-        <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }} suppressHydrationWarning />
+        <div 
+          className={styles.content} 
+          itemProp="articleBody"
+          dangerouslySetInnerHTML={{ __html: post.content }} 
+          suppressHydrationWarning 
+        />
       </article>
 
       <BackToTop />
