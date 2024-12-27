@@ -11,12 +11,22 @@
 }
 
 .backLink {
+  height: 38px;
   color: #fff;
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.1);
   transition: background 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  font-weight: inherit;
+  appearance: none;
   
   &:hover {
     background: rgba(255, 255, 255, 0.15);
