@@ -1,8 +1,8 @@
 import styles from "./blog-post.module.scss";
 import { MediumPost } from "../../../utils/medium";
-import Link from "next/link";
 import { formatDistanceToNow } from 'date-fns';
 import BackToTop from "../../../components/back-to-top/back-to-top";
+import BackButton from "../../../components/back-button/back-button";
 
 interface Props {
   post: MediumPost;
@@ -12,13 +12,7 @@ export default function BlogPost({ post }: Props) {
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <Link 
-          href="/" 
-          className={styles.backLink}
-          scroll={false}
-        >
-          ← Back to home
-        </Link>
+        <BackButton />
       </nav>
       
       <article className={styles.article}>
