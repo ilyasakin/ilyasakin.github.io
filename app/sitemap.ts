@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getMediumPosts, MediumPost } from '../utils/medium'
+import { toKebabCase } from '../utils/string'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ilyasakin.dev'
@@ -9,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   // Create sitemap entries for blog posts
   const blogEntries = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.link.split('/').pop()}`,
+    url: `${baseUrl}/blog/${toKebabCase(post.title)}`,
     lastModified: new Date(post.pubDate),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
