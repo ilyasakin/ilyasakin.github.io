@@ -12,7 +12,11 @@ export default function BlogPost({ post }: Props) {
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.backLink}>
+        <Link 
+          href="/" 
+          className={styles.backLink}
+          scroll={false}
+        >
           ← Back to home
         </Link>
       </nav>
