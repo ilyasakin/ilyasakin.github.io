@@ -14,19 +14,6 @@ export const metadata: Metadata = {
   keywords: ['web development', 'full-stack', 'software engineering', 'React', 'Node.js', 'TypeScript', 'blog'],
   authors: [{ name: 'İlyas Akın' }],
   creator: 'İlyas Akın',
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://ilyasakin.dev',
-    siteName: 'İlyas Akın',
-    title: 'İlyas Akın - Senior Full-Stack Web Developer',
-    description: 'Senior full-stack web developer crafting code at Kuika Software. Blog posts about web development, software engineering, and technology.',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'İlyas Akın - Senior Full-Stack Web Developer',
-    description: 'Senior full-stack web developer crafting code at Kuika Software. Blog posts about web development, software engineering, and technology.',
-  },
   robots: {
     index: true,
     follow: true,
@@ -38,9 +25,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     }
   },
-  verification: {
-    google: 'your-google-site-verification', // Add your Google verification code
-  }
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
