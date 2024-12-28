@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { toKebabCase } from "../../../utils/string";
 import PageTransition from "../../../components/transitions/page-transition";
 
+export const runtime = 'edge';
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }>} 
 ): Promise<Metadata> {
