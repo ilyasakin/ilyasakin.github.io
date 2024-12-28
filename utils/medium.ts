@@ -1,5 +1,5 @@
 import Parser from "rss-parser";
-import { JSDOM } from "jsdom";
+import { Window } from "happy-dom";
 
 export interface MediumPost {
   title: string;
@@ -31,22 +31,27 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
       const feed = await parser.parseString(xmlText);
 
       return feed.items.map((item) => {
-        const dom = new JSDOM(item["content:encoded"] || "");
-        dom.window.document.querySelectorAll("img").forEach((img) => {
+        const window = new Window();
+        const document = window.document;
+        document.body.innerHTML = item["content:encoded"] || "";
+
+        // Remove tracking images
+        document.querySelectorAll("img").forEach((img) => {
           if (img.src.includes("post.clientViewed")) {
             img.remove();
           }
         });
-        const originalInnerHTML = dom.window.document.body.innerHTML;
-        dom.window.document.body.querySelectorAll("figure").forEach((figure) => {
+
+        const originalInnerHTML = document.body.innerHTML;
+
+        // Remove figures and headers for preview text
+        document.querySelectorAll("figure").forEach((figure) => {
           figure.remove();
         });
-        dom.window.document
-          .querySelectorAll("h1, h2, h3, h4, h5, h6")
-          .forEach((header) => {
-            header.remove();
-          });
-        const textContent = dom.window.document.body.textContent || "";
+        document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((header) => {
+          header.remove();
+        });
+        const textContent = document.body.textContent || "";
 
         return {
           title: item.title || "",
