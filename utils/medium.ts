@@ -13,7 +13,16 @@ export interface MediumPost {
 const MAX_RETRIES = 3;
 const INITIAL_RETRY_DELAY = 1000;
 
+let cachedPosts: MediumPost[] | null = null;
+const CACHE_DURATION = 86400000; // 24 hours in milliseconds
+let lastFetchTime: number = 0;
+
 export async function getMediumPosts(): Promise<MediumPost[]> {
+  // Return cached posts if they exist and aren't expired
+  if (cachedPosts && (Date.now() - lastFetchTime) < CACHE_DURATION) {
+    return cachedPosts;
+  }
+
   let lastError: Error | null = null;
   
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
@@ -30,7 +39,7 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
       const parser = new Parser();
       const feed = await parser.parseString(xmlText);
 
-      return feed.items.map((item) => {
+      const parsedPosts = feed.items.map((item) => {
         const window = new Window();
         const document = window.document;
         document.body.innerHTML = item["content:encoded"] || "";
@@ -64,6 +73,11 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
           )?.[1],
         };
       });
+
+      // Cache the results
+      cachedPosts = parsedPosts;
+      lastFetchTime = Date.now();
+      return parsedPosts;
     } catch (err) {
       lastError = err as Error;
       

@@ -5,6 +5,18 @@ import { notFound } from "next/navigation";
 import { toKebabCase } from "../../../utils/string";
 import PageTransition from "../../../components/transitions/page-transition";
 
+// Force static generation
+export const dynamic = 'force-static';
+export const revalidate = 86400; // Revalidate every 24 hours
+
+// Generate static paths at build time
+export async function generateStaticParams() {
+  const posts = await getMediumPosts();
+  return posts.map((post) => ({
+    slug: toKebabCase(post.title),
+  }));
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }>} 
 ): Promise<Metadata> {

@@ -4,6 +4,9 @@ import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 import { toKebabCase } from '../../utils/string';
 
+export const dynamic = 'force-static';
+export const revalidate = 86400; // Revalidate every 24 hours
+
 export default async function Blog() {
   const posts = await getMediumPosts();
 
@@ -16,7 +19,7 @@ export default async function Blog() {
             href={`/blog/${toKebabCase(post.title)}`}
             key={post.link} 
             className={styles.postLink}
-            prefetch
+            prefetch={false}
           >
             <article className={styles.post}>
               <h3>{post.title}</h3>
