@@ -3,12 +3,12 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass";
 import { BokehPass } from "three/examples/jsm/postprocessing/BokehPass";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import texturepx from "../assets/textures/px.jpg";
-import texturepy from "../assets/textures/py.jpg";
-import texturepz from "../assets/textures/pz.jpg";
-import texturenx from "../assets/textures/nx.jpg";
-import textureny from "../assets/textures/ny.jpg";
-import texturenz from "../assets/textures/nz.jpg";
+import texturepx from "../assets/textures/px.avif";
+import texturepy from "../assets/textures/py.avif";
+import texturepz from "../assets/textures/pz.avif";
+import texturenx from "../assets/textures/nx.avif";
+import textureny from "../assets/textures/ny.avif";
+import texturenz from "../assets/textures/nz.avif";
 import { setInterval } from "worker-timers";
 
 export class FancyBackground {
