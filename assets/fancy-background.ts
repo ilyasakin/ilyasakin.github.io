@@ -22,8 +22,8 @@ export class FancyBackground {
   private scene!: THREE.Scene;
   private renderer!: THREE.WebGLRenderer;
   private objects: THREE.Mesh[] = [];
-  private mouseX = 0;
-  private mouseY = 0;
+  private mouseX: number = 0;
+  private mouseY: number = 0;
   private windowHalfX: number;
   private windowHalfY: number;
   private width: number;
@@ -33,7 +33,7 @@ export class FancyBackground {
     bokeh: BokehPass | null;
   } = { composer: null, bokeh: null };
 
-  private readonly isMobile = /Android|iPhone|iPad/i.test(
+  private readonly isMobile: boolean = /Android|iPhone|iPad/i.test(
     typeof navigator !== "undefined" ? navigator.userAgent : "",
   );
 
@@ -159,7 +159,7 @@ export class FancyBackground {
       precision: this.isMobile ? ("lowp" as const) : ("mediump" as const),
     };
 
-    const geo = new THREE.SphereGeometry(
+    const geo: THREE.SphereGeometry = new THREE.SphereGeometry(
       1,
       this.SPHERE_DETAIL.segments,
       this.SPHERE_DETAIL.rings,
@@ -210,7 +210,7 @@ export class FancyBackground {
   }
 
   private onPointerMove(event: PointerEvent): void {
-    if (!this.isWebGL2 || !event.isPrimary) return;
+    if (!this.isWebGL2 || !event.isPrimary || this.isMobile) return;
 
     this.mouseX = event.clientX - this.windowHalfX;
     this.mouseY = event.clientY - this.windowHalfY;
@@ -256,7 +256,7 @@ export class FancyBackground {
   private render(): void {
     if (!this.isWebGL2) return;
 
-    const time = Date.now() * 0.00005;
+    const time: number = Date.now() * 0.00005;
 
     // Camera movement
     this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.036;
