@@ -3,12 +3,18 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass";
 import { BokehPass } from "three/examples/jsm/postprocessing/BokehPass";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import texturepx from "../assets/textures/px.avif";
-import texturepy from "../assets/textures/py.avif";
-import texturepz from "../assets/textures/pz.avif";
-import texturenx from "../assets/textures/nx.avif";
-import textureny from "../assets/textures/ny.avif";
-import texturenz from "../assets/textures/nz.avif";
+import texturepxAvif from "../assets/textures/px.avif";
+import texturepyAvif from "../assets/textures/py.avif";
+import texturepzAvif from "../assets/textures/pz.avif";
+import texturenxAvif from "../assets/textures/nx.avif";
+import texturenyAvif from "../assets/textures/ny.avif";
+import texturenzAvif from "../assets/textures/nz.avif";
+import texturepxJpg from "../assets/textures/px.jpg";
+import texturepyJpg from "../assets/textures/py.jpg";
+import texturepzJpg from "../assets/textures/pz.jpg";
+import texturenxJpg from "../assets/textures/nx.jpg";
+import texturenyJpg from "../assets/textures/ny.jpg";
+import texturenzJpg from "../assets/textures/nz.jpg";
 import { setInterval } from "worker-timers";
 
 export class FancyBackground {
@@ -122,19 +128,33 @@ export class FancyBackground {
     this.animate();
   }
 
+  private async checkAvifSupport(): Promise<boolean> {
+    if (typeof window === 'undefined') return false;
+    
+    const img = new Image();
+    img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=';
+    
+    return new Promise((resolve) => {
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+    });
+  }
+
   private setupScene(): void {
     // Pre-load textures once
     if (!this.textureCube) {
-      const urls = [
-        texturepx.src,
-        texturenx.src,
-        texturepy.src,
-        textureny.src,
-        texturepz.src,
-        texturenz.src,
-      ];
+      this.checkAvifSupport().then(supportsAvif => {
+        const urls = [
+          supportsAvif ? texturepxAvif.src : texturepxJpg.src,
+          supportsAvif ? texturenxAvif.src : texturenxJpg.src,
+          supportsAvif ? texturepyAvif.src : texturepyJpg.src,
+          supportsAvif ? texturenyAvif.src : texturenyJpg.src,
+          supportsAvif ? texturepzAvif.src : texturepzJpg.src,
+          supportsAvif ? texturenzAvif.src : texturenzJpg.src,
+        ];
 
-      this.textureCube = new THREE.CubeTextureLoader().load(urls);
+        this.textureCube = new THREE.CubeTextureLoader().load(urls);
+      });
     }
 
     const parameters = {
