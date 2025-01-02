@@ -128,33 +128,27 @@ export class FancyBackground {
     this.animate();
   }
 
-  private async checkAvifSupport(): Promise<boolean> {
+  private checkAvifSupport(): boolean {
     if (typeof window === 'undefined') return false;
     
-    const img = new Image();
-    img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=';
-    
-    return new Promise((resolve) => {
-      img.onload = () => resolve(true);
-      img.onerror = () => resolve(false);
-    });
+    const canvas = document.createElement('canvas');
+    return canvas.toDataURL('image/avif').indexOf('data:image/avif') === 0;
   }
 
   private setupScene(): void {
     // Pre-load textures once
     if (!this.textureCube) {
-      this.checkAvifSupport().then(supportsAvif => {
-        const urls = [
-          supportsAvif ? texturepxAvif.src : texturepxJpg.src,
-          supportsAvif ? texturenxAvif.src : texturenxJpg.src,
-          supportsAvif ? texturepyAvif.src : texturepyJpg.src,
-          supportsAvif ? texturenyAvif.src : texturenyJpg.src,
-          supportsAvif ? texturepzAvif.src : texturepzJpg.src,
-          supportsAvif ? texturenzAvif.src : texturenzJpg.src,
-        ];
+      const supportsAvif = this.checkAvifSupport();
+      const urls = [
+        supportsAvif ? texturepxAvif.src : texturepxJpg.src,
+        supportsAvif ? texturenxAvif.src : texturenxJpg.src,
+        supportsAvif ? texturepyAvif.src : texturepyJpg.src,
+        supportsAvif ? texturenyAvif.src : texturenyJpg.src,
+        supportsAvif ? texturepzAvif.src : texturepzJpg.src,
+        supportsAvif ? texturenzAvif.src : texturenzJpg.src,
+      ];
 
-        this.textureCube = new THREE.CubeTextureLoader().load(urls);
-      });
+      this.textureCube = new THREE.CubeTextureLoader().load(urls);
     }
 
     const parameters = {
