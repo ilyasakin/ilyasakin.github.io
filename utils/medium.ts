@@ -8,6 +8,7 @@ export interface MediumPost {
   content: string;
   thumbnail?: string;
   preview: string;
+  isLocal: false;
 }
 
 const MAX_RETRIES = 3;
@@ -71,6 +72,7 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
           thumbnail: item["content:encoded"]?.match(
             /<img[^>]*src="([^"]*)"[^>]*>/,
           )?.[1],
+          isLocal: false as const,
         };
       });
 

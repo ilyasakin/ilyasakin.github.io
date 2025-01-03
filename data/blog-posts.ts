@@ -1,28 +1,43 @@
-export interface BlogPost {
+import { MediumPost } from "../utils/medium";
+
+export interface LocalBlogPost {
   slug: string;
   title: string;
   preview: string;
-  status: "Coming soon" | "Published";
-  content?: React.ReactNode;
+  content: string;
+  pubDate: string;
+  isLocal: true;
 }
 
-export const BLOG_POSTS: BlogPost[] = [
+export interface MediumBlogPost {
+  title: string;
+  link: string;
+  pubDate: string;
+  content: string;
+  thumbnail?: string;
+  preview: string;
+  isLocal: false;
+}
+
+export type BlogPost = LocalBlogPost | MediumBlogPost;
+
+export const LOCAL_BLOG_POSTS: LocalBlogPost[] = [
   {
-    slug: "building-modern-web-portfolio",
-    title: "Building a Modern Web Portfolio",
-    preview: "A deep dive into how I built this website using Next.js, Three.js, and TypeScript. Exploring performance optimization and modern design principles.",
-    status: "Coming soon"
-  },
-  {
-    slug: "webgl-and-threejs-effects",
-    title: "WebGL and Three.js Effects",
-    preview: "Learn how to create engaging 3D backgrounds and effects using WebGL and Three.js. From basic setup to advanced post-processing.",
-    status: "Coming soon"
-  },
-  {
-    slug: "typescript-best-practices",
-    title: "TypeScript Best Practices",
-    preview: "Essential TypeScript patterns and practices I've learned while building large-scale applications. Including real-world examples and common pitfalls.",
-    status: "Coming soon"
+    slug: "exile-on-the-main-st",
+    title: "Exile on the Main St",
+    preview: "!Hola¡ from a new day in glorious hell called planet earth of ours...",
+    pubDate: "2025-01-03T02:00:00Z",
+    content: `
+!Hola¡ from a new day in glorious hell called planet earth of ours.
+
+Today marks a new arc in my life which includes me growing a pair and accepting my shortcomings and dealing with them with a collossal fucking hammer.
+
+Even, a villain arc as some might say.
+
+Life is too short for your, and, especially your bullshit for your own fucking sake.
+
+Time to grow the fuck up.
+`,
+    isLocal: true
   }
 ]; 
