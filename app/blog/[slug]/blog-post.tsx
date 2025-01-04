@@ -46,7 +46,6 @@ export default async function BlogPost({ post }: Props) {
     Array.from(imageUrls).map(async (url) => {
       const { base64 } = await getImage(url);
       if (base64) placeholders.set(url, base64);
-      console.log(base64);
     })
   );
 
