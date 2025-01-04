@@ -13,21 +13,21 @@ interface Props {
   post: BlogPostType;
 }
 
-async function getBase64(imageUrl: string) {
-  try {
-    const res = await fetch(imageUrl);
-    if (!res.ok) {
-      throw new Error(`Failed to fetch image: ${res.status} ${res.statusText}`);
-    }
-
-    const buffer = await res.arrayBuffer();
-    const { base64 } = await getPlaiceholder(Buffer.from(buffer));
-    return base64;
-  } catch (e) {
-    console.error('Error generating placeholder:', e);
-    return undefined;
-  }
-}
+const getImage = async (src: string) => {
+  const buffer = await fetch(src).then(async (res) =>
+    Buffer.from(await res.arrayBuffer())
+  );
+ 
+  const {
+    metadata: { height, width },
+    ...plaiceholder
+  } = await getPlaiceholder(buffer, { size: 10 });
+ 
+  return {
+    ...plaiceholder,
+    img: { src, height, width },
+  };
+};
 
 export default async function BlogPost({ post }: Props) {
   const isLocalPost = 'isLocal' in post && post.isLocal === true;
@@ -44,8 +44,9 @@ export default async function BlogPost({ post }: Props) {
   const placeholders = new Map<string, string>();
   await Promise.all(
     Array.from(imageUrls).map(async (url) => {
-      const base64 = await getBase64(url);
+      const { base64 } = await getImage(url);
       if (base64) placeholders.set(url, base64);
+      console.log(base64);
     })
   );
 
@@ -54,7 +55,7 @@ export default async function BlogPost({ post }: Props) {
       if (domNode instanceof Element && domNode.name === 'img') {
         const { src, alt = '', width = '800', height = '400' } = domNode.attribs;
         const blurDataURL = placeholders.get(src);
-        
+
         return (
           <Image
             src={src}
