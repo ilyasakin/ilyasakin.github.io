@@ -1,9 +1,11 @@
 import styles from "./blog-post.module.scss";
 import { BlogPost as BlogPostType } from "../../../data/blog-posts";
-import Link from "next/link";
 import { formatDistanceToNow } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import BackButton from "../../../components/back-button/back-button";
+import parse, { HTMLReactParserOptions, Element, domToReact } from 'html-react-parser';
+import Image from "next/image";
+import { sanitize } from 'isomorphic-dompurify';
 
 interface Props {
   post: BlogPostType;
@@ -11,6 +13,34 @@ interface Props {
 
 export default function BlogPost({ post }: Props) {
   const isLocalPost = 'isLocal' in post && post.isLocal === true;
+
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      if (domNode instanceof Element && domNode.name === 'img') {
+        const { src, alt = '', width = '800', height = '400' } = domNode.attribs;
+        return (
+          <Image
+            src={src}
+            alt={alt}
+            width={parseInt(width, 10)}
+            height={parseInt(height, 10)}
+            className={domNode.attribs.class}
+          />
+        );
+      }
+    }
+  };
+
+  const sanitizedContent = sanitize(post.content, {
+    USE_PROFILES: { html: true },
+    ALLOWED_TAGS: [
+      'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'img',
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
+      'figure', 'figcaption'
+    ],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'width', 'height', 'class']
+  });
 
   return (
     <div className={styles.container}>
@@ -52,8 +82,9 @@ export default function BlogPost({ post }: Props) {
           <div 
             className={styles.content} 
             itemProp="articleBody"
-            dangerouslySetInnerHTML={{ __html: post.content }} 
-          />
+          >
+            {parse(sanitizedContent, options)}
+          </div>
         )}
       </article>
     </div>
