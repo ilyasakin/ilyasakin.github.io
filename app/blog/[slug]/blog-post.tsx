@@ -144,7 +144,7 @@ export default async function BlogPost({ post }: Props) {
         </header>
 
         {isLocalPost ? (
-          <div className={styles.content}>
+          <div className={styles.content} itemProp="articleBody">
             <ReactMarkdown>{post.content}</ReactMarkdown>
           </div>
         ) : (
