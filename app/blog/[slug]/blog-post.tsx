@@ -1,5 +1,4 @@
 import styles from "./blog-post.module.scss";
-import { BlogPost as BlogPostType } from "../../../data/blog-posts";
 import { formatDistanceToNow } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import BackButton from "../../../components/back-button/back-button";
@@ -8,6 +7,7 @@ import Image from "next/image";
 import { sanitize } from "isomorphic-dompurify";
 import { getPlaiceholder } from "plaiceholder";
 import { JSDOM } from "jsdom";
+import { IBlogPost as BlogPostType } from "../../../types/blog";
 
 interface Props {
   post: BlogPostType;
@@ -30,7 +30,7 @@ const getImage = async (src: string) => {
 };
 
 export default async function BlogPost({ post }: Props) {
-  const isLocalPost = "isLocal" in post && post.isLocal === true;
+  const isLocalPost = post.source === 'local';
 
   // Extract all image URLs from the content using JSDOM
   const imageUrls = new Set<string>();
@@ -129,7 +129,7 @@ export default async function BlogPost({ post }: Props) {
               {formatDistanceToNow(new Date(post.pubDate), { addSuffix: true })}
             </time>
             <span aria-hidden="true">·</span>
-            {!post.isLocal && (
+            {post.source === 'medium' && (
               <a
                 href={post.link}
                 target="_blank"

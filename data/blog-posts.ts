@@ -1,27 +1,6 @@
-import { MediumPost } from "../utils/medium";
+import { IBlogPost } from "../types/blog";
 
-export interface LocalBlogPost {
-  slug: string;
-  title: string;
-  preview: string;
-  content: string;
-  pubDate: string;
-  isLocal: true;
-}
-
-export interface MediumBlogPost {
-  title: string;
-  link: string;
-  pubDate: string;
-  content: string;
-  thumbnail?: string;
-  preview: string;
-  isLocal: false;
-}
-
-export type BlogPost = LocalBlogPost | MediumBlogPost;
-
-export const LOCAL_BLOG_POSTS: LocalBlogPost[] = [
+export const LOCAL_BLOG_POSTS: IBlogPost[] = [
 //   {
 //     slug: "exile-on-the-main-st",
 //     title: "Exile on the Main St",

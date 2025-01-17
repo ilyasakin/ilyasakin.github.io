@@ -1,19 +1,15 @@
 import styles from "./blog.module.scss";
-import { getMediumPosts } from "../../utils/medium";
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 import { toKebabCase } from '../../utils/string';
-import { LOCAL_BLOG_POSTS, BlogPost } from "../../data/blog-posts";
+import { IBlogPost } from "../../types/blog";
+import { blogService } from "../../services/blog-service";
 
 export const dynamic = 'force-static';
 export const revalidate = 86400; // Revalidate every 24 hours
 
 export default async function Blog() {
-  const mediumPosts = await getMediumPosts();
-  const allPosts: BlogPost[] = [
-    ...LOCAL_BLOG_POSTS,
-    ...mediumPosts.map(post => ({ ...post, isLocal: false as const }))
-  ].sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+  const allPosts: IBlogPost[] = (await blogService.getAllPosts()).sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
   return (
     <section className={styles.blog}>
@@ -21,8 +17,8 @@ export default async function Blog() {
       <div className={styles.posts}>
         {allPosts.map((post) => (
           <Link 
-            href={post.isLocal ? `/blog/${post.slug}` : `/blog/${toKebabCase(post.title)}`}
-            key={post.isLocal ? post.slug : post.link} 
+            href={post.source === 'local' ? `/blog/${post.slug}` : `/blog/${toKebabCase(post.title)}`}
+            key={post.source === 'local' ? post.slug : post.link} 
             className={styles.postLink}
             prefetch={false}
           >
@@ -34,7 +30,7 @@ export default async function Blog() {
                   {formatDistanceToNow(new Date(post.pubDate), { addSuffix: true })}
                 </time>
                 <span>·</span>
-                <span>{post.isLocal ? 'Personal Blog' : 'medium.com'}</span>
+                <span>{post.source === 'local' ? 'Personal Blog' : 'medium.com'}</span>
               </div>
             </article>
           </Link>
