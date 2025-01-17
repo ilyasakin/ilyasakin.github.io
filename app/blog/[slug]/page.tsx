@@ -1,68 +1,40 @@
 import { Metadata } from "next";
 import BlogPost from "./blog-post";
-import { getMediumPosts } from "../../../utils/medium";
 import { notFound } from "next/navigation";
-import { toKebabCase } from "../../../utils/string";
-import { LOCAL_BLOG_POSTS } from "../../../data/blog-posts";
+import { blogService } from "../../../services/blog-service";
 import PageTransition from "../../../components/transitions/page-transition";
 
 export async function generateStaticParams() {
-  const mediumPosts = await getMediumPosts();
-  return [
-    ...LOCAL_BLOG_POSTS.map((post) => ({
-      slug: post.slug,
-    })),
-    ...mediumPosts.map((post) => ({
-      slug: toKebabCase(post.title),
-    })),
-  ];
+  const posts = await blogService.getAllPosts();
+  return posts.map(post => ({
+    slug: post.slug,
+  }));
 }
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }>} 
 ): Promise<Metadata> {
   const { slug } = await params;
-  const localPost = LOCAL_BLOG_POSTS.find(post => post.slug === slug);
-  if (localPost) {
-    return {
-      title: localPost.title,
-      description: localPost.preview,
-    };
-  }
-
-  // Then check medium posts
-  const mediumPosts = await getMediumPosts();
-  const mediumPost = mediumPosts.find(post => toKebabCase(post.title) === slug);
-  if (!mediumPost) return {};
+  const post = await blogService.getPost(slug);
+  if (!post) return {};
 
   return {
-    title: mediumPost.title,
-    description: mediumPost.preview,
+    title: post.title,
+    description: post.preview,
   };
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const localPost = LOCAL_BLOG_POSTS.find(post => post.slug === slug);
-  if (localPost) {
-    return (
-      <PageTransition>
-        <BlogPost post={{ ...localPost, isLocal: true }} />
-      </PageTransition>
-    );
-  }
-
-  // Then check medium posts
-  const mediumPosts = await getMediumPosts();
-  const mediumPost = mediumPosts.find(post => toKebabCase(post.title) === slug);
+  const post = await blogService.getPost(slug);
   
-  if (!mediumPost) {
+  if (!post) {
     notFound();
   }
 
   return (
     <PageTransition>
-      <BlogPost post={{ ...mediumPost, isLocal: false }} />
+      <BlogPost post={post} />
     </PageTransition>
   );
 } 

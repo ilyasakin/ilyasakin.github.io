@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next'
-import { getMediumPosts, MediumPost } from '../utils/medium'
 import { toKebabCase } from '../utils/string'
+import { blogService } from '../services/blog-service'
+import { IBlogPost } from '../types/blog'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ilyasakin.dev'
   
   // Get all blog posts
-  const posts: MediumPost[] = await getMediumPosts()
+  const posts: IBlogPost[] = await blogService.getAllPosts()
   
   // Create sitemap entries for blog posts
   const blogEntries = posts.map((post) => ({
