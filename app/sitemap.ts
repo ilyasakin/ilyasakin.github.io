@@ -5,27 +5,21 @@ import { IBlogPost } from '../types/blog'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ilyasakin.dev'
-  
-  // Get all blog posts
   const posts: IBlogPost[] = await blogService.getAllPosts()
   
-  // Create sitemap entries for blog posts
-  const blogEntries = posts.map((post) => ({
+  const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/blog/${toKebabCase(post.title)}`,
     lastModified: new Date(post.pubDate),
     changeFrequency: 'monthly' as const,
-    priority: 0.7,
-    description: `Read ${post.title} - A blog post by İlyas Akın about web development, software engineering, and technology.`
+    priority: 0.7
   }))
 
-  // Add static pages
-  const staticPages = [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
-      priority: 1,
-      description: "İlyas Akın's personal website - Senior full-stack web developer crafting code at Kuika Software. Blog posts about web development, software engineering, and technology."
+      priority: 1
     },
   ]
 
