@@ -16,7 +16,7 @@ export default function MailButton() {
             {isCopied ? "Copied!" : "Click to copy"}
           </div>
           {!isCopied && (
-            <div className={style.tooltip__text}>ilyas.akin@yahoo.com</div>
+            <div className={style.tooltip__text}>me@ilyasakin.dev</div>
           )}
         </div>
         <div className={style.tooltip__arrow}></div>
@@ -27,7 +27,7 @@ export default function MailButton() {
         width={10 * MM_TO_PX}
         style={{ cursor: "pointer" }}
         onClick={() => {
-          navigator.clipboard.writeText("ilyas.akin@yahoo.com");
+          navigator.clipboard.writeText("me@ilyasakin.dev");
           setIsCopied(true);
         }}
         onMouseLeave={() => setTimeout(() => setIsCopied(false), 150)}
@@ -35,4 +35,4 @@ export default function MailButton() {
       <span className={style.hero__link_text}>Mail</span>
     </div>
   );
-} 
+}
