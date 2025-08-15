@@ -1,0 +1,20 @@
+{{ define "blog_list.html" }}
+<h2>Blog</h2>
+<div class="posts">
+  {{ range .Posts }}
+    <a class="postLink" href="/blog/{{ .Slug }}" hx-get="/blog/{{ .Slug }}" hx-target="#app-root" hx-push-url="true" hx-boost="true" hx-swap="innerHTML">
+      <article class="post">
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Preview }}</p>
+        <div class="meta">
+          <time datetime="{{ .PubDate.Format "2006-01-02" }}">{{ humanize .PubDate }}</time>
+          <span>·</span>
+          <span>{{ if eq .Source "local" }}Personal Blog{{ else }}medium.com{{ end }}</span>
+        </div>
+      </article>
+    </a>
+  {{ end }}
+</div>
+{{ end }}
+
+

@@ -1,0 +1,23 @@
+{{ define "blog_post.html" }}
+<div class="post-container" hx-boost="true">
+  <nav class="nav" aria-label="Navigation">
+    <a class="backLink" href="/" hx-get="/" hx-target="#app-root" hx-push-url="true" hx-swap="innerHTML">← Back</a>
+  </nav>
+
+  <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">{{ .Post.Title }}</h1>
+      <div class="meta">
+        <time itemprop="datePublished" datetime="{{ .Post.PubDate.Format "2006-01-02" }}">{{ humanize .Post.PubDate }}</time>
+        <span aria-hidden="true">·</span>
+        {{ if eq .Post.Source "medium" }}
+        <a href="{{ .Post.Link }}" target="_blank" rel="noopener noreferrer" class="mediumLink" itemprop="url">Read on Medium</a>
+        {{ end }}
+      </div>
+    </header>
+    <div class="content" itemprop="articleBody">{{ safeHTML .Post.Content }}</div>
+  </article>
+</div>
+{{ end }}
+
+

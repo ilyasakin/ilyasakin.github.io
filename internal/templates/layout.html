@@ -1,0 +1,29 @@
+{{ define "layout.html" }}
+<!doctype html>
+<html lang="en" style="background-color: #000;">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ if eq .Page "post" }}{{ .Post.Title }} | İlyas Akın{{ else }}İlyas Akın - Senior Full-Stack Web Developer{{ end }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+    <script src="/static/js/fancy-background.js" defer></script>
+  </head>
+  <body>
+    <div id="app-root" hx-history-elt >
+      {{ if eq .Page "home" }}
+        {{ template "home.html" . }}
+      {{ else if eq .Page "post" }}
+        {{ template "blog_post.html" . }}
+      {{ end }}
+    </div>
+    <button id="back-to-top" aria-label="Back to top">↑</button>
+    <script src="/static/js/main.js"></script>
+  </body>
+  </html>
+{{ end }}
+
+

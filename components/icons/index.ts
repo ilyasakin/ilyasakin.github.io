@@ -1,9 +1,0 @@
-export { default as Dribbble } from "./Dribbble";
-export { default as Github } from "./Github";
-export { default as Globe } from "./Globe";
-export { default as Linkedin } from "./Linkedin";
-export { default as Logo } from "./Logo";
-export { default as Mail } from "./Mail";
-export { default as Medium } from "./Medium";
-export { default as Npm } from "./Npm";
-export { default as Resume } from "./Resume";
