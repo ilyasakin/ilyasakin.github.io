@@ -1,6 +1,6 @@
 import styles from "./blog.module.scss";
 import { formatDistanceToNow } from 'date-fns';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { toKebabCase } from '../../utils/string';
 import { IBlogPost } from "../../types/blog";
 import { blogService } from "../../services/blog-service";
@@ -23,7 +23,7 @@ export default async function Blog() {
             prefetch={false}
           >
             <article className={styles.post}>
-              <h3>{post.title}</h3>
+              <h3 style={{ viewTransitionName: `blog-title-${post.source === 'local' ? post.slug : toKebabCase(post.title)}` }}>{post.title}</h3>
               <p>{post.preview}</p>
               <div className={styles.meta}>
                 <time dateTime={post.pubDate}>

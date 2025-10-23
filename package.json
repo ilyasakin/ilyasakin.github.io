@@ -22,6 +22,7 @@
     "happy-dom": "^16.8.1",
     "html-react-parser": "^5.2.6",
     "isomorphic-dompurify": "^2.26.0",
+    "next-view-transitions": "^0.3.4",
     "plaiceholder": "^3.0.0",
     "postprocessing": "6.36.6",
     "prettier": "^3.6.2",

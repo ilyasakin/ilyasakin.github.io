@@ -19,6 +19,17 @@ a {
   text-rendering: geometricPrecision;
 }
 
+/* View Transition Animations */
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.3s;
+}
+
 /* Appear animated */
 #fancy-background {
   animation: appear 1s ease-in-out;
