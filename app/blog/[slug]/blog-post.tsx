@@ -119,7 +119,7 @@ export default async function BlogPost({ post }: Props) {
         itemType="http://schema.org/BlogPosting"
       >
         <header>
-          <h1 itemProp="headline">{post.title}</h1>
+          <h1 itemProp="headline" style={{ viewTransitionName: `blog-title-${post.slug}` }}>{post.title}</h1>
           <div className={styles.meta}>
             <time
               itemProp="datePublished"

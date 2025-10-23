@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import { JetBrains_Mono } from "next/font/google";
 import { Metadata } from 'next'
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ViewTransitions } from 'next-view-transitions';
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
@@ -30,11 +31,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={jetbrainsMono.className}>
-      <body>
-        {children}
-        <SpeedInsights />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className={jetbrainsMono.className}>
+        <body>
+          {children}
+          <SpeedInsights />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
