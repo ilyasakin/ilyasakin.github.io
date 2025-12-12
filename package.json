@@ -42,7 +42,7 @@
     "@types/three": "^0.181.0",
     "eslint": "9.39.1",
     "eslint-config-next": "16.0.8",
-    "next": "16.0.8",
+    "next": "16.0.9",
     "typescript": "^5.9.3"
   },
   "overrides": {
