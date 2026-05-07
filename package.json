@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-three/fiber": "^9.6.1",
+    "bpmn-xyflow": "file:vendor/bpmn-xyflow",
     "@types/dompurify": "^3.2.0",
     "@types/jsdom": "^28.0.1",
     "@vercel/analytics": "^2.0.1",

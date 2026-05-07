@@ -1,0 +1,3 @@
+[submodule "vendor/bpmn-xyflow"]
+	path = vendor/bpmn-xyflow
+	url = git@github.com:ilyasakin/bpmn-js.git
