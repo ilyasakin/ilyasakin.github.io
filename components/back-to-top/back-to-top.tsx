@@ -31,12 +31,13 @@ export default function BackToTop() {
   }
 
   return (
-    <button 
+    <button
       className={styles.backToTop}
       onClick={scrollToTop}
       aria-label="Back to top"
     >
-      ↑
+      <span className={styles.icon} aria-hidden="true">↑</span>
+      <span className={styles.label} aria-hidden="true">top</span>
     </button>
   );
-} 
+}

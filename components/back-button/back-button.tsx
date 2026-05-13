@@ -30,7 +30,7 @@ export default function BackButton() {
       className={styles.backLink}
       type="button"
     >
-      ← Back to home
+      Back to home
     </button>
   );
 } 

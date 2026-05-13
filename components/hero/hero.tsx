@@ -12,7 +12,10 @@ export default function Hero() {
         Hi, I&apos;m İlyas Akın, a senior full-stack web developer.
       </h1>
 
-      <p className={style.hero__subtitle}>Crafting code at Kuika Software ✨</p>
+      <p className={style.hero__subtitle}>
+        Crafting code at Kuika Software
+        <span className={style.hero__caret} aria-hidden="true">_</span>
+      </p>
 
       <div className={style.hero__links}>
         <Link

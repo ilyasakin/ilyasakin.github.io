@@ -1,37 +1,70 @@
 .backToTop {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  width: 40px;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(20, 20, 22, 0.55);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   height: 40px;
-  border-radius: 50%;
-  display: flex;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
+  gap: 0.5rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.25s ease;
   z-index: 100;
   opacity: 0;
   animation: fadeIn 0.3s ease forwards;
-  
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
     transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+
+    .icon {
+      transform: translateY(-2px);
+    }
   }
 
   &:active {
     transform: translateY(0);
   }
 
-  // Only show on mobile
-  @media (min-width: 768px) {
-    display: none;
+  @media (max-width: 768px) {
+    padding: 0;
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+
+    .label {
+      display: none;
+    }
   }
+}
+
+.icon {
+  display: inline-block;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
 }
 
 @keyframes fadeIn {
@@ -43,4 +76,12 @@
     opacity: 1;
     transform: translateY(0);
   }
-} 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backToTop {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

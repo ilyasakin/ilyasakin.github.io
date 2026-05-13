@@ -9,3 +9,46 @@
     padding: 2rem;
   }
 }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 4px;
+  border-radius: 8px;
+  isolation: isolate;
+
+  // A subtle glow that softly appears behind the logo on hover
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 12px;
+    background: radial-gradient(
+      closest-side,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0) 70%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: -1;
+  }
+
+  @media (hover: hover) {
+    &:hover .logo {
+      transform: rotate(-4deg) scale(1.05);
+      filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.2));
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+}
+
+.logo {
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.35s ease;
+}

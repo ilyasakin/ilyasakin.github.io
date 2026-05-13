@@ -29,7 +29,11 @@
   text-align: center;
   letter-spacing: -0.02em;
   max-width: 800px;
-  
+  text-wrap: balance;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: hero-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s forwards;
+
   @media (max-width: 1024px) {
     font-size: 28px;
     line-height: 34px;
@@ -40,14 +44,44 @@
   font-weight: 500;
   font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
   margin-top: 0;
   text-align: center;
   max-width: 600px;
-  
+  opacity: 0;
+  transform: translateY(8px);
+  animation: hero-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.32s forwards;
+
   @media (max-width: 1024px) {
     font-size: 22px;
     line-height: 26px;
+  }
+}
+
+.hero__caret {
+  display: inline-block;
+  margin-left: 0.35em;
+  transform: translateY(-0.05em);
+  color: rgba(255, 255, 255, 0.85);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes hero-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title,
+  .hero__subtitle {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .hero__caret {
+    animation: none;
   }
 }
 
@@ -58,6 +92,9 @@
   padding: 0.5rem;
   flex-wrap: wrap;
   gap: 5mm;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: hero-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s forwards;
 
   .hero__link {
     display: flex;
@@ -65,11 +102,32 @@
     align-items: center;
     gap: 5mm;
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.2s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    &:focus-visible {
+      outline-offset: 6px;
+    }
   }
 
   .hero__link_text {
     writing-mode: vertical-rl;
     pointer-events: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s ease;
+  }
+
+  .hero__link:hover .hero__link_text {
+    color: rgba(255, 255, 255, 0.95);
   }
 
   @media (max-width: 1024px) {
@@ -88,18 +146,31 @@
 
     .hero__link_text {
       writing-mode: horizontal-tb;
+      letter-spacing: 0.14em;
     }
   }
 }
 
 .hero__icon {
   cursor: pointer;
-  transition: transform 0.15s ease-in-out;
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.25s ease;
 
   @media (hover: hover) {
     &:hover {
-      transform: scale(1.05);
+      transform: translateY(-2px) scale(1.06);
+      filter: drop-shadow(0 6px 14px rgba(255, 255, 255, 0.18));
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__links {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .hero__icon {
+    transition: none;
   }
 }
 
@@ -129,23 +200,31 @@
 }
 
 .tooltip__inner_container {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: rgba(20, 20, 22, 0.7);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
   padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
   min-width: 200px;
   margin-bottom: 8px;
 }
 
 .tooltip__text {
   font-weight: 500;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
   color: #fff;
   text-align: center;
-  
+
+  & + & {
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+  }
+
   &:last-child {
     margin-bottom: 0;
   }

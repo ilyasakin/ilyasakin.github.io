@@ -6,6 +6,25 @@ body {
 
 html {
   background-color: #000000;
+  color-scheme: dark;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Subtle grain texture overlay — adds tactile depth without competing with the WebGL background */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
 }
 
 a {
@@ -17,6 +36,52 @@ a {
   box-sizing: border-box;
   shape-rendering: geometricPrecision;
   text-rendering: geometricPrecision;
+}
+
+/* Custom text selection — matches the white-on-translucent language */
+::selection {
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+}
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+}
+
+/* Slim monochrome scrollbar — terminal-quiet, never visually loud */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+  background-clip: padding-box;
+}
+
+/* Visible, on-aesthetic focus ring (instead of the default blue OS ring) */
+:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Blinking caret used as a terminal-prompt accent */
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 /* View Transition Animations */
