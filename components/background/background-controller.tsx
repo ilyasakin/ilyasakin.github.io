@@ -1,20 +1,7 @@
 "use client";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { CubeTextureLoader } from "three";
-import texturepxAvif from "../../assets/textures/px.avif";
-import texturepyAvif from "../../assets/textures/py.avif";
-import texturepzAvif from "../../assets/textures/pz.avif";
-import texturenxAvif from "../../assets/textures/nx.avif";
-import texturenyAvif from "../../assets/textures/ny.avif";
-import texturenzAvif from "../../assets/textures/nz.avif";
-import texturepxJpg from "../../assets/textures/px.jpg";
-import texturepyJpg from "../../assets/textures/py.jpg";
-import texturepzJpg from "../../assets/textures/pz.jpg";
-import texturenxJpg from "../../assets/textures/nx.jpg";
-import texturenyJpg from "../../assets/textures/ny.jpg";
-import texturenzJpg from "../../assets/textures/nz.jpg";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 function getIsWebGL2(): boolean {
   try {
@@ -25,78 +12,197 @@ function getIsWebGL2(): boolean {
   }
 }
 
-function checkAvifSupport(): boolean {
-  if (typeof window === "undefined") return false;
-  const canvas = document.createElement("canvas");
-  return canvas.toDataURL("image/avif").indexOf("data:image/avif") === 0;
+// 256×256 random noise texture, sampled with linear-filter wrap.
+// Bilinear sampling gives "value noise" character for free; after 5-octave fBM
+// + domain warp the origin texture grid is invisible. ~5–7× cheaper than snoise.
+function makeNoiseTexture(): THREE.DataTexture {
+  const size = 256;
+  const data = new Uint8Array(size * size * 4);
+  for (let i = 0; i < size * size; i++) {
+    data[i * 4 + 0] = Math.random() * 255;
+    data[i * 4 + 1] = Math.random() * 255;
+    data[i * 4 + 2] = Math.random() * 255;
+    data[i * 4 + 3] = 255;
+  }
+  const tex = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.RepeatWrapping;
+  tex.magFilter = THREE.LinearFilter;
+  tex.minFilter = THREE.LinearFilter;
+  tex.generateMipmaps = false;
+  tex.needsUpdate = true;
+  return tex;
 }
 
-function SpheresGrid({ isMobile, mouseRef }: { isMobile: boolean; mouseRef: React.MutableRefObject<{ x: number; y: number }>; }) {
-  const supportsAvif = useMemo(() => checkAvifSupport(), []);
-  const urls = useMemo(
-    () => [
-      supportsAvif ? texturepxAvif.src : texturepxJpg.src,
-      supportsAvif ? texturenxAvif.src : texturenxJpg.src,
-      supportsAvif ? texturepyAvif.src : texturepyJpg.src,
-      supportsAvif ? texturenyAvif.src : texturenyJpg.src,
-      supportsAvif ? texturepzAvif.src : texturepzJpg.src,
-      supportsAvif ? texturenzAvif.src : texturenzJpg.src,
-    ],
-    [supportsAvif]
+const VERTEX_SHADER = /* glsl */ `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position.xy, 0.0, 1.0);
+  }
+`;
+
+const FRAGMENT_SHADER = /* glsl */ `
+  precision highp float;
+
+  uniform float     uTime;
+  uniform vec2      uResolution;
+  uniform vec2      uMouse;
+  uniform sampler2D uNoise;
+
+  varying vec2 vUv;
+
+  // Texture-baked value noise. One sample, bilinear-smoothed in hardware.
+  // Replaces 30+ ALU procedural simplex noise — the big perf win.
+  float noise(vec2 p) {
+    return texture2D(uNoise, p * (1.0 / 256.0)).r * 2.0 - 1.0;
+  }
+
+  // 5-octave fBM with per-octave rotation (kills axis-aligned tiling)
+  float fbm(vec2 p) {
+    float v = 0.0;
+    float a = 0.5;
+    const mat2 R = mat2(0.80, 0.60, -0.60, 0.80);
+    for (int i = 0; i < 5; i++) {
+      v += a * noise(p);
+      p = R * p * 2.0 + vec2(1.7, 9.2);
+      a *= 0.5;
+    }
+    return v;
+  }
+
+  // Inigo Quilez "domain warp": fbm of fbm — the signature organic-flow look
+  float pattern(in vec2 p, in float t) {
+    vec2 q = vec2(
+      fbm(p + vec2(0.0, 0.0) + 0.35 * t),
+      fbm(p + vec2(5.2, 1.3) + 0.27 * t)
+    );
+    return fbm(p + 3.4 * q);
+  }
+
+  // IQ cosine palette — near-black baseline, warm-magenta amplitude,
+  // channel-specific phase shifts for iridescence without rainbow cycling
+  vec3 palette(float t) {
+    vec3 a = vec3(0.04, 0.02, 0.06);
+    vec3 b = vec3(0.85, 0.32, 0.55);
+    vec3 c = vec3(0.85, 0.95, 0.55);
+    vec3 d = vec3(0.00, 0.18, 0.55);
+    return a + b * cos(6.28318 * (c * t + d));
+  }
+
+  void main() {
+    vec2 uv = vUv;
+    float aspect = uResolution.x / max(uResolution.y, 1.0);
+
+    vec2 p = uv - 0.5;
+    p.x *= aspect;
+
+    float t = uTime * 0.045;
+
+    // Subtle mouse warp
+    p += uMouse * 0.04;
+
+    // Flowing field
+    float n = pattern(p * 1.25 + vec2(t * 0.32, t * 0.11), t);
+
+    // Chromatic aberration via per-channel palette phase offset (cheap)
+    float v = n * 0.55 + 0.22;
+    float ca = 0.014;
+    vec3 color = vec3(
+      palette(v + ca).r,
+      palette(v).g,
+      palette(v - ca).b
+    );
+
+    // Black-dominant reveal — only color the active regions of the field
+    float reveal = smoothstep(-0.05, 0.85, n);
+    color *= reveal;
+
+    // Signature ember glow — bottom-center anchor
+    vec2 emberC = vec2(0.0, -0.22);
+    float emberD = length(p - emberC);
+    float ember  = exp(-emberD * 1.65) * 0.50;
+    color += vec3(1.0, 0.286, 0.0) * ember * (0.45 + 0.55 * smoothstep(-0.25, 0.6, n));
+
+    // Cool indigo counterpoint
+    vec2 coolC = vec2(0.42, 0.34);
+    float coolD = length(p - coolC);
+    float cool  = exp(-coolD * 2.0) * 0.32;
+    color += vec3(0.15, 0.22, 0.62) * cool * (0.35 + 0.65 * smoothstep(-0.2, 0.65, n));
+
+    // Soft vignette
+    float vig = smoothstep(1.45, 0.25, length(p));
+    color *= mix(0.18, 1.0, vig);
+
+    // Film grain in shader space
+    float grain = fract(sin(dot(uv * vec2(421.0, 711.0) + t * 23.0,
+                                vec2(12.9898, 78.233))) * 43758.5453);
+    color += (grain - 0.5) * 0.018;
+
+    // Preserve true black; gentle contrast curve to darken midtones
+    color = max(color, vec3(0.0));
+    color = pow(color, vec3(1.18));
+
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
+function FlowField({
+  mouseRef,
+  reducedMotion,
+}: {
+  mouseRef: React.MutableRefObject<{ x: number; y: number }>;
+  reducedMotion: boolean;
+}) {
+  const { size, invalidate } = useThree();
+
+  const noiseTex = useMemo(() => makeNoiseTexture(), []);
+
+  const material = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uResolution: { value: new THREE.Vector2(1, 1) },
+          uMouse: { value: new THREE.Vector2(0, 0) },
+          uNoise: { value: noiseTex },
+        },
+        vertexShader: VERTEX_SHADER,
+        fragmentShader: FRAGMENT_SHADER,
+        depthTest: false,
+        depthWrite: false,
+      }),
+    [noiseTex],
   );
 
-  const textureCube = useMemo(() => new CubeTextureLoader().load(urls), [urls]);
-  const { camera, scene } = useThree();
+  useEffect(() => {
+    material.uniforms.uResolution.value.set(size.width, size.height);
+    invalidate();
+  }, [size.width, size.height, material, invalidate]);
 
-  const GRID_SIZE = useMemo(() => ({ x: isMobile ? 6 : 10, y: isMobile ? 4 : 7, z: isMobile ? 6 : 10 }), [isMobile]);
-  const SPHERE_DETAIL = useMemo(() => ({ segments: isMobile ? 8 : 16, rings: isMobile ? 4 : 8 }), [isMobile]);
-
-  const count = GRID_SIZE.x * GRID_SIZE.y * GRID_SIZE.z;
-  const geometry = useMemo(() => new THREE.SphereGeometry(1, SPHERE_DETAIL.segments, SPHERE_DETAIL.rings), [SPHERE_DETAIL.rings, SPHERE_DETAIL.segments]);
-  const material = useMemo(() => new THREE.MeshBasicMaterial({ color: 0xff4900, envMap: textureCube, fog: false }), [textureCube]);
-  const instanced = useMemo(() => new THREE.InstancedMesh(geometry, material, count), [geometry, material, count]);
-
-  useLayoutEffect(() => {
-    const s = 60;
-    const matrix = new THREE.Matrix4();
-    let index = 0;
-    for (let i = 0; i < GRID_SIZE.x; i++) {
-      for (let j = 0; j < GRID_SIZE.y; j++) {
-        for (let k = 0; k < GRID_SIZE.z; k++) {
-          const x = 200 * (i - GRID_SIZE.x / 2);
-          const y = 200 * (j - GRID_SIZE.y / 2);
-          const z = 200 * (k - GRID_SIZE.z / 2);
-          matrix.makeTranslation(x, y, z);
-          matrix.scale(new THREE.Vector3(s, s, s));
-          instanced.setMatrixAt(index++, matrix);
-        }
-      }
-    }
-    instanced.instanceMatrix.needsUpdate = true;
-  }, [GRID_SIZE.x, GRID_SIZE.y, GRID_SIZE.z, instanced]);
-
-  useFrame(() => {
-    const time = Date.now() * 0.00005;
-    camera.position.x += (mouseRef.current.x - camera.position.x) * 0.036;
-    camera.position.y += (-mouseRef.current.y - camera.position.y) * 0.036;
-    camera.lookAt(0, 0, 0);
-    const h = time % 1;
-    material.color.setHSL(h, 1, 0.5);
-    material.needsUpdate = true;
+  useFrame(({ clock }) => {
+    if (reducedMotion) return;
+    // Modulo time so float precision stays sharp forever — no drift after long sessions
+    material.uniforms.uTime.value = clock.getElapsedTime() % 10000;
+    const target = mouseRef.current;
+    const m = material.uniforms.uMouse.value as THREE.Vector2;
+    m.x += (target.x - m.x) * 0.04;
+    m.y += (target.y - m.y) * 0.04;
   });
 
-  useEffect(() => {
-    scene.add(instanced);
-    return () => {
-      scene.remove(instanced);
-      instanced.dispose();
-      geometry.dispose();
+  useEffect(
+    () => () => {
       material.dispose();
-      textureCube.dispose();
-    };
-  }, [scene, geometry, material, instanced, textureCube]);
+      noiseTex.dispose();
+    },
+    [material, noiseTex],
+  );
 
-  return null;
+  return (
+    <mesh material={material} frustumCulled={false}>
+      <planeGeometry args={[2, 2]} />
+    </mesh>
+  );
 }
 
 export default function BackgroundController() {
@@ -108,7 +214,8 @@ export default function BackgroundController() {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setShouldReduceMotion(mediaQuery.matches);
-    const onMediaChange = (e: MediaQueryListEvent) => setShouldReduceMotion(e.matches);
+    const onMediaChange = (e: MediaQueryListEvent) =>
+      setShouldReduceMotion(e.matches);
     mediaQuery.addEventListener("change", onMediaChange);
     setIsWebGL2(getIsWebGL2());
     setIsMobile(/Android|iPhone|iPad/i.test(navigator.userAgent));
@@ -117,24 +224,35 @@ export default function BackgroundController() {
 
   useEffect(() => {
     if (!isMobile) return;
+    const target = { x: 0, y: 0 };
     const id = window.setInterval(() => {
-      mouseRef.current.x = Math.random() * window.innerWidth - window.innerWidth / 2;
-      mouseRef.current.y = Math.random() * window.innerHeight - window.innerHeight / 2;
-    }, 1500);
-    return () => window.clearInterval(id);
+      target.x = Math.random() * 2 - 1;
+      target.y = Math.random() * 2 - 1;
+    }, 2800);
+    let raf = 0;
+    const tick = () => {
+      mouseRef.current.x += (target.x - mouseRef.current.x) * 0.02;
+      mouseRef.current.y += (target.y - mouseRef.current.y) * 0.02;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => {
+      window.clearInterval(id);
+      cancelAnimationFrame(raf);
+    };
   }, [isMobile]);
 
   useEffect(() => {
     if (isMobile) return;
     const onPointerMove = (e: PointerEvent) => {
-      mouseRef.current.x = e.clientX - window.innerWidth / 2;
-      mouseRef.current.y = e.clientY - window.innerHeight / 2;
+      mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     return () => window.removeEventListener("pointermove", onPointerMove);
   }, [isMobile]);
 
-  if (shouldReduceMotion || !isWebGL2) return null;
+  if (!isWebGL2) return null;
 
   return (
     <div
@@ -146,18 +264,39 @@ export default function BackgroundController() {
         width: "100vw",
         height: "100vh",
         zIndex: -1,
-        boxShadow: "inset 0 0 100px rgba(0, 0, 0, 0.5)",
-        filter: isMobile ? "blur(20px)" : "blur(30px)",
-        pointerEvents: isMobile ? "none" : "auto",
+        pointerEvents: "none",
         touchAction: "none",
+        backgroundColor: "#000000",
+        overflow: "hidden",
       }}
     >
       <Canvas
-        camera={{ fov: 70, near: 1, far: 3000, position: [0, 0, 200] }}
-        dpr={isMobile ? 1 : 0.5}
+        camera={{ position: [0, 0, 1] }}
+        // dpr 1.0 desktop (was 1.5) — field is low-frequency, retina upscale is invisible
+        dpr={1}
+        frameloop={shouldReduceMotion ? "demand" : "always"}
+        gl={{
+          antialias: false,
+          alpha: false,
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: false,
+        }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 1);
+        }}
       >
-        <SpheresGrid isMobile={isMobile} mouseRef={mouseRef} />
+        <FlowField mouseRef={mouseRef} reducedMotion={shouldReduceMotion} />
       </Canvas>
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          background:
+            "radial-gradient(ellipse 110% 80% at 50% 50%, transparent 35%, rgba(0, 0, 0, 0.55) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.55) 100%)",
+        }}
+      />
     </div>
   );
 }
