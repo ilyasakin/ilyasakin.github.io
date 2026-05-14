@@ -1,7 +1,27 @@
 "use client";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { setConsoleFunction } from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
+
+// THREE r183 deprecated Clock in favor of Timer, but @react-three/fiber 9.6
+// still instantiates Clock internally (events-*.esm.js). Register a console
+// hook that swallows just that one deprecation and forwards everything else
+// untouched. Idempotent under HMR — re-running just replaces the same function.
+if (typeof window !== "undefined") {
+  setConsoleFunction((type, message, ...params) => {
+    if (
+      type === "warn" &&
+      typeof message === "string" &&
+      message.startsWith("THREE.Clock: This module has been deprecated")
+    ) {
+      return;
+    }
+    if (type === "error") console.error(message, ...params);
+    else if (type === "warn") console.warn(message, ...params);
+    else console.log(message, ...params);
+  });
+}
 
 function getIsWebGL2(): boolean {
   try {
@@ -278,11 +298,22 @@ export default function BackgroundController() {
         gl={{
           antialias: false,
           alpha: false,
+          // Shader doesn't depth- or stencil-test → skip those framebuffer attachments.
+          // Saves memory bandwidth and shrinks the framebuffer/viewport mismatch surface
+          // that causes Firefox's "destination rect smaller than viewport" warning at first draw.
+          depth: false,
+          stencil: false,
           powerPreference: "high-performance",
           preserveDrawingBuffer: false,
         }}
-        onCreated={({ gl }) => {
+        onCreated={({ gl, size }) => {
           gl.setClearColor(0x000000, 1);
+          // R3F's first rAF render can fire before ResizeObserver settles — the renderer's
+          // default 300×150 backing buffer then drives a draw with a viewport set for the
+          // real size, and Firefox latches the "viewport > destination" warning permanently.
+          // Force-sync size + pixel ratio here (runs before the first render) to close the gap.
+          gl.setPixelRatio(1);
+          gl.setSize(size.width, size.height, false);
         }}
       >
         <FlowField mouseRef={mouseRef} reducedMotion={shouldReduceMotion} />
