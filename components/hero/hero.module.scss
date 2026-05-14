@@ -63,7 +63,14 @@
   margin-left: 0.35em;
   transform: translateY(-0.05em);
   color: rgba(255, 255, 255, 0.85);
-  animation: caret-blink 1.05s steps(1) infinite;
+  // Keyframe is co-located below — CSS Modules then keep both name references in sync.
+  animation: hero-caret-blink 1.06s steps(2, jump-none) infinite;
+  will-change: opacity;
+}
+
+@keyframes hero-caret-blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @keyframes hero-rise {
@@ -80,9 +87,7 @@
     transform: none;
     animation: none;
   }
-  .hero__caret {
-    animation: none;
-  }
+  // .hero__caret intentionally keeps blinking — it's a UI indicator, not scenery motion.
 }
 
 .hero__links {
