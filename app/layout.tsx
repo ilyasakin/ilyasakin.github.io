@@ -10,13 +10,13 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: {
     template: "%s | İlyas Akın",
-    default: "İlyas Akın - Senior Full-Stack Web Developer",
+    default: "İlyas Akın - Software Architect",
   },
   description:
-    "Senior full-stack web developer crafting code at Kuika Software. Blog posts about web development, software engineering, and technology.",
+    "Software architect crafting code at Kuika Software. Blog posts about web development, software engineering, and technology.",
   keywords: [
     "web development",
-    "full-stack",
+    "software architect",
     "software engineering",
     "React",
     "Node.js",
