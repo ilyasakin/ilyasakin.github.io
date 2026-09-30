@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "../demo.module.css";
-// @ts-expect-error — bpmn-xyflow ships untyped JS
 import { Modeler } from "bpmn-xyflow";
 
 const SAMPLES = [
@@ -12,6 +11,10 @@ const SAMPLES = [
     label: "Conditional flows",
     path: "/bpmn-samples/draw/conditional-flow.bpmn",
   },
+  { label: "Order, payment and delivery", path: "/bpmn-samples/scenarios/order-payment-delivery.bpmn" },
+  { label: "Approval, rejection and rework", path: "/bpmn-samples/scenarios/approval-rejection-rework.bpmn" },
+  { label: "Booking, timeout and compensation", path: "/bpmn-samples/scenarios/booking-timeout-compensation.bpmn" },
+  { label: "HR recruitment (retained example)", path: "/bpmn-samples/complex.bpmn" },
 ];
 
 const EMPTY_BPMN = `<?xml version="1.0" encoding="UTF-8"?>
@@ -30,7 +33,7 @@ const EMPTY_BPMN = `<?xml version="1.0" encoding="UTF-8"?>
 
 export default function ModelerDemo() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const modelerRef = useRef<any>(null);
+  const modelerRef = useRef<Modeler | null>(null);
   const [idx, setIdx] = useState(0);
   const [status, setStatus] = useState("");
   const [xmlOut, setXmlOut] = useState<string | null>(null);

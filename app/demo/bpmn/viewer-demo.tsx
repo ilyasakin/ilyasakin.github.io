@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./demo.module.css";
-// @ts-expect-error — bpmn-xyflow ships untyped JS
-import { BpmnViewer } from "bpmn-xyflow/lib/react";
+import { BpmnViewer, type BpmnViewerHandle } from "bpmn-xyflow/lib/react";
 
 const SAMPLES = [
   { label: "Basic", path: "/bpmn-samples/basic.bpmn" },
@@ -13,7 +12,10 @@ const SAMPLES = [
     path: "/bpmn-samples/draw/conditional-flow.bpmn",
   },
   { label: "Pools (collaboration)", path: "/bpmn-samples/collaboration.bpmn" },
-  { label: "Complex", path: "/bpmn-samples/complex.bpmn" },
+  { label: "HR recruitment (retained example)", path: "/bpmn-samples/complex.bpmn" },
+  { label: "Order, payment and delivery", path: "/bpmn-samples/scenarios/order-payment-delivery.bpmn" },
+  { label: "Approval, rejection and rework", path: "/bpmn-samples/scenarios/approval-rejection-rework.bpmn" },
+  { label: "Booking, timeout and compensation", path: "/bpmn-samples/scenarios/booking-timeout-compensation.bpmn" },
 ];
 
 type SelectionElement = {
@@ -28,7 +30,7 @@ export default function ViewerDemo() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState(`Fetching ${SAMPLES[0].label}…`);
   const [selection, setSelection] = useState<SelectionElement[]>([]);
-  const viewerRef = useRef<any>(null);
+  const viewerRef = useRef<BpmnViewerHandle | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -104,7 +106,7 @@ export default function ViewerDemo() {
           event.preventDefault();
           const viewer = viewerRef.current?.getViewer();
           const matches = viewer?.findElements(query) || [];
-          if (matches[0]) viewer.focusElement(matches[0].id);
+          if (matches[0]) viewer?.focusElement(matches[0].id);
           setStatus(matches.length ? `${matches.length} matching element(s)` : "No matching elements");
         }}>
           <input aria-label="Find by name or ID" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Name or ID" />
