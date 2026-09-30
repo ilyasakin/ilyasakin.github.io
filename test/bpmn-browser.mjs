@@ -61,6 +61,76 @@ try {
     await page.click('[aria-label="Close XML export"]');
     await page.waitForSelector('pre',{hidden:true});
   }
+  // User-reported basic bug: a visible right-side port must not flip to the
+  // left side when the chosen target is left of the source. Use only public UI,
+  // SVG screen transforms and the Export XML dialog, never an editor API.
+  async function clickButton(text) {
+    for (const button of await page.$$('button')) {
+      if ((await button.evaluate(node => node.textContent)).trim() === text) {
+        await button.click(); return;
+      }
+    }
+    throw new Error(`Missing button ${text}`);
+  }
+  async function exportedDiagram() {
+    await clickButton('Export XML'); await page.waitForSelector('pre');
+    const result = await page.$eval('pre', node => {
+      const xml = node.textContent, doc = new DOMParser().parseFromString(xml, 'application/xml');
+      if (doc.querySelector('parsererror')) throw new Error('Invalid exported BPMN XML');
+      const all = [...doc.getElementsByTagName('*')];
+      const ids = Object.fromEntries(all.filter(e => e.hasAttribute('name')).map(e => [e.getAttribute('name'), e.getAttribute('id')]));
+      const bounds = Object.fromEntries(all.filter(e => e.localName === 'BPMNShape').map(e => {
+        const b = [...e.children].find(child => child.localName === 'Bounds');
+        return [e.getAttribute('bpmnElement'), Object.fromEntries(['x', 'y', 'width', 'height'].map(k => [k, Number(b.getAttribute(k))]))];
+      }));
+      const flows = all.filter(e => e.localName === 'sequenceFlow').map(e => {
+        const di = all.find(d => d.localName === 'BPMNEdge' && d.getAttribute('bpmnElement') === e.id);
+        return { id: e.id, source: e.getAttribute('sourceRef'), target: e.getAttribute('targetRef'), points: di ? [...di.children].filter(p => p.localName === 'waypoint').map(p => ({ x: Number(p.getAttribute('x')), y: Number(p.getAttribute('y')) })) : [] };
+      });
+      return { xml, ids, bounds, flows };
+    });
+    await page.click('[aria-label="Close XML export"]');
+    await page.waitForSelector('pre', { hidden: true });
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    return result;
+  }
+  await page.select('select[aria-label="Sample diagram"]', '2');
+  await page.waitForSelector('[data-element-id="sid-F08DF3C0-AC64-4563-A5AE-E5E807602626"]');
+  const beforeArrow = await exportedDiagram(), sourceId = beforeArrow.ids['T2.0'], targetId = beforeArrow.ids.T1;
+  assert.ok(sourceId && targetId);
+  const sourceBounds = beforeArrow.bounds[sourceId], targetBounds = beforeArrow.bounds[targetId];
+  const sourcePort = { x: sourceBounds.x + sourceBounds.width, y: sourceBounds.y + sourceBounds.height / 2 };
+  const targetPort = { x: targetBounds.x + targetBounds.width, y: targetBounds.y + targetBounds.height * 0.75 };
+  const screenPoint = point => page.evaluate(point => {
+    const matrix = document.querySelector('.bpmn-xyflow-viewport').getScreenCTM();
+    const p = new DOMPoint(point.x, point.y).matrixTransform(matrix); return { x: p.x, y: p.y, zoom: Math.hypot(matrix.a, matrix.b) };
+  }, point);
+  const sourceCenter = await screenPoint({ x: sourceBounds.x + sourceBounds.width / 2, y: sourceBounds.y + sourceBounds.height / 2 });
+  await page.mouse.move(sourceCenter.x, sourceCenter.y);
+  const portHandle = await page.waitForSelector('.bpmn-xyflow-connect-handle');
+  const handleBounds = await portHandle.boundingBox(), targetScreen = await screenPoint(targetPort);
+  await page.mouse.move(handleBounds.x + handleBounds.width / 2, handleBounds.y + handleBounds.height / 2);
+  await page.mouse.down(); await page.mouse.move(targetScreen.x, targetScreen.y, { steps: 12 });
+  const live = await page.$eval('.bpmn-xyflow-connect-preview path', path => {
+    const start = path.getPointAtLength(0), end = path.getPointAtLength(path.getTotalLength());
+    return { start: { x: start.x, y: start.y }, end: { x: end.x, y: end.y } };
+  });
+  await mkdir('test-artifacts', { recursive: true });
+  await page.screenshot({ path: 'test-artifacts/site-bpmn-arrow-preview.png', fullPage: true });
+  await page.mouse.up();
+  const afterArrow = await exportedDiagram();
+  const newArrow = afterArrow.flows.find(flow => !beforeArrow.flows.some(old => old.id === flow.id) && flow.source === sourceId && flow.target === targetId);
+  assert.ok(newArrow, 'visible port drag creates a semantic flow');
+  const near = (actual, expected, label) => assert.ok(Math.hypot(actual.x - expected.x, actual.y - expected.y) <= 1.5 / targetScreen.zoom, `${label}: ${JSON.stringify({ actual, expected })}`);
+  near(live.start, sourcePort, 'production preview keeps chosen RIGHT source port');
+  near(live.end, targetPort, 'production preview keeps chosen target port');
+  near(newArrow.points[0], sourcePort, 'production export keeps chosen RIGHT source port');
+  near(newArrow.points.at(-1), targetPort, 'production export keeps chosen target port');
+  await clickButton('Undo'); assert.equal((await exportedDiagram()).xml, beforeArrow.xml, 'production Undo restores exact diagram');
+  await clickButton('Redo'); assert.equal((await exportedDiagram()).xml, afterArrow.xml, 'production Redo restores exact arrow');
+  await page.select('select[aria-label="Sample diagram"]', '1');
+  await page.waitForSelector('[data-element-id="Task_1"]');
+
   await page.click('.bpmn-xyflow-palette button:nth-child(2)');
   assert.ok((await page.$$('.bpmn-xyflow-shape')).length >= 3);
   for (const index of ['3','4','5','6']) {
@@ -92,7 +162,7 @@ try {
   assert.deepEqual(errors,[]);
   await mkdir('test-artifacts', { recursive: true });
   await page.screenshot({ path: 'test-artifacts/site-bpmn-phone.png', fullPage: true });
-  console.log('PASS site browser parity: readable fit/header/controls, search, navigation teardown, repeated XML export/close, palette, phone attribution');
+  console.log('PASS site browser parity: readable fit/header/controls, search, navigation teardown, repeated XML export/close, palette, precise native arrow anchors/history, phone attribution');
 } catch (error) {
   await mkdir('test-artifacts', { recursive: true });
   await page?.screenshot({ path: 'test-artifacts/site-bpmn-failure.png', fullPage: true });
