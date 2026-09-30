@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import styles from "../demo.module.css";
 // @ts-expect-error — bpmn-xyflow ships untyped JS
 import { Modeler } from "bpmn-xyflow";
 
@@ -33,8 +34,13 @@ export default function ModelerDemo() {
   const [idx, setIdx] = useState(0);
   const [status, setStatus] = useState("");
   const [xmlOut, setXmlOut] = useState<string | null>(null);
+  const [warnings, setWarnings] = useState<string[]>([]);
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
+  const [canExport, setCanExport] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const exportRequestRef = useRef(0);
+  const exportBusyRef = useRef(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -60,7 +66,12 @@ export default function ModelerDemo() {
     const modeler = modelerRef.current;
     if (!modeler) return;
     let cancelled = false;
+    const controller = new AbortController();
     const sample = SAMPLES[idx];
+    ++exportRequestRef.current;
+    exportBusyRef.current = false;
+    setIsExporting(false);
+    setCanExport(false);
     setStatus(`Loading ${sample.label}…`);
     setXmlOut(null);
     (async () => {
@@ -68,10 +79,15 @@ export default function ModelerDemo() {
         const xml =
           sample.path === "empty"
             ? EMPTY_BPMN
-            : await fetch(sample.path).then((r) => r.text());
+            : await fetch(sample.path, { signal: controller.signal }).then((r) => {
+              if (!r.ok) throw new Error(`HTTP ${r.status}`);
+              return r.text();
+            });
         if (cancelled) return;
         const result = await modeler.importXML(xml);
         if (cancelled) return;
+        setCanExport(true);
+        setWarnings(result.warnings.map((warning: { message?: string }) => warning.message || String(warning)));
         setStatus(
           `Loaded ${sample.label} (${result.warnings.length} warnings)`,
         );
@@ -82,11 +98,35 @@ export default function ModelerDemo() {
     })();
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, [idx]);
 
+  async function exportXML() {
+    const modeler = modelerRef.current;
+    if (!modeler || !canExport || exportBusyRef.current) return;
+    const request = ++exportRequestRef.current;
+    exportBusyRef.current = true;
+    setIsExporting(true);
+    try {
+      const xml = await modeler.getXML();
+      if (request !== exportRequestRef.current || modelerRef.current !== modeler) return;
+      setXmlOut(xml);
+    } catch (error) {
+      if (request === exportRequestRef.current && modelerRef.current === modeler) {
+        setStatus("Export error: " + (error instanceof Error ? error.message : String(error)));
+      }
+    } finally {
+      if (request === exportRequestRef.current && modelerRef.current === modeler) {
+        exportBusyRef.current = false;
+        setIsExporting(false);
+      }
+    }
+  }
+
   return (
     <div
+      className={styles.demo}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -106,7 +146,7 @@ export default function ModelerDemo() {
         }}
       >
         <strong style={{ fontSize: 13 }}>bpmn-xyflow modeler</strong>
-        <select value={idx} onChange={(e) => setIdx(Number(e.target.value))}>
+        <select aria-label="Sample diagram" value={idx} onChange={(e) => { setCanExport(false); setWarnings([]); setIdx(Number(e.target.value)); }}>
           {SAMPLES.map((s, i) => (
             <option key={i} value={i}>
               {s.label}
@@ -128,12 +168,11 @@ export default function ModelerDemo() {
           Redo
         </button>
         <button
-          onClick={async () => {
-            const xml = await modelerRef.current?.getXML();
-            setXmlOut(xml ?? null);
-          }}
+          disabled={!canExport || isExporting}
+          aria-busy={isExporting}
+          onClick={exportXML}
         >
-          Export XML
+          {isExporting ? "Exporting…" : "Export XML"}
         </button>
         <a href="/demo/bpmn" style={{ fontSize: 12 }}>
           → viewer
@@ -145,6 +184,12 @@ export default function ModelerDemo() {
         <span style={{ flex: 1 }} />
         <span style={{ fontSize: 12, color: "#666" }}>{status}</span>
       </div>
+      {warnings.length > 0 && (
+        <details className={styles.warnings}>
+          <summary>{warnings.length} import warning(s)</summary>
+          <ul>{warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul>
+        </details>
+      )}
       <div
         ref={containerRef}
         style={{
@@ -155,6 +200,11 @@ export default function ModelerDemo() {
         }}
       />
       {xmlOut !== null && (
+        <>
+        <div className={styles.xmlHeader}>
+          <span>Exported BPMN XML</span>
+          <button onClick={() => setXmlOut(null)} aria-label="Close XML export">Close</button>
+        </div>
         <pre
           style={{
             maxHeight: 240,
@@ -170,6 +220,7 @@ export default function ModelerDemo() {
         >
           {xmlOut}
         </pre>
+        </>
       )}
     </div>
   );

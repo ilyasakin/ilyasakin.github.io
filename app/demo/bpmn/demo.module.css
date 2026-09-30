@@ -1,0 +1,28 @@
+.demo {
+  color: #1f2937;
+  color-scheme: light;
+  isolation: isolate;
+}
+.demo button, .demo select, .demo input {
+  color: #1f2937;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 5px 9px;
+  font: inherit;
+  font-size: 13px;
+  min-height: 30px;
+}
+.demo button { cursor: pointer; }
+.demo button:disabled { color: #64748b; cursor: default; background: #f1f5f9; }
+.demo a { color: #0369a1; }
+.demo :is(button, select, input, a):focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+.warnings { margin: 0; padding: 8px 14px; background: #fffbeb; color: #78350f; font-size: 12px; border-bottom: 1px solid #fcd34d; }
+.warnings ul { margin: 4px 0; padding-left: 20px; max-height: 140px; overflow: auto; }
+.search { display: inline-flex; gap: 4px; }
+.search input { width: 150px; }
+.xmlHeader { display: flex; align-items: center; justify-content: space-between; padding: 4px 14px; border-top: 1px solid #cbd5e1; background: #f3f3f3; font-size: 12px; }
+@media (max-width: 600px) {
+  .demo { min-width: 0; }
+  .search input { width: 130px; }
+}
