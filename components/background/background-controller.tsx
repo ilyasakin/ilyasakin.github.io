@@ -2,7 +2,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { setConsoleFunction } from "three";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 
 // THREE r183 deprecated Clock in favor of Timer, but @react-three/fiber 9.6
 // still instantiates Clock internally (events-*.esm.js). Register a console
@@ -175,6 +175,8 @@ function FlowField({
   reducedMotion: boolean;
 }) {
   const { size, invalidate } = useThree();
+  const meshRef =
+    useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>>(null);
 
   const noiseTex = useMemo(() => makeNoiseTexture(), []);
 
@@ -201,11 +203,12 @@ function FlowField({
   }, [size.width, size.height, material, invalidate]);
 
   useFrame(({ clock }) => {
-    if (reducedMotion) return;
+    const frameMaterial = meshRef.current?.material;
+    if (reducedMotion || !frameMaterial) return;
     // Modulo time so float precision stays sharp forever — no drift after long sessions
-    material.uniforms.uTime.value = clock.getElapsedTime() % 10000;
+    frameMaterial.uniforms.uTime.value = clock.getElapsedTime() % 10000;
     const target = mouseRef.current;
-    const m = material.uniforms.uMouse.value as THREE.Vector2;
+    const m = frameMaterial.uniforms.uMouse.value as THREE.Vector2;
     m.x += (target.x - m.x) * 0.04;
     m.y += (target.y - m.y) * 0.04;
   });
@@ -219,28 +222,44 @@ function FlowField({
   );
 
   return (
-    <mesh material={material} frustumCulled={false}>
+    <mesh ref={meshRef} material={material} frustumCulled={false}>
       <planeGeometry args={[2, 2]} />
     </mesh>
   );
 }
 
-export default function BackgroundController() {
-  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
-  const [isWebGL2, setIsWebGL2] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+const getServerSnapshot = () => false;
+const subscribeToStaticCapability = () => () => {};
+const getIsMobile = () => /Android|iPhone|iPad/i.test(navigator.userAgent);
+const getReducedMotion = () => window.matchMedia(reducedMotionQuery).matches;
+const subscribeToReducedMotion = (onChange: () => void) => {
+  const mediaQuery = window.matchMedia(reducedMotionQuery);
+  mediaQuery.addEventListener("change", onChange);
+  return () => mediaQuery.removeEventListener("change", onChange);
+};
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setShouldReduceMotion(mediaQuery.matches);
-    const onMediaChange = (e: MediaQueryListEvent) =>
-      setShouldReduceMotion(e.matches);
-    mediaQuery.addEventListener("change", onMediaChange);
-    setIsWebGL2(getIsWebGL2());
-    setIsMobile(/Android|iPhone|iPad/i.test(navigator.userAgent));
-    return () => mediaQuery.removeEventListener("change", onMediaChange);
-  }, []);
+// Browser support is stable; avoid allocating a test context on every snapshot.
+let webGL2Supported: boolean | undefined;
+const getWebGL2Snapshot = () => (webGL2Supported ??= getIsWebGL2());
+
+export default function BackgroundController() {
+  const shouldReduceMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotion,
+    getServerSnapshot,
+  );
+  const isWebGL2 = useSyncExternalStore(
+    subscribeToStaticCapability,
+    getWebGL2Snapshot,
+    getServerSnapshot,
+  );
+  const isMobile = useSyncExternalStore(
+    subscribeToStaticCapability,
+    getIsMobile,
+    getServerSnapshot,
+  );
+  const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   useEffect(() => {
     if (!isMobile) return;

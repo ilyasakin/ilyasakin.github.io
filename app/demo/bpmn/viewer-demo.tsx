@@ -23,14 +23,12 @@ type SelectionElement = {
 export default function ViewerDemo() {
   const [idx, setIdx] = useState(0);
   const [xml, setXml] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(`Fetching ${SAMPLES[0].label}…`);
   const [selection, setSelection] = useState<SelectionElement[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const viewerRef = useRef<any>(null);
 
   useEffect(() => {
     let cancelled = false;
-    setStatus(`Fetching ${SAMPLES[idx].label}…`);
     fetch(SAMPLES[idx].path)
       .then((r) => r.text())
       .then((text) => {
@@ -65,7 +63,14 @@ export default function ViewerDemo() {
         }}
       >
         <strong style={{ fontSize: 13 }}>bpmn-xyflow viewer</strong>
-        <select value={idx} onChange={(e) => setIdx(Number(e.target.value))}>
+        <select
+          value={idx}
+          onChange={(e) => {
+            const nextIdx = Number(e.target.value);
+            setStatus(`Fetching ${SAMPLES[nextIdx].label}…`);
+            setIdx(nextIdx);
+          }}
+        >
           {SAMPLES.map((s, i) => (
             <option key={i} value={i}>
               {s.label}
@@ -90,7 +95,9 @@ export default function ViewerDemo() {
                 .map(
                   (e) =>
                     e.type.replace("bpmn:", "") +
-                    (e.businessObject?.name ? ` "${e.businessObject.name}"` : ""),
+                    (e.businessObject?.name
+                      ? ` "${e.businessObject.name}"`
+                      : ""),
                 )
                 .join(", ")}`
             : ""}
