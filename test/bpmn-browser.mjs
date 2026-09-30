@@ -128,6 +128,26 @@ try {
   near(newArrow.points.at(-1), targetPort, 'production export keeps chosen target port');
   await clickButton('Undo'); assert.equal((await exportedDiagram()).xml, beforeArrow.xml, 'production Undo restores exact diagram');
   await clickButton('Redo'); assert.equal((await exportedDiagram()).xml, afterArrow.xml, 'production Redo restores exact arrow');
+  // The real sample's visually horizontal edge has fractional ordinates.
+  // Native segment dragging must not mistake it for a free-form diagonal.
+  const fractionalId = 'sid-262FECFE-432B-42B6-AAF7-040A6B6D1880';
+  const fractionalBefore = afterArrow.flows.find(flow => flow.id === fractionalId);
+  assert.ok(fractionalBefore && fractionalBefore.points.length === 2);
+  const middle = await screenPoint({
+    x: (fractionalBefore.points[0].x + fractionalBefore.points[1].x) / 2,
+    y: (fractionalBefore.points[0].y + fractionalBefore.points[1].y) / 2,
+  });
+  await page.mouse.click(middle.x, middle.y);
+  await page.mouse.move(middle.x, middle.y); await page.mouse.down();
+  await page.mouse.move(middle.x, middle.y + 55, { steps: 10 }); await page.mouse.up();
+  const afterSegment = await exportedDiagram(), fractionalAfter = afterSegment.flows.find(flow => flow.id === fractionalId);
+  assert.equal(fractionalAfter.source, fractionalBefore.source); assert.equal(fractionalAfter.target, fractionalBefore.target);
+  assert.ok(fractionalAfter.points.length >= 4, 'fractional segment drag creates an orthogonal dogleg');
+  assert.ok(fractionalAfter.points.every((point, index, points) => index === 0 || Math.abs(point.x - points[index - 1].x) < 0.01 || Math.abs(point.y - points[index - 1].y) < 0.01), 'fractional segment must not turn into a V');
+  await page.screenshot({ path: 'test-artifacts/site-bpmn-fractional-segment.png', fullPage: true });
+  await clickButton('Undo'); assert.equal((await exportedDiagram()).xml, afterArrow.xml, 'fractional segment Undo preserves exact original decimals');
+  await clickButton('Redo'); assert.equal((await exportedDiagram()).xml, afterSegment.xml, 'fractional segment Redo restores exact edited route');
+
   await page.select('select[aria-label="Sample diagram"]', '1');
   await page.waitForSelector('[data-element-id="Task_1"]');
 
