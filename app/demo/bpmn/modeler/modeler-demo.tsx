@@ -29,7 +29,6 @@ const EMPTY_BPMN = `<?xml version="1.0" encoding="UTF-8"?>
 
 export default function ModelerDemo() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const modelerRef = useRef<any>(null);
   const [idx, setIdx] = useState(0);
   const [status, setStatus] = useState("");
