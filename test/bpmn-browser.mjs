@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer-core';
 import { spawn } from 'node:child_process';
 import { mkdir } from 'node:fs/promises';
+import { verifyProductionImport } from './bpmn-import-browser.mjs';
 
 const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
 if (!executablePath) throw new Error('PUPPETEER_EXECUTABLE_PATH must identify supported sandbox-capable Chrome');
@@ -36,7 +37,7 @@ try {
   await page.waitForSelector('[data-element-id="Task_1"].is-selected');
   await page.click('a[href="/demo/bpmn/modeler"]');
   await page.waitForSelector('.bpmn-xyflow-palette');
-  await page.select('select[aria-label="Sample diagram"]','1');
+  await chooseSample('1');
   await page.waitForSelector('[data-element-id="Task_1"]');
   const unobstructed = await page.evaluate(() => {
     const obstacles = [...document.querySelectorAll('.bpmn-xyflow-palette, .bpmn-xyflow-editor-actions, .bpmn-xyflow-minimap, .bjs-powered-by')].map(element => element.getBoundingClientRect());
@@ -72,6 +73,17 @@ try {
     }
     throw new Error(`Missing button ${text}`);
   }
+  async function chooseSample(index) {
+    await page.waitForFunction(() => !document.querySelector('select[aria-label="Sample diagram"]').disabled);
+    const label = await page.$eval('select[aria-label="Sample diagram"]', (select, index) => select.querySelector(`option[value="${index}"]`).textContent, index);
+    await page.select('select[aria-label="Sample diagram"]', index);
+    await page.waitForFunction(({ index, label }) =>
+      document.querySelector('#import-title')?.textContent === 'Replace unsaved changes?' ||
+      (document.querySelector('select[aria-label="Sample diagram"]').value === index && document.querySelector('[role="status"]')?.textContent.startsWith(`Loaded ${label}`)), {}, { index, label });
+    if (await page.$('dialog[open]')) await clickButton('Replace diagram');
+    await page.waitForFunction(({ index, label }) => !document.querySelector('dialog[open]') &&
+      document.querySelector('select[aria-label="Sample diagram"]').value === index && document.querySelector('[role="status"]')?.textContent.startsWith(`Loaded ${label}`), {}, { index, label });
+  }
   async function exportedDiagram() {
     await clickButton('Export XML'); await page.waitForSelector('pre');
     const result = await page.$eval('pre', node => {
@@ -94,7 +106,7 @@ try {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     return result;
   }
-  await page.select('select[aria-label="Sample diagram"]', '2');
+  await chooseSample('2');
   await page.waitForSelector('[data-element-id="sid-F08DF3C0-AC64-4563-A5AE-E5E807602626"]');
   const beforeArrow = await exportedDiagram(), sourceId = beforeArrow.ids['T2.0'], targetId = beforeArrow.ids.T1;
   assert.ok(sourceId && targetId);
@@ -148,13 +160,13 @@ try {
   await clickButton('Undo'); assert.equal((await exportedDiagram()).xml, afterArrow.xml, 'fractional segment Undo preserves exact original decimals');
   await clickButton('Redo'); assert.equal((await exportedDiagram()).xml, afterSegment.xml, 'fractional segment Redo restores exact edited route');
 
-  await page.select('select[aria-label="Sample diagram"]', '1');
+  await chooseSample('1');
   await page.waitForSelector('[data-element-id="Task_1"]');
 
   await page.click('.bpmn-xyflow-palette button:nth-child(2)');
   assert.ok((await page.$$('.bpmn-xyflow-shape')).length >= 3);
   for (const index of ['3','4','5','6']) {
-    await page.select('select[aria-label="Sample diagram"]', index);
+    await chooseSample(index);
     await page.waitForFunction(index => {
       const select = document.querySelector('select[aria-label="Sample diagram"]');
       const label = select.options[Number(index)].text;
@@ -165,6 +177,7 @@ try {
     await page.click('.bpmn-xyflow-palette button:nth-child(2)');
     assert.equal(await page.evaluate(() => [...document.querySelectorAll('button')].find(button => button.textContent === 'Undo').disabled), false);
   }
+  await verifyProductionImport(page, { clickButton, exportedDiagram, chooseSample });
   await page.click('a[href="/demo/bpmn"]');
   await page.waitForSelector('[data-element-id="Task_1"]');
   assert.equal((await page.$$('.bjs-powered-by')).length,1);

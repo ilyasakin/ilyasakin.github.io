@@ -26,3 +26,13 @@
   .demo { min-width: 0; }
   .search input { width: 130px; }
 }
+.importDialog { width: min(620px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; margin: auto; padding: 22px; border: 1px solid #cbd5e1; border-radius: 10px; color: #1f2937; background: #fff; box-shadow: 0 18px 60px #0004; }
+.importDialog::backdrop { background: #0f172a80; }
+.importDialog h2 { margin: 0 0 10px; font-size: 20px; }
+.importDialog p { font-size: 14px; line-height: 1.5; }
+.importDialog label { display: block; margin: 14px 0 5px; font-size: 13px; font-weight: 600; }
+.importDialog input { width: 100%; }
+.importDialog textarea { display: block; width: 100%; min-height: 220px; resize: vertical; padding: 10px; border: 1px solid #94a3b8; border-radius: 4px; color: #1f2937; background: #fff; font: 12px/1.5 monospace; }
+.importDialog textarea:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+.importError { color: #b91c1c; }
+.importActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }

@@ -11,7 +11,8 @@
     "svgr": "svgr --typescript assets/icons --icon --replace-attr-values \"#000=currentColor\" -d components/icons",
     "typecheck": "next typegen && tsc --noEmit",
     "check": "bun run lint && bun run typecheck && bun run build",
-    "test:bpmn:browser": "node test/bpmn-browser.mjs"
+    "test:bpmn:browser": "node test/bpmn-browser.mjs",
+    "test:bpmn:import": "node --test --test-concurrency=1 test/bpmn-import.test.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.7.0",

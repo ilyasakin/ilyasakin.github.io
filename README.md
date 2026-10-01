@@ -27,6 +27,29 @@ uses that API because its CLI path assumes `typescript/bin/tsc`; the separate
 The build fetches the Google font and Medium feed, so CI needs outbound access
 to those services. Vendored BPMN source is excluded from this site's lint scope.
 
+## BPMN modeler import and export
+
+The modeler toolbar includes **Import XML**. Paste BPMN XML or choose a local
+`.bpmn` or `.xml` file, then choose **Import diagram**. Files are read in the
+browser. The current diagram is replaced only after explicit submission; parse
+errors appear in the dialog and leave its XML, selection, viewport and history
+intact. Cancel or Escape dismisses the dialog without importing.
+
+Replacing a changed diagram, including changes made inside a subprocess, asks
+for confirmation first. The sample selector uses the same protection. Export
+your XML before confirming if you want to keep those changes. A successful
+import resets the old selection and undo/redo history, and any import warnings
+are listed above the canvas. **Export XML** displays text for copying; viewing
+that text does not mark an edited diagram as saved.
+
+`bun run test:bpmn:import` checks the site's import coordinator against the real
+Modeler and all three business samples, including failed/cancelled imports,
+whole-document change detection and inert XML content. The production browser
+suite also exercises paste and file import through the actual toolbar/dialog,
+export-to-import round trips, unsaved warnings, error recovery and phone layout.
+It requires sandbox-capable Chrome via `PUPPETEER_EXECUTABLE_PATH`; structural
+checks alone do not certify native browser interaction.
+
 ## LICENSE
 
 MIT License

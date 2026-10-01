@@ -20,6 +20,7 @@ jobs:
         with:
           bun-version: "1.4.2"
       - run: bun install --frozen-lockfile --ignore-scripts
+      - run: bun run test:bpmn:import
       - run: bun run check
       - name: Select installed sandbox-capable Chrome
         run: |

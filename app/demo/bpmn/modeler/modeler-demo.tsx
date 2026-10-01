@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../demo.module.css";
 import { Modeler } from "bpmn-xyflow";
+import ImportDialog from "./import-dialog";
+import { DiagramImportSession, type DiagramInput, type ImportOutcome } from "./diagram-import";
 
 const SAMPLES = [
   { label: "Empty diagram", path: "empty" },
@@ -34,7 +36,7 @@ const EMPTY_BPMN = `<?xml version="1.0" encoding="UTF-8"?>
 export default function ModelerDemo() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const modelerRef = useRef<Modeler | null>(null);
-  const [idx, setIdx] = useState(0);
+  const [idx, setIdx] = useState<number | null>(0);
   const [status, setStatus] = useState("");
   const [xmlOut, setXmlOut] = useState<string | null>(null);
   const [warnings, setWarnings] = useState<string[]>([]);
@@ -42,68 +44,125 @@ export default function ModelerDemo() {
   const [canRedo, setCanRedo] = useState(false);
   const [canExport, setCanExport] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importError, setImportError] = useState("");
+  const [confirmation, setConfirmation] = useState<string | null>(null);
+  const importSessionRef = useRef<DiagramImportSession | null>(null);
+  const importReturnFocusRef = useRef<HTMLElement | null>(null);
+  const loadBusyRef = useRef(false);
+  const sampleRequestRef = useRef(0);
   const exportRequestRef = useRef(0);
   const exportBusyRef = useRef(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
+    const sampleRequest = sampleRequestRef;
     const modeler = new Modeler({
       container: containerRef.current,
       fitViewOnInit: true,
       minimap: true,
     });
     modelerRef.current = modeler;
+    const session = new DiagramImportSession(modeler);
+    importSessionRef.current = session;
     modeler.commandStack.onChange(
       ({ canUndo, canRedo }: { canUndo: boolean; canRedo: boolean }) => {
         setCanUndo(canUndo);
         setCanRedo(canRedo);
       },
     );
+    void session.request({ xml: EMPTY_BPMN, label: "Empty diagram", sample: 0 }).then(outcome => {
+      if (modelerRef.current === modeler) finishImport(outcome);
+    }).catch(error => {
+      if (modelerRef.current === modeler) setStatus("Error: " + errorMessage(error));
+    }).finally(() => {
+      if (modelerRef.current === modeler) setIsLoading(false);
+    });
     return () => {
+      ++sampleRequest.current;
+      session.cancel();
+      importSessionRef.current = null;
       modeler.destroy?.();
       modelerRef.current = null;
     };
   }, []);
 
-  useEffect(() => {
-    const modeler = modelerRef.current;
-    if (!modeler) return;
-    let cancelled = false;
-    const controller = new AbortController();
-    const sample = SAMPLES[idx];
-    ++exportRequestRef.current;
-    exportBusyRef.current = false;
-    setIsExporting(false);
-    setCanExport(false);
-    setStatus(`Loading ${sample.label}…`);
-    setXmlOut(null);
-    (async () => {
-      try {
-        const xml =
-          sample.path === "empty"
-            ? EMPTY_BPMN
-            : await fetch(sample.path, { signal: controller.signal }).then((r) => {
-              if (!r.ok) throw new Error(`HTTP ${r.status}`);
-              return r.text();
-            });
-        if (cancelled) return;
-        const result = await modeler.importXML(xml);
-        if (cancelled) return;
-        setCanExport(true);
-        setWarnings(result.warnings.map((warning: { message?: string }) => warning.message || String(warning)));
-        setStatus(
-          `Loaded ${sample.label} (${result.warnings.length} warnings)`,
-        );
-      } catch (e) {
-        if (!cancelled)
-          setStatus("Error: " + (e instanceof Error ? e.message : String(e)));
+  function errorMessage(error: unknown) {
+    return error instanceof Error ? error.message : String(error);
+  }
+
+  function finishImport(outcome: ImportOutcome) {
+    if (outcome.kind === "confirmation") {
+      setConfirmation(outcome.input.label);
+      setImportOpen(true);
+    } else if (outcome.kind === "loaded") {
+      ++exportRequestRef.current;
+      exportBusyRef.current = false;
+      setIsExporting(false);
+      setXmlOut(null);
+      setCanExport(true);
+      setIdx(outcome.input.sample);
+      setWarnings(outcome.result.warnings.map(warning => warning.message || String(warning)));
+      setStatus(`Loaded ${outcome.input.label} (${outcome.result.warnings.length} warnings)`);
+      setImportOpen(false);
+      setConfirmation(null);
+      setImportError("");
+    }
+  }
+
+  async function replaceDiagram(input?: DiagramInput) {
+    const session = importSessionRef.current;
+    if (!session || loadBusyRef.current) return;
+    loadBusyRef.current = true;
+    setIsLoading(true);
+    setImportError("");
+    try {
+      const outcome = input ? await session.request(input) : await session.confirm();
+      if (importSessionRef.current === session) finishImport(outcome);
+    } catch (error) {
+      if (importSessionRef.current === session) {
+        setImportError(errorMessage(error));
+        setConfirmation(null);
+        setImportOpen(true);
       }
-    })();
-    return () => {
-      cancelled = true;
-      controller.abort();
-    };
-  }, [idx]);
+    } finally {
+      if (importSessionRef.current === session) {
+        loadBusyRef.current = false;
+        setIsLoading(false);
+      }
+    }
+  }
+
+  async function chooseSample(index: number) {
+    if (loadBusyRef.current || isLoading) return;
+    const sample = SAMPLES[index], request = ++sampleRequestRef.current;
+    loadBusyRef.current = true;
+    setIsLoading(true);
+    try {
+      const xml = sample.path === "empty" ? EMPTY_BPMN : await fetch(sample.path).then(response => {
+        if (!response.ok) throw new Error(`Could not load ${sample.label} (HTTP ${response.status}).`);
+        return response.text();
+      });
+      if (request !== sampleRequestRef.current) return;
+      loadBusyRef.current = false;
+      await replaceDiagram({ xml, label: sample.label, sample: index });
+    } catch (error) {
+      if (request === sampleRequestRef.current) setStatus("Error: " + errorMessage(error));
+    } finally {
+      if (request === sampleRequestRef.current) {
+        loadBusyRef.current = false;
+        setIsLoading(false);
+      }
+    }
+  }
+
+  function cancelImport() {
+    importSessionRef.current?.cancel();
+    setImportOpen(false);
+    setConfirmation(null);
+    setImportError("");
+  }
 
   async function exportXML() {
     const modeler = modelerRef.current;
@@ -149,7 +208,8 @@ export default function ModelerDemo() {
         }}
       >
         <strong style={{ fontSize: 13 }}>bpmn-xyflow modeler</strong>
-        <select aria-label="Sample diagram" value={idx} onChange={(e) => { setCanExport(false); setWarnings([]); setIdx(Number(e.target.value)); }}>
+        <select aria-label="Sample diagram" value={idx ?? "imported"} disabled={isLoading || importOpen} onChange={event => { importReturnFocusRef.current = event.currentTarget; void chooseSample(Number(event.target.value)); }}>
+          {idx === null && <option value="imported" disabled>Imported diagram</option>}
           {SAMPLES.map((s, i) => (
             <option key={i} value={i}>
               {s.label}
@@ -157,21 +217,24 @@ export default function ModelerDemo() {
           ))}
         </select>
         <button
-          disabled={!canUndo}
+          disabled={!canUndo || isLoading || importOpen}
           onClick={() => modelerRef.current?.undo()}
           title="Ctrl+Z"
         >
           Undo
         </button>
         <button
-          disabled={!canRedo}
+          disabled={!canRedo || isLoading || importOpen}
           onClick={() => modelerRef.current?.redo()}
           title="Ctrl+Shift+Z"
         >
           Redo
         </button>
+        <button disabled={isLoading || importOpen} onClick={event => { importReturnFocusRef.current = event.currentTarget; setImportError(""); setConfirmation(null); setImportOpen(true); }}>
+          Import XML
+        </button>
         <button
-          disabled={!canExport || isExporting}
+          disabled={!canExport || isExporting || isLoading || importOpen}
           aria-busy={isExporting}
           onClick={exportXML}
         >
@@ -185,8 +248,11 @@ export default function ModelerDemo() {
           delete
         </span>
         <span style={{ flex: 1 }} />
-        <span style={{ fontSize: 12, color: "#666" }}>{status}</span>
+        <span role="status" style={{ fontSize: 12, color: "#666" }}>{isLoading ? "Loading diagram…" : status}</span>
       </div>
+      {importOpen && <ImportDialog busy={isLoading} error={importError} confirmation={confirmation} returnFocusTo={importReturnFocusRef.current}
+        onImport={(xml, label) => { void replaceDiagram({ xml, label, sample: null }); }}
+        onConfirm={() => { void replaceDiagram(); }} onCancel={cancelImport} />}
       {warnings.length > 0 && (
         <details className={styles.warnings}>
           <summary>{warnings.length} import warning(s)</summary>
@@ -195,6 +261,7 @@ export default function ModelerDemo() {
       )}
       <div
         ref={containerRef}
+        inert={isLoading || importOpen}
         style={{
           flex: 1,
           background: "#fff",
