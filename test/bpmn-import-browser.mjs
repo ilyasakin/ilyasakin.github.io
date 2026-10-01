@@ -10,8 +10,81 @@ async function canonical(xml) {
   return (await oracle.toXML(parsed.rootElement, { format: true })).xml;
 }
 
-export async function verifyProductionImport(page, { clickButton, exportedDiagram, chooseSample }) {
+/** Use the installed Puppeteer native CDP text-input API, with no DOM value assignment. */
+export async function enterXML(page, xml) {
+  await page.click('#bpmn-import-xml');
+  await page.evaluate(() => {
+    const input = document.querySelector('#bpmn-import-xml');
+    if (input.value !== '') throw new Error('Paste case requires an empty visible textarea');
+    const events = [];
+    const listener = event => { events.push({ trusted: event.isTrusted, type: event.inputType, value: input.value }); };
+    input.addEventListener('input', listener);
+    window.sitePasteObservation = { events, remove: () => input.removeEventListener('input', listener) };
+  });
+  try {
+    await page.keyboard.sendCharacter(xml);
+    const observed = await page.evaluate(() => ({ value: document.querySelector('#bpmn-import-xml').value, events: window.sitePasteObservation.events }));
+    assert.equal(observed.value, xml, 'native text insertion preserves complete XML');
+    assert.ok(observed.events.length > 0, 'native text insertion fires input');
+    assert.ok(observed.events.every(event => event.trusted), 'input events originate from Chrome');
+    assert.equal(observed.events.at(-1).value, xml);
+  } finally {
+    await page.evaluate(() => { window.sitePasteObservation?.remove(); delete window.sitePasteObservation; });
+  }
+}
+
+/** Every group gets its own lifecycle and reports a result, even after another group fails. */
+export async function runImportGroups(cases, openCase, report = async () => {}) {
   const results = [];
+  for (const group of cases) {
+    let context;
+    const result = { id: group.id, case: group.name, status: 'passed' };
+    try {
+      context = await openCase(group);
+      await context.setup?.();
+      await group.run(context);
+      await context.check?.();
+    } catch (error) {
+      result.status = 'failed'; result.error = error.stack || String(error);
+    } finally {
+      if (context) {
+        try { await context.capture?.(result); } catch (error) {
+          result.status = 'failed'; result.captureError = error.stack || String(error);
+        }
+        try { await context.close(); } catch (error) {
+          result.status = 'failed'; result.closeError = error.stack || String(error);
+        }
+      }
+    }
+    results.push(result);
+    await report(results);
+  }
+  return results;
+}
+
+function importControls(page) {
+  let lastXML = null;
+  async function clickButton(text) {
+    for (const button of await page.$$('button')) {
+      if ((await button.evaluate(node => node.textContent)).trim() === text) { await button.click(); return; }
+    }
+    throw new Error(`Missing button ${text}`);
+  }
+  async function exportedDiagram() {
+    await clickButton('Export XML'); await page.waitForSelector('pre');
+    const xml = await page.$eval('pre', node => node.textContent);
+    await page.click('[aria-label="Close XML export"]');
+    await page.waitForSelector('pre', { hidden: true });
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    return { xml };
+  }
+  async function chooseSample(index) {
+    await page.waitForFunction(() => !document.querySelector('select[aria-label="Sample diagram"]').disabled);
+    const label = await page.$eval('select[aria-label="Sample diagram"]', (select, index) => select.querySelector(`option[value="${index}"]`).textContent, index);
+    await page.select('select[aria-label="Sample diagram"]', index);
+    await page.waitForFunction(({ index, label }) => !document.querySelector('dialog[open]') &&
+      document.querySelector('select[aria-label="Sample diagram"]').value === index && document.querySelector('[role="status"]')?.textContent.startsWith(`Loaded ${label}`), {}, { index, label });
+  }
   const ready = () => page.waitForSelector('dialog[open]', { hidden: true });
   const warning = async () => {
     await page.waitForFunction(() => document.querySelector('#import-title')?.textContent === 'Replace unsaved changes?');
@@ -26,14 +99,14 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
       undo: ![...document.querySelectorAll('button')].find(e => e.textContent === 'Undo').disabled,
       redo: ![...document.querySelectorAll('button')].find(e => e.textContent === 'Redo').disabled,
     }));
+    lastXML = xml;
     return { xml, ...ui };
   };
   async function open(xml) {
     await clickButton('Import XML');
     await page.waitForSelector('dialog[open] textarea');
     if (xml !== undefined) {
-      await page.click('#bpmn-import-xml');
-      await page.keyboard.insertText(xml);
+      await enterXML(page, xml);
     }
   }
   async function importPaste(xml) {
@@ -45,8 +118,13 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
     assert.equal((await page.$$('[data-element-id].is-selected')).length, 0);
   }
 
-  // Three real business documents use both supported entry paths and a true exported-file round trip.
+  return { page, clickButton, exportedDiagram, chooseSample, ready, warning, restoredFocus, current, open, importPaste, cleanHistory, lastXML: () => lastXML };
+}
+
+export function productionImportCases() {
+  const cases = [];
   for (const [index, name, id] of [[3, 'order-payment-delivery', 'ValidateOrder'], [4, 'approval-rejection-rework', 'ReviewRequest'], [5, 'booking-timeout-compensation', 'ReserveHotel']]) {
+    cases.push({ id: name, name: `${name}: paste exported XML and load local BPMN file`, async run({ page, chooseSample, current, importPaste, cleanHistory, open, clickButton, ready }) {
     await chooseSample(String(index));
     const before = await current();
     await page.click(`[data-element-id="${id}"]`);
@@ -60,8 +138,11 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
     await page.waitForFunction(id => document.querySelector('#bpmn-import-xml').value.includes(id), {}, id);
     await clickButton('Import diagram'); await ready(); await cleanHistory();
     assert.equal(await canonical((await current()).xml), await canonical(await readFile(fixturePath, 'utf8')));
-    results.push({ case: `${name}: paste exported XML and load local BPMN file`, status: 'passed' });
+
+    } });
   }
+  cases.push({ id: 'export-file', name: 'production export to local .xml file to import', async run({ page, chooseSample, current, open, clickButton, ready }) {
+    await chooseSample('5');
   const beforeFile = await current();
   await mkdir('test-artifacts', { recursive: true });
   const exportedPath = path.resolve('test-artifacts/site-export-roundtrip.xml');
@@ -70,8 +151,11 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
   await page.waitForFunction(() => document.querySelector('#bpmn-import-xml').value.includes('ReserveHotel'));
   await clickButton('Import diagram'); await ready();
   assert.equal(await canonical((await current()).xml), await canonical(beforeFile.xml));
-  results.push({ case: 'production export to local .xml file to import', status: 'passed' });
 
+  } });
+  cases.push({ id: 'unsaved-failure-history', name: 'unsaved guard, Cancel, Escape, malformed error, sample guard, accepted replacement and exact old undo/redo', async run({ page, chooseSample, current, open, clickButton, ready, warning, restoredFocus, cleanHistory }) {
+    await chooseSample('5');
+  const beforeFile = await current();
   // Build undo and redo directions with real palette and toolbar actions.
   const original = await current();
   await page.click('.bpmn-xyflow-palette button:nth-child(2)');
@@ -107,8 +191,10 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
   // Accepted replacement resets old selection/history, and repeat import stays usable.
   await open(beforeFile.xml); await clickButton('Import diagram'); await warning(); await clickButton('Replace diagram'); await ready(); await cleanHistory();
   assert.equal(await canonical((await current()).xml), await canonical(beforeFile.xml));
-  results.push({ case: 'unsaved guard, Cancel, Escape, malformed error, sample guard, accepted replacement and exact old undo/redo', status: 'passed' });
 
+  } });
+  cases.push({ id: 'file-cancellation', name: 'file chooser cancellation, delayed read and unsupported file keep draft, focus and exact diagram', async run({ page, chooseSample, current, open, clickButton, ready, restoredFocus }) {
+    await chooseSample('5');
   const beforePicker = await current();
   await open('draft remains here');
   const picker = page.waitForFileChooser(); await page.click('#bpmn-import-file'); await (await picker).cancel();
@@ -149,8 +235,10 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
     await clickButton('Cancel'); await ready(); await restoredFocus();
     assert.deepEqual(await current(), beforePicker);
   } finally { await page.evaluate(() => { window.restoreSiteFileRead?.(); delete window.restoreSiteFileRead; }); }
-  results.push({ case: 'file chooser cancellation, delayed read and unsupported file keep draft, focus and exact diagram', status: 'passed' });
 
+  } });
+  cases.push({ id: 'inert-content', name: 'embedded markup stays inert through input, render and export', async run({ page, chooseSample, importPaste, current }) {
+    await chooseSample('4');
   // Imported text and opaque extension XML must never become executable browser markup.
   let inert = await readFile('public/bpmn-samples/scenarios/approval-rejection-rework.bpmn', 'utf8');
   inert = inert.replace('name="Review request"', 'name="&lt;img src=x onerror=window.siteImportExecuted=true&gt;"')
@@ -160,8 +248,10 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
   assert.equal(await page.evaluate(() => window.siteImportExecuted), undefined);
   assert.equal(await page.$eval('.bpmn-xyflow-viewport', e => e.querySelector('script,img,foreignObject')), null);
   assert.match((await current()).xml, /siteImportExecuted/);
-  results.push({ case: 'embedded markup stays inert through input, render and export', status: 'passed' });
 
+  } });
+  cases.push({ id: 'phone-dialog', name: 'phone dialog remains visible and Escape dismisses it', async run({ page, chooseSample, open, ready }) {
+    await chooseSample('5');
   await page.setViewport({ width: 390, height: 844 });
   await open();
   assert.ok(await page.$eval('dialog[open]', e => {
@@ -170,8 +260,46 @@ export async function verifyProductionImport(page, { clickButton, exportedDiagra
   await page.screenshot({ path: 'test-artifacts/site-import-phone.png', fullPage: true });
   await page.keyboard.press('Escape'); await ready();
   await page.setViewport({ width: 1188, height: 762 });
-  results.push({ case: 'phone dialog remains visible and Escape dismisses it', status: 'passed' });
-  await writeFile('test-artifacts/site-import-results.json', JSON.stringify(results, null, 2));
+
+  } });
+  return cases;
+}
+
+export async function verifyProductionImport(browser, base) {
+  await mkdir('test-artifacts', { recursive: true });
+  const cases = productionImportCases();
+  assert.equal(cases.length, 8);
+  const results = await runImportGroups(cases, async group => {
+    const page = await browser.newPage(), errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    page.setDefaultTimeout(10000);
+    page.setDefaultNavigationTimeout(30000);
+    const controls = importControls(page);
+    return {
+      ...controls,
+      async setup() {
+        await page.setViewport({ width: 1188, height: 762 });
+        await page.goto(new URL('/demo/bpmn/modeler', base).href, { waitUntil: 'networkidle0' });
+        await page.waitForSelector('.bpmn-xyflow-palette');
+        await page.waitForFunction(() => [...document.querySelectorAll('button')].some(button => button.textContent === 'Import XML' && !button.disabled));
+      },
+      async check() { assert.deepEqual(errors, [], 'no page errors during import'); },
+      async capture(result) {
+        const prefix = `test-artifacts/site-import-${group.id}`;
+        const ui = await page.evaluate(() => ({ url: location.href, status: document.querySelector('[role="status"]')?.textContent,
+          dialog: document.querySelector('dialog[open]')?.textContent, focus: document.activeElement?.outerHTML,
+          selection: [...document.querySelectorAll('[data-element-id].is-selected')].map(node => node.dataset.elementId) }));
+        await writeFile(`${prefix}.json`, JSON.stringify({ ...result, errors, ui, lastExportedXML: controls.lastXML() }, null, 2));
+        await page.screenshot({ path: `${prefix}.png`, fullPage: true });
+      },
+      async close() { await page.close(); },
+    };
+  }, async results => {
+    await writeFile('test-artifacts/site-import-results.json', JSON.stringify(results, null, 2));
+    const last = results.at(-1); console.log(`${last.status === 'passed' ? 'PASS' : 'FAIL'} import ${last.id}${last.error ? ': ' + last.error : ''}`);
+  });
   assert.equal(results.length, 8);
-  console.log('PASS production Import XML: 8 groups, 3 business diagrams, full-model round trips, exact failure/cancel/history and inert content');
+  const failures = results.filter(result => result.status !== 'passed');
+  assert.deepEqual(failures, [], `${failures.length}/8 production import groups failed; all groups ran independently`);
+  console.log('PASS production Import XML: 8 independent groups, 3 business diagrams, full-model round trips, exact failure/cancel/history and inert content');
 }

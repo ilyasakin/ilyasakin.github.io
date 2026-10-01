@@ -177,7 +177,6 @@ try {
     await page.click('.bpmn-xyflow-palette button:nth-child(2)');
     assert.equal(await page.evaluate(() => [...document.querySelectorAll('button')].find(button => button.textContent === 'Undo').disabled), false);
   }
-  await verifyProductionImport(page, { clickButton, exportedDiagram, chooseSample });
   await page.click('a[href="/demo/bpmn"]');
   await page.waitForSelector('[data-element-id="Task_1"]');
   assert.equal((await page.$$('.bjs-powered-by')).length,1);
@@ -195,6 +194,7 @@ try {
   assert.deepEqual(errors,[]);
   await mkdir('test-artifacts', { recursive: true });
   await page.screenshot({ path: 'test-artifacts/site-bpmn-phone.png', fullPage: true });
+  await verifyProductionImport(browser, base);
   console.log('PASS site browser parity: readable fit/header/controls, search, navigation teardown, repeated XML export/close, palette, precise native arrow anchors/history, phone attribution');
 } catch (error) {
   await mkdir('test-artifacts', { recursive: true });

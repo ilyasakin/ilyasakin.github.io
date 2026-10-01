@@ -48,7 +48,11 @@ whole-document change detection and inert XML content. The production browser
 suite also exercises paste and file import through the actual toolbar/dialog,
 export-to-import round trips, unsaved warnings, error recovery and phone layout.
 It requires sandbox-capable Chrome via `PUPPETEER_EXECUTABLE_PATH`; structural
-checks alone do not certify native browser interaction.
+checks alone do not certify native browser interaction. The eight import groups
+run on separate production pages and report every outcome even if an earlier
+group fails. An installed-Puppeteer contract test verifies the native CDP text
+insertion API and the browser methods used by this harness before CI launches
+Chrome.
 
 ## LICENSE
 
