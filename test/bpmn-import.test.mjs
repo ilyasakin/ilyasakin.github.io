@@ -53,12 +53,18 @@ test('three business diagrams export and reimport with complete semantics and DI
   }
 });
 
-test('replacement warns for complete-document edits, including a drilled child with no active root history', async () => {
+test('replacement warns for complete-document edits, including a drilled child after returning to the outer root', async () => {
   const h = await editor(), { m, session } = h;
   try {
     await m.drillInto(m.getElement('Payment'));
+    const childBaseline = await m.getXML(), childGraph = m.getGraph();
     m.updateLabel(m.getElement('CapturePayment'), 'Unsaved child payment');
-    await m.navigateBack(); assert.equal(m.canUndo(), false);
+    const childEdited = await m.getXML();
+    await m.navigateBack(); assert.equal(m.canUndo(), true, 'child edits remain in global history after returning to the outer root');
+    assert.equal(m.undo(), true); assert.equal(m.getGraph(), childGraph); assert.equal(await m.getXML(), childBaseline);
+    assert.equal(m.getElement('CapturePayment').businessObject.name, 'Capture payment');
+    assert.equal(m.redo(), true); assert.equal(m.getGraph(), childGraph); assert.equal(await m.getXML(), childEdited);
+    await m.navigateBack();
     m.select('ValidateOrder'); const before = await snapshot(m);
     const next = await input(samples[1]);
     assert.equal((await session.request(next)).kind, 'confirmation'); await unchanged(m, before);
@@ -107,7 +113,7 @@ test('embedded markup remains model text and opaque XML, never DOM content', asy
   try {
     const source = await input(samples[1]);
     source.xml = source.xml.replace('name="Review request"', 'name="&lt;img src=x onerror=alert(1)&gt;"');
-    source.xml = source.xml.replace('<bpmn:process ', '<bpmn:process ').replace('<bpmn:laneSet', '<bpmn:extensionElements><v:payload xmlns:v="urn:site-import:test"><![CDATA[<script>window.importExecuted=true</script>]]></v:payload></bpmn:extensionElements><bpmn:laneSet');
+    source.xml = source.xml.replace('<bpmn:laneSet', '<bpmn:extensionElements><v:payload xmlns:v="urn:site-import:test"><![CDATA[<script>window.importExecuted=true</script>]]></v:payload></bpmn:extensionElements><bpmn:laneSet');
     assert.equal((await session.request(source)).kind, 'loaded');
     assert.equal(window.importExecuted, undefined);
     assert.equal(m.getContainer().querySelector('script,img'), null);
