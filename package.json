@@ -12,7 +12,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "check": "bun run lint && bun run typecheck && bun run build",
     "test:bpmn:browser": "node test/bpmn-browser.mjs",
-    "test:bpmn:import": "node --test --test-concurrency=1 test/bpmn-import.test.mjs test/bpmn-puppeteer-contract.test.mjs"
+    "test:bpmn:import": "node --test --test-concurrency=1 test/bpmn-import.test.mjs test/bpmn-import-dialog.test.mjs test/bpmn-import-oracle.test.mjs test/bpmn-puppeteer-contract.test.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.7.0",

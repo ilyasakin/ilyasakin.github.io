@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { test, before, after } from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { BpmnModdle } from 'bpmn-moddle';
+import { assertFileImportMatches } from './helpers/site-import-oracle.mjs';
 import { DiagramImportSession } from '../app/demo/bpmn/modeler/diagram-import.ts';
 import { setupDOM } from '../vendor/bpmn-xyflow/test/helpers/dom.mjs';
 
@@ -33,6 +34,7 @@ test('three business diagrams export and reimport with complete semantics and DI
     const h = await editor(name), { m, session } = h;
     try {
       const exported = await m.getXML();
+      await assertFileImportMatches(exported, (await input(name)).xml);
       const node = m.getGraph().nodes.find(node => node.type.endsWith('Task'));
       m.select(node.id);
       for (let i = 0; i < 2; i++) {

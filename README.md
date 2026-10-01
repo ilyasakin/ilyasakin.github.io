@@ -33,7 +33,8 @@ The modeler toolbar includes **Import XML**. Paste BPMN XML or choose a local
 `.bpmn` or `.xml` file, then choose **Import diagram**. Files are read in the
 browser. The current diagram is replaced only after explicit submission; parse
 errors appear in the dialog and leave its XML, selection, viewport and history
-intact. Cancel or Escape dismisses the dialog without importing.
+intact. Cancel or Escape dismisses the dialog without importing. Cancelling the
+system file picker keeps the import dialog and its draft open.
 
 Replacing a changed diagram, including changes made inside a subprocess, asks
 for confirmation first. The sample selector uses the same protection. Export

@@ -61,7 +61,12 @@ export default function ImportDialog({ busy, error, confirmation, returnFocusTo,
 
   return <dialog ref={dialogRef} className={styles.importDialog} aria-labelledby="import-title"
     aria-describedby="import-description" aria-busy={blocked}
-    onCancel={event => { event.preventDefault(); if (!busy) onCancel(); }}>
+    onCancel={event => {
+      // A file picker also emits a bubbling cancel event; only Escape on this dialog dismisses it.
+      if (event.target !== event.currentTarget) return;
+      event.preventDefault();
+      if (!busy) onCancel();
+    }}>
     <form onSubmit={event => { event.preventDefault(); if (!blocked && !fileError) confirmation ? onConfirm() : onImport(xml, filename || "Pasted XML"); }}>
       <h2 id="import-title">{confirmation ? "Replace unsaved changes?" : "Import XML"}</h2>
       <p id="import-description">{confirmation

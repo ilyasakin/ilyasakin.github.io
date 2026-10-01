@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { BpmnModdle } from 'bpmn-moddle';
+import { assertFileImportMatches } from './helpers/site-import-oracle.mjs';
 const oracle = new BpmnModdle();
 async function canonical(xml) {
   const parsed = await oracle.fromXML(xml);
@@ -137,7 +138,7 @@ export function productionImportCases() {
     await (await page.$('#bpmn-import-file')).uploadFile(fixturePath);
     await page.waitForFunction(id => document.querySelector('#bpmn-import-xml').value.includes(id), {}, id);
     await clickButton('Import diagram'); await ready(); await cleanHistory();
-    assert.equal(await canonical((await current()).xml), await canonical(await readFile(fixturePath, 'utf8')));
+    await assertFileImportMatches((await current()).xml, await readFile(fixturePath, 'utf8'));
 
     } });
   }
@@ -197,7 +198,22 @@ export function productionImportCases() {
     await chooseSample('5');
   const beforePicker = await current();
   await open('draft remains here');
-  const picker = page.waitForFileChooser(); await page.click('#bpmn-import-file'); await (await picker).cancel();
+  await page.evaluate(() => {
+    const input = document.querySelector('#bpmn-import-file'), events = [];
+    const listener = event => { events.push({ target: event.target.id, bubbles: event.bubbles, cancelable: event.cancelable, trusted: event.isTrusted }); };
+    input.addEventListener('cancel', listener);
+    window.siteFileCancelObservation = { events, remove: () => input.removeEventListener('cancel', listener) };
+  });
+  try {
+    const picker = page.waitForFileChooser(); await page.click('#bpmn-import-file'); await (await picker).cancel();
+    // Installed Puppeteer emits this synthetic bubbling event; real picker input still performs the action.
+    assert.deepEqual(await page.evaluate(() => window.siteFileCancelObservation.events), [
+      { target: 'bpmn-import-file', bubbles: true, cancelable: false, trusted: false },
+    ]);
+    assert.equal((await page.$$('dialog[open]')).length, 1, 'cancelling the file picker keeps the import dialog open');
+  } finally {
+    await page.evaluate(() => { window.siteFileCancelObservation?.remove(); delete window.siteFileCancelObservation; });
+  }
   assert.equal(await page.$eval('#bpmn-import-xml', e => e.value), 'draft remains here');
   await (await page.$('#bpmn-import-file')).uploadFile(path.resolve('README.md'));
   await page.waitForSelector('#import-error[role="alert"]');
