@@ -119,7 +119,16 @@ try {
   }, point);
   const sourceCenter = await screenPoint({ x: sourceBounds.x + sourceBounds.width / 2, y: sourceBounds.y + sourceBounds.height / 2 });
   await page.mouse.move(sourceCenter.x, sourceCenter.y);
+  // Choose the visible right-side origin; the affordance now follows the
+  // requested perimeter instead of always appearing at the right on body hover.
+  const sourceScreen = await screenPoint(sourcePort);
+  await page.mouse.move(sourceScreen.x, sourceScreen.y, { steps: 8 });
   const portHandle = await page.waitForSelector('.bpmn-xyflow-connect-handle');
+  const markedOrigin = await page.$eval('.bpmn-xyflow-connect-docking-point', point => ({
+    x: Number(point.getAttribute('cx')), y: Number(point.getAttribute('cy'))
+  }));
+  assert.ok(Math.hypot(markedOrigin.x - sourcePort.x, markedOrigin.y - sourcePort.y) <= 1.5 / sourceScreen.zoom,
+    'production visible docking marker follows the requested right-side origin');
   const handleBounds = await portHandle.boundingBox(), targetScreen = await screenPoint(targetPort);
   await page.mouse.move(handleBounds.x + handleBounds.width / 2, handleBounds.y + handleBounds.height / 2);
   await page.mouse.down(); await page.mouse.move(targetScreen.x, targetScreen.y, { steps: 12 });
