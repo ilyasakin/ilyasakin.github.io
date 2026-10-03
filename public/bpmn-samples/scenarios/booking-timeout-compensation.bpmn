@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_booking-timeout-compensation" targetNamespace="https://bpmn-xyflow.example/scenarios">
+  <bpmn:process id="BookingProcess" isExecutable="false">
+    <bpmn:startEvent id="BookingStart" name="Travel request">
+      <bpmn:outgoing>BookingFlow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:transaction id="BookingTransaction" name="Book flight and hotel">
+      <bpmn:incoming>BookingFlow1</bpmn:incoming>
+      <bpmn:outgoing>BookingFlow2</bpmn:outgoing>
+      <bpmn:startEvent id="ReservationStart" name="">
+        <bpmn:outgoing>ReservationFlow1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="ReserveHotel" name="Reserve hotel">
+        <bpmn:incoming>ReservationFlow1</bpmn:incoming>
+        <bpmn:outgoing>ReservationFlow2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="ReserveFlight" name="Reserve flight">
+        <bpmn:incoming>ReservationFlow2</bpmn:incoming>
+        <bpmn:outgoing>ReservationFlow3</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="ReservationsComplete" name="Reserved">
+        <bpmn:incoming>ReservationFlow3</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:boundaryEvent id="HotelCompensation" name="Compensate hotel" cancelActivity="false" attachedToRef="ReserveHotel">
+        <bpmn:compensateEventDefinition />
+      </bpmn:boundaryEvent>
+      <bpmn:serviceTask id="ReleaseHotel" name="Release hotel reservation" isForCompensation="true" />
+      <bpmn:boundaryEvent id="FlightTimeout" name="One hour timeout" attachedToRef="ReserveFlight">
+        <bpmn:outgoing>TimeoutFlow</bpmn:outgoing>
+        <bpmn:timerEventDefinition>
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1H</bpmn:timeDuration>
+        </bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:endEvent id="CancelBooking" name="Cancel transaction">
+        <bpmn:incoming>TimeoutFlow</bpmn:incoming>
+        <bpmn:cancelEventDefinition />
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="ReservationFlow1" sourceRef="ReservationStart" targetRef="ReserveHotel" />
+      <bpmn:sequenceFlow id="ReservationFlow2" sourceRef="ReserveHotel" targetRef="ReserveFlight" />
+      <bpmn:sequenceFlow id="ReservationFlow3" sourceRef="ReserveFlight" targetRef="ReservationsComplete" />
+      <bpmn:sequenceFlow id="TimeoutFlow" sourceRef="FlightTimeout" targetRef="CancelBooking" />
+      <bpmn:association id="CompensateHotel" associationDirection="One" sourceRef="HotelCompensation" targetRef="ReleaseHotel" />
+    </bpmn:transaction>
+    <bpmn:boundaryEvent id="BookingCancelled" name="Booking cancelled" attachedToRef="BookingTransaction">
+      <bpmn:outgoing>CancellationFlow1</bpmn:outgoing>
+      <bpmn:cancelEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:sendTask id="ConfirmBooking" name="Send confirmation">
+      <bpmn:incoming>BookingFlow2</bpmn:incoming>
+      <bpmn:outgoing>BookingFlow3</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="ConfirmedEnd" name="Confirmed">
+      <bpmn:incoming>BookingFlow3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="NotifyCancellation" name="Notify cancellation">
+      <bpmn:incoming>CancellationFlow1</bpmn:incoming>
+      <bpmn:outgoing>CancellationFlow2</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="CancelledEnd" name="Cancelled and compensated">
+      <bpmn:incoming>CancellationFlow2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="BookingFlow1" sourceRef="BookingStart" targetRef="BookingTransaction" />
+    <bpmn:sequenceFlow id="BookingFlow2" sourceRef="BookingTransaction" targetRef="ConfirmBooking" />
+    <bpmn:sequenceFlow id="BookingFlow3" sourceRef="ConfirmBooking" targetRef="ConfirmedEnd" />
+    <bpmn:sequenceFlow id="CancellationFlow1" sourceRef="BookingCancelled" targetRef="NotifyCancellation" />
+    <bpmn:sequenceFlow id="CancellationFlow2" sourceRef="NotifyCancellation" targetRef="CancelledEnd" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_booking-timeout-compensation">
+    <bpmndi:BPMNPlane id="Plane_booking-timeout-compensation" bpmnElement="BookingProcess">
+      <bpmndi:BPMNShape id="BookingStart_di" bpmnElement="BookingStart">
+        <dc:Bounds x="80" y="260" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BookingTransaction_di" bpmnElement="BookingTransaction" isExpanded="true">
+        <dc:Bounds x="220" y="110" width="700" height="440" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReservationStart_di" bpmnElement="ReservationStart">
+        <dc:Bounds x="260" y="240" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReserveHotel_di" bpmnElement="ReserveHotel">
+        <dc:Bounds x="360" y="220" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReserveFlight_di" bpmnElement="ReserveFlight">
+        <dc:Bounds x="620" y="220" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReservationsComplete_di" bpmnElement="ReservationsComplete">
+        <dc:Bounds x="830" y="240" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="HotelCompensation_di" bpmnElement="HotelCompensation">
+        <dc:Bounds x="400" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReleaseHotel_di" bpmnElement="ReleaseHotel">
+        <dc:Bounds x="350" y="385" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="CompensateHotel_di" bpmnElement="CompensateHotel">
+        <di:waypoint x="418" y="318" />
+        <di:waypoint x="425" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="FlightTimeout_di" bpmnElement="FlightTimeout">
+        <dc:Bounds x="670" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CancelBooking_di" bpmnElement="CancelBooking">
+        <dc:Bounds x="790" y="405" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ReservationFlow1_di" bpmnElement="ReservationFlow1">
+        <di:waypoint x="296" y="258" />
+        <di:waypoint x="360" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ReservationFlow2_di" bpmnElement="ReservationFlow2">
+        <di:waypoint x="480" y="260" />
+        <di:waypoint x="620" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ReservationFlow3_di" bpmnElement="ReservationFlow3">
+        <di:waypoint x="740" y="260" />
+        <di:waypoint x="830" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="TimeoutFlow_di" bpmnElement="TimeoutFlow">
+        <di:waypoint x="706" y="300" />
+        <di:waypoint x="790" y="423" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BookingCancelled_di" bpmnElement="BookingCancelled">
+        <dc:Bounds x="850" y="532" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ConfirmBooking_di" bpmnElement="ConfirmBooking">
+        <dc:Bounds x="1020" y="238" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ConfirmedEnd_di" bpmnElement="ConfirmedEnd">
+        <dc:Bounds x="1240" y="260" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NotifyCancellation_di" bpmnElement="NotifyCancellation">
+        <dc:Bounds x="1020" y="500" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CancelledEnd_di" bpmnElement="CancelledEnd">
+        <dc:Bounds x="1240" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BookingFlow1_di" bpmnElement="BookingFlow1">
+        <di:waypoint x="116" y="278" />
+        <di:waypoint x="220" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BookingFlow2_di" bpmnElement="BookingFlow2">
+        <di:waypoint x="920" y="330" />
+        <di:waypoint x="1020" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BookingFlow3_di" bpmnElement="BookingFlow3">
+        <di:waypoint x="1140" y="278" />
+        <di:waypoint x="1240" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CancellationFlow1_di" bpmnElement="CancellationFlow1">
+        <di:waypoint x="886" y="550" />
+        <di:waypoint x="1020" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CancellationFlow2_di" bpmnElement="CancellationFlow2">
+        <di:waypoint x="1140" y="540" />
+        <di:waypoint x="1240" y="540" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -20,4 +20,22 @@ jobs:
         with:
           bun-version: "1.4.2"
       - run: bun install --frozen-lockfile --ignore-scripts
+      - run: bun run test:bpmn:import
       - run: bun run check
+      - name: Select installed sandbox-capable Chrome
+        run: |
+          CHROME_PATH="$(command -v google-chrome)"
+          test -x "$CHROME_PATH"
+          "$CHROME_PATH" --version
+          readlink -f "$CHROME_PATH"
+          echo "PUPPETEER_EXECUTABLE_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+      - name: Verify BPMN in served production build
+        run: bun run test:bpmn:browser
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-bpmn-browser-evidence
+          path: test-artifacts/
+          if-no-files-found: ignore
+          retention-days: 14

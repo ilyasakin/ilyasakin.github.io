@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_order-payment-delivery" targetNamespace="https://bpmn-xyflow.example/scenarios">
+  <bpmn:process id="BuyerProcess" isExecutable="false">
+    <bpmn:startEvent id="BuyerStart" name="Need product">
+      <bpmn:outgoing>BuyerFlow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="SubmitOrder" name="Submit order">
+      <bpmn:incoming>BuyerFlow1</bpmn:incoming>
+      <bpmn:outgoing>BuyerFlow2</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:receiveTask id="ReceiveDelivery" name="Receive delivery">
+      <bpmn:incoming>BuyerFlow2</bpmn:incoming>
+      <bpmn:outgoing>BuyerFlow3</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:endEvent id="BuyerEnd" name="Order received">
+      <bpmn:incoming>BuyerFlow3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="BuyerFlow1" sourceRef="BuyerStart" targetRef="SubmitOrder" />
+    <bpmn:sequenceFlow id="BuyerFlow2" sourceRef="SubmitOrder" targetRef="ReceiveDelivery" />
+    <bpmn:sequenceFlow id="BuyerFlow3" sourceRef="ReceiveDelivery" targetRef="BuyerEnd" />
+  </bpmn:process>
+  <bpmn:process id="SellerProcess" isExecutable="false">
+    <bpmn:startEvent id="OrderReceived" name="Order received">
+      <bpmn:outgoing>SellerFlow1</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:startEvent>
+    <bpmn:task id="ValidateOrder" name="Validate order">
+      <bpmn:incoming>SellerFlow1</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:subProcess id="Payment" name="Authorize and capture payment">
+      <bpmn:incoming>SellerFlow2</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow3</bpmn:outgoing>
+      <bpmn:startEvent id="PaymentStart" name="">
+        <bpmn:outgoing>PaymentFlow1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="CapturePayment" name="Capture payment">
+        <bpmn:documentation>Capture payment only after order validation; a failed charge must not start fulfillment.</bpmn:documentation>
+        <bpmn:incoming>PaymentFlow1</bpmn:incoming>
+        <bpmn:outgoing>PaymentFlow2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="PaymentEnd" name="Payment captured">
+        <bpmn:incoming>PaymentFlow2</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="PaymentFlow1" sourceRef="PaymentStart" targetRef="CapturePayment" />
+      <bpmn:sequenceFlow id="PaymentFlow2" sourceRef="CapturePayment" targetRef="PaymentEnd" />
+    </bpmn:subProcess>
+    <bpmn:parallelGateway id="FulfillmentFork" name="Prepare shipment and invoice">
+      <bpmn:incoming>SellerFlow3</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow4</bpmn:outgoing>
+      <bpmn:outgoing>SellerFlow5</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="CreateInvoice" name="Create invoice">
+      <bpmn:incoming>SellerFlow4</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="PackOrder" name="Pick and pack">
+      <bpmn:incoming>SellerFlow5</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="FulfillmentJoin" name="Ready to dispatch">
+      <bpmn:incoming>SellerFlow6</bpmn:incoming>
+      <bpmn:incoming>SellerFlow7</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow8</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sendTask id="ShipOrder" name="Dispatch order">
+      <bpmn:incoming>SellerFlow8</bpmn:incoming>
+      <bpmn:outgoing>SellerFlow9</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="SellerEnd" name="Fulfilled">
+      <bpmn:incoming>SellerFlow9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SellerFlow1" sourceRef="OrderReceived" targetRef="ValidateOrder" />
+    <bpmn:sequenceFlow id="SellerFlow2" sourceRef="ValidateOrder" targetRef="Payment" />
+    <bpmn:sequenceFlow id="SellerFlow3" sourceRef="Payment" targetRef="FulfillmentFork" />
+    <bpmn:sequenceFlow id="SellerFlow4" sourceRef="FulfillmentFork" targetRef="CreateInvoice" />
+    <bpmn:sequenceFlow id="SellerFlow5" sourceRef="FulfillmentFork" targetRef="PackOrder" />
+    <bpmn:sequenceFlow id="SellerFlow6" sourceRef="CreateInvoice" targetRef="FulfillmentJoin" />
+    <bpmn:sequenceFlow id="SellerFlow7" sourceRef="PackOrder" targetRef="FulfillmentJoin" />
+    <bpmn:sequenceFlow id="SellerFlow8" sourceRef="FulfillmentJoin" targetRef="ShipOrder" />
+    <bpmn:sequenceFlow id="SellerFlow9" sourceRef="ShipOrder" targetRef="SellerEnd" />
+  </bpmn:process>
+  <bpmn:collaboration id="OrderCollaboration">
+    <bpmn:participant id="BuyerPool" name="Customer" processRef="BuyerProcess" />
+    <bpmn:participant id="SellerPool" name="Order fulfillment" processRef="SellerProcess" />
+    <bpmn:messageFlow id="OrderMessage" name="Purchase order" sourceRef="SubmitOrder" targetRef="OrderReceived" />
+    <bpmn:messageFlow id="DeliveryMessage" name="Delivery notice" sourceRef="ShipOrder" targetRef="ReceiveDelivery" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="Diagram_order-payment-delivery">
+    <bpmndi:BPMNPlane id="Plane_order-payment-delivery" bpmnElement="OrderCollaboration">
+      <bpmndi:BPMNShape id="BuyerPool_di" bpmnElement="BuyerPool">
+        <dc:Bounds x="30" y="30" width="1450" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SellerPool_di" bpmnElement="SellerPool">
+        <dc:Bounds x="30" y="250" width="1450" height="420" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BuyerStart_di" bpmnElement="BuyerStart">
+        <dc:Bounds x="100" y="96" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubmitOrder_di" bpmnElement="SubmitOrder">
+        <dc:Bounds x="200" y="75" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveDelivery_di" bpmnElement="ReceiveDelivery">
+        <dc:Bounds x="1210" y="75" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BuyerEnd_di" bpmnElement="BuyerEnd">
+        <dc:Bounds x="1380" y="96" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BuyerFlow1_di" bpmnElement="BuyerFlow1">
+        <di:waypoint x="136" y="114" />
+        <di:waypoint x="200" y="115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BuyerFlow2_di" bpmnElement="BuyerFlow2">
+        <di:waypoint x="300" y="115" />
+        <di:waypoint x="1210" y="115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BuyerFlow3_di" bpmnElement="BuyerFlow3">
+        <di:waypoint x="1310" y="115" />
+        <di:waypoint x="1380" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="OrderReceived_di" bpmnElement="OrderReceived">
+        <dc:Bounds x="100" y="410" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ValidateOrder_di" bpmnElement="ValidateOrder">
+        <dc:Bounds x="200" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Payment_di" bpmnElement="Payment" isExpanded="true">
+        <dc:Bounds x="350" y="320" width="340" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PaymentStart_di" bpmnElement="PaymentStart">
+        <dc:Bounds x="380" y="417" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CapturePayment_di" bpmnElement="CapturePayment">
+        <dc:Bounds x="460" y="395" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PaymentEnd_di" bpmnElement="PaymentEnd">
+        <dc:Bounds x="620" y="417" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PaymentFlow1_di" bpmnElement="PaymentFlow1">
+        <di:waypoint x="416" y="435" />
+        <di:waypoint x="460" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PaymentFlow2_di" bpmnElement="PaymentFlow2">
+        <di:waypoint x="580" y="435" />
+        <di:waypoint x="620" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="FulfillmentFork_di" bpmnElement="FulfillmentFork">
+        <dc:Bounds x="740" y="405" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CreateInvoice_di" bpmnElement="CreateInvoice">
+        <dc:Bounds x="840" y="305" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PackOrder_di" bpmnElement="PackOrder">
+        <dc:Bounds x="840" y="505" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="FulfillmentJoin_di" bpmnElement="FulfillmentJoin">
+        <dc:Bounds x="1020" y="405" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ShipOrder_di" bpmnElement="ShipOrder">
+        <dc:Bounds x="1160" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SellerEnd_di" bpmnElement="SellerEnd">
+        <dc:Bounds x="1370" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SellerFlow1_di" bpmnElement="SellerFlow1">
+        <di:waypoint x="136" y="428" />
+        <di:waypoint x="200" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow2_di" bpmnElement="SellerFlow2">
+        <di:waypoint x="300" y="430" />
+        <di:waypoint x="350" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow3_di" bpmnElement="SellerFlow3">
+        <di:waypoint x="690" y="445" />
+        <di:waypoint x="740" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow4_di" bpmnElement="SellerFlow4">
+        <di:waypoint x="790" y="430" />
+        <di:waypoint x="840" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow5_di" bpmnElement="SellerFlow5">
+        <di:waypoint x="790" y="430" />
+        <di:waypoint x="840" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow6_di" bpmnElement="SellerFlow6">
+        <di:waypoint x="940" y="345" />
+        <di:waypoint x="1020" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow7_di" bpmnElement="SellerFlow7">
+        <di:waypoint x="940" y="545" />
+        <di:waypoint x="1020" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow8_di" bpmnElement="SellerFlow8">
+        <di:waypoint x="1070" y="430" />
+        <di:waypoint x="1160" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SellerFlow9_di" bpmnElement="SellerFlow9">
+        <di:waypoint x="1260" y="430" />
+        <di:waypoint x="1370" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="OrderMessage_di" bpmnElement="OrderMessage">
+        <di:waypoint x="250" y="155" />
+        <di:waypoint x="118" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DeliveryMessage_di" bpmnElement="DeliveryMessage">
+        <di:waypoint x="1210" y="470" />
+        <di:waypoint x="1260" y="75" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
